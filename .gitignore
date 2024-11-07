@@ -1,3 +1,17 @@
+# My
+*.log
+*.gc*
+*.sw*
+\#*#
+*~
+vgcore.*
+main_test*.c
+test_sample.c
+unit_test
+prog
+:
+q
+
 # Prerequisites
 *.d
 
