@@ -1,0 +1,119 @@
+##
+## EPITECH PROJECT, 2024
+## makefile
+## File description:
+## Make file to: Compile / Compile CSFML / Compile Lib / Compile && Execute
+## Made Verification on *.c / Run UnitTest / Clear Unnecessary File
+##
+
+TGR_UT = unit_test
+TGR_PROG = prog
+TGR_MY_LIB = libmy.a
+
+PROG_SRCS = $(shell find . -name "*.c" | grep "$(NAME)" | grep -v "lib/my/" | \
+grep -v "tests")
+UT_SRCS = $(shell find . -name "*.c" | grep "$(NAME)" | \
+grep -v "main_test" | grep -v "lib/my/")
+LIB_SRCS = $(shell find lib/my -name "*.c")
+MAIN = $(shell find . -name "main_test_*.c | grep "$(MAIN_NAME)")
+
+Clear: Start CleanAll End
+UnitTest: Start CpUnitTest ExecuteUnitTest Clean End
+Executable: Start CpExecutable ExecutePrograme Clean End
+ExecutableCSFML: Start CpExecutableCSFML ExecutePrograme Clean End
+Valgrind: Start CpExecutableValgrind ExecuteValgrind Clean End
+Compile: Start CpExecutable CleanO End
+Verif: Start CpLib CpExecutableWall ExecuteValgrind CodingStyle GitStatus End
+CompileMyLib: Start CpLib Clean End
+
+CpLib: CpMyLib CreateArchive
+
+Start:
+	@echo "---------------------START---------------------"
+
+CpUnitTest:
+	@echo "Compiling files with criterion..."
+	@gcc $(UT_SRCS) -I./include/ -L. -lmy -o $(TGR_UT) \
+	--coverage -lcriterion
+
+CpExecutable:
+	@echo "Compiling files \".c\" to \".o\"..."
+	@gcc $(PROG_SRCS) $(MAIN) -I./include/ -L. -lmy -o $(TGR_PROG)
+
+CpExecutableValgrind:
+	@echo "Compiling files \".c\" to \".o\"..."
+	@gcc $(PROG_SRCS) $(MAIN) -I./include/ -L. -lmy -o $(TGR_PROG)
+
+CpExecutableCSFML:
+	@echo "Compiling files \".c\" to \".o\"..."
+	@gcc $(PROG_SRCS) $(MAIN) -I./include/ -L. -lmy -o $(TGR_PROG) \
+	-lcsfml-graphics -lcsfml-window -lcsfml-system
+
+CpExecutableWall:
+	@echo "Compiling files \".c\" to \".o\"... (Flag -W -Wall)"
+	@gcc $(PROG_SRCS) -I./include/ -L. -lmy -o $(TGR_PROG) \
+	-Wall -Wpedantic -Werror
+
+CpMyLib:
+	@echo "Compiling files \".c\" to \".o\"..."
+	@gcc -c $(LIB_SRCS) -I./include/
+
+ExecuteUnitTest:
+	@echo "Execute the unit test..."
+	@echo "-----------------------------------------------"
+	@./$(TGR_UT) $(ARG) #make ARG="..."
+	@echo "-----------------------------------------------"
+	@gcovr --exclude tests/ --branches .
+	@gcovr --exclude tests/ .
+	@echo "-----------------------------------------------"
+
+ExecutePrograme:
+	@echo "Execute the programe..."
+	@echo "-----------------------------------------------"
+	@./$(TGR_PROG) $(ARG) #make ARG="..."
+	@echo "-----------------------------------------------"
+
+ExecuteValgrind:
+	@echo "Execute the programe..."
+	@echo "-----------------------------------------------"
+	@valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all \
+	--errors-for-leak-kinds=all ./$(TGR_PROG) $(ARG) #make ARG="..."
+	@echo "-----------------------------------------------"
+
+CreateArchive:
+	@echo "Compiling files \".o\" in an archive..."
+	@ar rc $(TGR_MY_LIB) *.o
+
+CodingStyle: CleanAll
+	@coding-style . .
+	@echo "-----------------------------------------------"
+	@cat coding-style-reports.log
+
+GitStatus:
+	@echo "-----------------------------------------------"
+	@git status
+
+Clean:
+	@echo "Clear unnecessary file..."
+	@rm -f $(shell find . -name "*.o")
+	@rm -f $(shell find . -name "*.gc*")
+	@rm -f $(shell find . -name "vgcore.*")
+	@rm -f $(TGR_UNIT_TEST)
+	@rm -f $(TGR_PROG)
+
+CleanAll: Clean
+	@rm -f $(shell find . -name "*.a")
+	@rm -f $(shell find . -name "*.log")
+	@rm -f $(shell find . -name "*.swp")
+	@rm -f $(shell find . -name "*~")
+	@rm -f $(shell find . -name "#*#")
+	@rm -f $(shell find . -name "a.out")
+	@rm -f $(TGR_MY_LIB)
+
+CleanO:
+	@rm -f $(shell find . -name "*.o")
+
+End:
+	@echo "----------------------END----------------------"
+
+.PHONY: Clear UnitTest Executable ExecutableCSFML Compile Verif MyLib Valgrind

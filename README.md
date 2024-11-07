@@ -1,2 +1,2 @@
-# Project_Template
-Template for project in c
+# Project Name
+Description of the project...
