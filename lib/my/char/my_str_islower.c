@@ -5,15 +5,15 @@
 ** Verif if the given string is only lowr case
 */
 
+#include "include.h"
 #include "error.h"
 
-int my_str_islower(char const *str)
+bool my_str_islower(char const *str)
 {
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: str_islower", KO);
+    ERR_D(PTR_ERR, "In: my_str_islower", false, (!str));
     for (int i = 0; str[i]; i++) {
         if (!(str[i] >= 'a' && str[i] <= 'z'))
-            return 0;
+            return false;
     }
-    return 1;
+    return true;
 }

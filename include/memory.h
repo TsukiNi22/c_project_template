@@ -13,13 +13,12 @@
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
-/* memory_alloc */
-int my_calloc_str(char *str, int size); // Error: KO
-int my_calloc_int(int *array, int size); // Error: KO
-int my_calloc_float(float *array, int size); // Error: KO
+/* memory_calloc */
+int my_calloc(void *ptr, int size, int type_size); // Error: KO
+void *my_malloc(int size, int type_size); // Error: NULL
+void *my_realloc(void *ptr, int add, int size, int type_size); // Error: NULL
 
-/* memory_realloc */
+/* memory_char */
 char *my_strdup(char const *src); // Error: NULL
-char *my_realloc_str(char *str, int add); // Error: NULL
 
 #endif /* MEMORY */

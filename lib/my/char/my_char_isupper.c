@@ -5,7 +5,9 @@
 ** Verif if the given char is only upper case
 */
 
-int my_char_isupper(char const c)
+#include "include.h"
+
+bool my_char_isupper(char const c)
 {
     return (c >= 'A' && c <= 'Z');
 }

@@ -6,74 +6,76 @@
 */
 
 #include "char.h"
+#include "memory.h"
 #include "include.h"
 #include "define.h"
 #include "error.h"
 
-static int is_pr(char c)
+static bool is_pr(char c)
 {
     int c1 = (c >= 'a' && c <= 'z');
     int c2 = (c >= 'A' && c <= 'Z');
     int c3 = (c >= '0' && c <= '9');
 
     if (!(c1 + c2 + c3))
-        return 0;
-    return 1;
+        return false;
+    return true;
 }
 
 static int get_word_nbr(char const *str)
 {
+    bool new = true;
     int n = 0;
-    int new = 1;
 
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: str_to_word_array 1.1", -1);
+    ERR_D(PTR_ERR, "In: my_str_to_word_array > reset_val", KO, (!str));
     for (int i = 0; str[i]; i++) {
         if (is_pr(str[i]) && new) {
-            new = 0;
+            new = false;
             n++;
         } else
-            new = 1;
+            new = true;
     }
     return n;
 }
 
-static void raaaa(int *n, int *i_word)
+static int reset_val(int *n, int *i_word)
 {
-    if (!n || !i_word)
-        return err_dispatch_v(PTR_ERR, "In: to_word_array 3.1");
-    *n += 1;
+    ERR_D(PTR_ERR, "In: my_str_to_word_array > reset_val", KO,
+    (!n || !i_word));
+    (*n)++;
     *i_word = 0;
+    return KO;
 }
 
-static void raaaa_2(char *word, char const *str, int *i_word, int i)
+static int incrementation(char *word, char const *str, int *i_word, int i)
 {
-    if (!word || !str || !i_word)
-        return err_dispatch_v(PTR_ERR, "In: to_word_array 2.1");
+    ERR_D(PTR_ERR, "In: my_str_to_word_array > incrementation", KO,
+    (!word || !str || !i_word));
     word[*i_word] = str[i];
-    *i_word++;
+    (*i_word)++;
+    return OK;
 }
 
 char **my_str_to_word_array(char const *str)
 {
     int word_nbr = get_word_nbr(str);
-    char **word_array = malloc(sizeof(char *) * (word_nbr + 1));
-    char *word = malloc(sizeof(char) * my_strlen(str));
+    char **word_array = my_malloc(word_nbr + 1, sizeof(char *));
+    char *word = my_malloc(my_strlen(str), sizeof(char));
     int n = 0;
     int i_word = 0;
 
-    if (!word_array || !word || !str)
-        err_dispatch_n(UNDEF_ERR, "In: to_word_array");
+    ERR_DN(PTR_ERR, "In: my_str_to_word_array", (!str));
+    ERR_DN(UNDEF_ERR, "In: my_str_to_word_array", (!word || !word_array));
     for (int i = 0; str[i]; i++) {
-        if (is_pr(str[i]))
-            raaaa_2(word, str, &i_word, i);
+        ERR_DN(PTR_ERR, "In: my_str_to_word_array",
+        (is_pr(str[i]) && incrementation(word, str, &i_word, i) == KO));
         if ((i > 0 && !is_pr(str[i]) && is_pr(str[i - 1])) || !str[i + 1]) {
             word[i_word] = '\0';
-            word_array[n] = malloc(sizeof(char) * my_strlen(word));
-            my_strcpy(word_array[n], word);
-            raaaa(&n, &i_word);
+            word_array[n] = my_malloc(my_strlen(word), sizeof(char));
+            ERR_DN(PTR_ERR, "In: my_str_to_word_array",
+            (!my_strcpy(word_array[n], word)));
+            ERR_DN(PTR_ERR, "In: s_t_w_arr", (reset_val(&n, &i_word) == KO));
         }
     }
-    word_array[word_nbr] = NULL;
     return word_array;
 }

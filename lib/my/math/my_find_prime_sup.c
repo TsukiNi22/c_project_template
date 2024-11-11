@@ -9,10 +9,10 @@
 
 int my_find_prime_sup(int nb)
 {
+    int i = nb;
+
     if (nb < 2)
         return 2;
-    for (int i = nb;; i++) {
-        if (my_is_prime(i))
-            return i;
-    }
+    for (; !my_is_prime(i); i++);
+    return i;
 }

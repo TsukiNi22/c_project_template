@@ -6,14 +6,16 @@
 ** pour moi la vie c est avant tous des fonctions...
 */
 
-#include "global.h"
+#include "char.h"
+#include "write.h"
+#include "language.h"
+#include "error.h"
 
 static float my_strlen_local(char const *str)
 {
     float count = 0;
 
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: get_language 3.1", -1);
+    ERR_D(PTR_ERR, "In: my_get_language > my_strlen_local", KO, (!str));
     for (int i = 0; str[i]; i++) {
         if (my_char_isupper(str[i]) || my_char_islower(str[i]))
             count++;
@@ -31,7 +33,7 @@ static int dispatch_bis(int smallest)
         return my_putstr(1, "German");
     if (smallest == 3)
         return my_putstr(1, "Spanish");
-    return -1;
+    return KO;
 }
 
 static int dispatch(float *lg)
@@ -39,8 +41,7 @@ static int dispatch(float *lg)
     int smallest = 0;
     int res[3];
 
-    if (!lg)
-        return err_dispatch(PTR_ERR, "In: get_language 3.3", KO);
+    ERR_D(PTR_ERR, "In: my_get_language > dispatch", KO, (!lg));
     for (int i = 0; i < 4; i++) {
         if (lg[i] > lg[smallest])
             smallest = i;
@@ -48,9 +49,9 @@ static int dispatch(float *lg)
     res[0] = my_putstr(1, "=> ");
     res[1] = dispatch_bis(smallest);
     res[2] = my_putchar('\n');
-    if (((res[0] < 0) + (res[1] < 0) + (res[2] < 0)) > 0)
-        return err_dispatch(WRITE_ERR, "In: get_language", KO);
-    return 0;
+    ERR_D(WRITE_ERR, "In: my_get_language > dispatch", KO,
+    (((res[0] < 0) + (res[1] < 0) + (res[2] < 0)) > 0));
+    return OK;
 }
 
 static float get_coef(int lg, char c)
@@ -64,8 +65,7 @@ static float get_coef(int lg, char c)
     my_get_index(ger, c) * (lg == 2) +
     my_get_index(sp, c) * (lg == 3);
 
-    if (res < 0)
-        return err_dispatch(PTR_ERR, "In: get_language 3.2", 0);
+    ERR_D(PTR_ERR, "In: my_get_language > var_f", KO, (res < 0));
     return 1 / ((float) res + 1);
 }
 
@@ -80,13 +80,12 @@ static int var_f(float *lg_en, float *lg_fr)
     7.095, 5.796, 2.521, 1.362, 6.693, 7.948, 7.244, 6.311,
     1.838, 0.017, 0.215, 0.308, 0.074};
 
-    if (!lg_en || !lg_fr)
-        return err_dispatch(PTR_ERR, "In: get_language 2.1", KO);
+    ERR_D(PTR_ERR, "In: my_get_language > var_f", KO, (!lg_en || !lg_fr));
     for (int i = 0; i < 26; i++) {
         lg_en[i] = lg_en_clone[i];
         lg_fr[i] = lg_fr_clone[i];
     }
-    return 0;
+    return OK;
 }
 
 static int var_s(float *lg_ger, float *lg_sp)
@@ -100,13 +99,12 @@ static int var_s(float *lg_ger, float *lg_sp)
     6.712, 8.683, 2.510, 0.877, 6.871, 7.977, 4.632, 3.927,
     1.138, 0.017, 0.215, 1.008, 0.467};
 
-    if (!lg_ger || !lg_sp)
-        return err_dispatch(PTR_ERR, "In: get_language 2.2", KO);
+    ERR_D(PTR_ERR, "In: my_get_language > var_s", KO, (!lg_ger || !lg_sp));
     for (int i = 0; i < 26; i++) {
         lg_ger[i] = lg_ger_clone[i];
         lg_sp[i] = lg_sp_clone[i];
     }
-    return 0;
+    return OK;
 }
 
 static int get_lg_bis_coef(float nb, float percent, int j, int i)
@@ -122,12 +120,12 @@ int get_language(char const *str)
     float lg_ger[26];
     float lg_sp[26];
     float *lg[] = {lg_en, lg_fr, lg_ger, lg_sp};
-    float lg_coef[4];
+    float lg_coef[4] = {0};
     int res;
 
-    if (!str || var_f(lg_en, lg_fr) == KO || var_s(lg_ger, lg_sp) == ERR)
-        return err_dispatch(PTR_ERR, "In: get_language 1", KO);
-    my_calloc_float(lg_coef, 4);
+    ERR_D(PTR_ERR, "In: my_get_language", KO, (!str));
+    ERR_D(UNDEF_ERR, "In: my_get_language", KO,
+    (var_f(lg_en, lg_fr) == KO || var_s(lg_ger, lg_sp) == KO));
     for (int i = 0; i < 26; i++) {
         percent = count_occurence(str, (char) (i + 97)) / my_strlen_local(str);
         percent = percent * 100 - percent * 0.1;

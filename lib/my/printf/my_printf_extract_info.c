@@ -23,8 +23,7 @@ int get_precision(va_list ap, char *precision, int basic_return)
     if (my_strcmp(precision, ".*") == 0)
         return va_arg(ap, int);
     n = my_strlen(precision);
-    nbr = malloc(sizeof(char) * (n - 1));
-    my_calloc_str(nbr, n);
+    nbr = my_malloc(n - 1, sizeof(char));
     for (int i = 1; precision[i]; i++)
         nbr[i - 1] = precision[i];
     n = my_atoi(nbr);
@@ -45,8 +44,7 @@ int get_field(va_list ap, char *flag, char *field, int basic_return)
     if (c == '*')
         return va_arg(ap, int);
     n = my_strlen(field) + 1;
-    nbr = malloc(sizeof(char) * n);
-    my_calloc_str(nbr, n);
+    nbr = my_malloc(n, sizeof(char));
     for (int i = 0; field[i]; i++)
         nbr[i] = field[i];
     n = my_atoi(nbr);

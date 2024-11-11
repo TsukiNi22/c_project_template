@@ -11,10 +11,11 @@
 
 char *my_strncat(char *dest, char const *src, int nb)
 {
-    int len = my_strlen(dest);
+    int len;
 
-    if (!dest || !src || len < 0)
-        err_dispatch_n(PTR_ERR, "In: strncat");
+    ERR_DN(PTR_ERR, "In: my_strncat", (!dest || !src));
+    len = my_strlen(dest);
+    ERR_DN(UNDEF_ERR, "In: my_strncat", (len < 0));
     for (int i = 0; src[i] && i < nb; i++)
         dest[len + i] = src[i];
     return dest;

@@ -5,25 +5,20 @@
 ** Add place at the end of the given array
 */
 
-#include "char.h"
 #include "memory.h"
 #include "include.h"
 #include "error.h"
 
-char *my_realloc_str(char *str, int add)
+void *my_realloc(void *ptr, int add, int size, int type_size)
 {
-    char *tmp;
-    int size = my_strlen(str);
+    void *new;
 
-    if (!str)
-        err_dispatch_n(PTR_ERR, "In: realloc_str");
-    tmp = malloc(sizeof(char) * (size + add));
-    my_calloc_str(tmp, size + add);
-    if (!tmp)
-        err_dispatch_n(MALLOC_ERR, "In: realloc_str");
-    if (my_calloc_str(tmp, size + add) == KO)
-        return err_dispatch_n(PTR_ERR, "In: realloc_str");
-    tmp = my_strcat(tmp, str);
-    free(str);
-    return tmp;
+    ERR_DN(PTR_ERR, "In: my_realloc", (!ptr));
+    ERR_DN(ARGV_ERR, "In: my_realloc", (add < 1 || size < 1 || type_size < 1));
+    new = my_malloc(size, type_size);
+    ERR_DN(UNDEF_ERR, "In: my_realloc", (!new));
+    for (int i = 0; i < size * type_size; i++)
+        ((unsigned char *) new)[i] = ((unsigned char *) ptr)[i];
+    free(ptr);
+    return new;
 }

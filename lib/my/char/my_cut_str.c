@@ -6,33 +6,34 @@
 */
 
 #include "char.h"
+#include "memory.h"
 #include "include.h"
 #include "define.h"
 #include "error.h"
 
 static int get_alloc_size(char const *str, int before, int cut_place)
 {
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: cut_str 2.1", 0);
+    int res = my_strlen(str);
+
+    ERR_D(PTR_ERR, "In: my_cut_str > get_alloc_size", KO, (!str));
+    ERR_D(UNDEF_ERR, "In: my_cut_str > get_alloc_size", KO, (res < 0));
     if (before)
         return cut_place - 1;
-    else
-        return my_strlen(str) - cut_place;
+    return res - cut_place;
 }
 
 char *my_cut_str(const char *str, const int before, int cut_place)
 {
-    int actual_place = 0;
     char *new_str;
-    int res = my_strlen(str);
+    int actual_place = 0;
+    int res;
 
-    if (!str || res < 0)
-        err_dispatch_n(PTR_ERR, "In: cut_str 1");
-    if (1 > cut_place || cut_place > res)
-        err_dispatch_n(ARGV_ERR, "In: cut_str");
-    new_str = malloc(sizeof(char) * get_alloc_size(str, before, cut_place));
-    if (!new_str)
-        err_dispatch_n(MALLOC_ERR, "In: cut_str");
+    ERR_DN(PTR_ERR, "In: my_cut_str", (!str));
+    res = my_strlen(str);
+    ERR_DN(UNDEF_ERR, "In: my_cut_str", (res < 0));
+    ERR_DN(ARGV_ERR, "In: my_cut_str", (1 > cut_place || cut_place > res));
+    new_str = my_malloc(get_alloc_size(str, before, cut_place), sizeof(char));
+    ERR_DN(MALLOC_ERR, "In: my_cut_str", (!new_str));
     for (int i = 0; str[i]; i++) {
         if ((i < cut_place && before) || (i > cut_place && !before)) {
             new_str[actual_place] = str[i];

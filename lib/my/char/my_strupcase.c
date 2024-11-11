@@ -10,8 +10,7 @@
 
 char *my_strupcase(char *str)
 {
-    if (!str)
-        err_dispatch_n(PTR_ERR, "In: strupcase");
+    ERR_DN(PTR_ERR, "In: my_strupcase", (!str));
     for (int i = 0; str[i]; i++) {
         if (str[i] <= 'z' && str[i] >= 'a')
             str[i] = (char) ((int) str[i] - 32);

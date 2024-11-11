@@ -20,8 +20,7 @@ char *get_info_single_char(char *str, char *valid_char_list, int *i, int stop)
 
     if (size < 0 || !str || !valid_char_list)
         return err_dispatch_n(PTR_ERR, "In: pritnf_info");
-    info = malloc(sizeof(char) * size);
-    my_calloc_str(info, size);
+    info = my_malloc(size, sizeof(char));
     for (int j = 0; my_strfind(valid_char_list, str[*i]) != -1; j++) {
         info[j] = str[*i];
         (*i)++;
@@ -37,9 +36,8 @@ char *get_info_mult_char(char *str, char *valid_char_list, int *i, int stop)
     char tmp[3];
     int size = my_strlen(str);
 
-    info = malloc(sizeof(char) * size);
-    my_calloc_str(info, size);
-    my_calloc_str(tmp, 3);
+    info = my_malloc(size, sizeof(char));
+    my_calloc(tmp, 3, sizeof(char));
     tmp[0] = str[*i];
     if (str[*i + 1] && my_strfind(valid_char_list, str[*i + 1]) != -1)
         tmp[1] = str[*i + 1];

@@ -21,8 +21,8 @@ static char *get_str_from_nbr(long long n, int negatif)
 
     for (; n / diviseur >= 10; diviseur *= 10);
         size++;
-    str = malloc(sizeof(char) * (size + negatif));
-    my_calloc_str(str, size + negatif);
+    str = my_malloc(size + negatif, sizeof(char));
+    ERR_DN(UNDEF_ERR, "In: my_itoa > get_str_from_nbr", (!str));
     str[0] = '-' * negatif;
     for (; diviseur > 0; diviseur /= 10) {
         nb = (n / diviseur) - nbis;

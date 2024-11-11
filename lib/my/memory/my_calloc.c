@@ -7,35 +7,13 @@
 
 #include "error.h"
 
-int my_calloc_float(float *array, int size)
+int my_calloc(void *ptr, int size, int type_size)
 {
-    if (!array)
-        return err_dispatch(PTR_ERR, "In: calloc_float", KO);
-    if (size < 0)
-        return err_dispatch(ARGV_ERR, "In: calloc_float", KO);
-    for (int i = 0; i < size; i++)
-        array[i] = 0;
-    return 0;
-}
+    unsigned char *cast_ptr = (unsigned char *) ptr;
 
-int my_calloc_int(int *array, int size)
-{
-    if (!array)
-        return err_dispatch(PTR_ERR, "In: calloc_int", KO);
-    if (size < 0)
-        return err_dispatch(ARGV_ERR, "In: calloc_int", KO);
-    for (int i = 0; i < size; i++)
-        array[i] = 0;
-    return 0;
-}
-
-int my_calloc_str(char *str, int size)
-{
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: calloc_str", KO);
-    if (size < 0)
-        return err_dispatch(ARGV_ERR, "In: calloc_str", KO);
-    for (int i = 0; i < size; i++)
-        str[i] = '\0';
-    return 0;
+    ERR_D(PTR_ERR, "In: my_calloc", KO, (!ptr));
+    ERR_D(ARGV_ERR, "In: my_calloc", KO, (size < 0));
+    for (int i = 0; i < size * type_size; i++)
+        cast_ptr[i] = 0;
+    return OK;
 }

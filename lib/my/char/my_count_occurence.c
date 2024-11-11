@@ -11,8 +11,7 @@ float count_occurence(char const *str, char const c)
 {
     float count = 0;
 
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: count_occurence", -1);
+    ERR_D(PTR_ERR, "In: my_count_occurence", KO, (!str));
     for (int i = 0; str[i]; i++) {
         if (str[i] == c)
             count++;

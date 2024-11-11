@@ -9,14 +9,10 @@
 
 int my_get_index(char const *str, char const c)
 {
-    int i = 0;
-
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: get_index", -1);
-    for (; i[str];) {
+    ERR_D(PTR_ERR, "In: my_get_index", -2, (!str));
+    for (int i = 0; i[str]; i++) {
         if (i[str] == c)
             return i;
-        i++;
     }
-    return -1;
+    return KO;
 }

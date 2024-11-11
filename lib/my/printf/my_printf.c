@@ -59,7 +59,7 @@ int my_printf(char *str, ...)
     int identifier_check[my_strlen(str)];
     int res;
 
-    my_calloc_int(identifier_check, my_strlen(str));
+    my_calloc(identifier_check, my_strlen(str), sizeof(int));
     if (!str)
         return err_dispatch(PTR_ERR, "In: printf 1", KO);
     if (!data)

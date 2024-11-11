@@ -8,18 +8,19 @@
 
 #include "math.h"
 #include "char.h"
+#include "memory.h"
 #include "define.h"
+#include "include.h"
 #include "error.h"
 
 long long my_atoi(const char *str)
 {
     int array_size = my_strlen(str);
-    int negatif;
+    bool negatif;
     long long my_int = 0;
     long long mult;
 
-    if (!str || array_size < 0)
-        return err_dispatch(PTR_ERR, "In: atoi", 0);
+    ERR_D(PTR_ERR, "In: my_atoi", 0, (!str || array_size < 0));
     negatif = (str[0] && str[0] == '-');
     for (int i = negatif; str[i]; i++) {
         mult = my_pow(10, array_size - i - negatif);
@@ -27,5 +28,7 @@ long long my_atoi(const char *str)
     }
     if (negatif)
         my_int *= -1;
+    ERR_D(OVERFLOW, "In: my_atoi", 0,
+    ((!negatif && my_int < 0) || (negatif && my_int >= 0)));
     return my_int;
 }

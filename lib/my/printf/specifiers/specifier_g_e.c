@@ -128,10 +128,9 @@ int specifier_g_e(printf_data_t *data, int precision, long double nbr)
 {
     long double e = my_log(ABS(nbr), 10);
     int flag_hastag = flag_in(data->flag, '#');
-    char *str = malloc(sizeof(char) * (precision + 2 + 4 + (e >= 100)));
+    char *str = my_malloc(precision + 2 + 4 + (e >= 100), sizeof(char));
 
     for (; (nbr < 1 && nbr > 0) || (nbr < 0 && nbr > -1); nbr *= 10);
-    my_calloc_str(str, precision + 2 + 4 + (e >= 100));
     if (flag_hastag)
         str[0] = '!';
     set_str(str, nbr, e, precision);

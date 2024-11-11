@@ -5,35 +5,35 @@
 ** Return a number from a string
 */
 
-#include "include.h"
 #include "math.h"
+#include "memory.h"
+#include "include.h"
+#include "error.h"
 
-static int size_int(char const *str, int const n)
+static bool size_int(char const *str, int const n)
 {
     int c = 0;
 
-    if (!str)
-        return 0;
+    ERR_D(PTR_ERR, "In: my_getnbr > size_int", false, (!str));
     for (int i = 1; c; i++) {
         if (i > 10)
-            return 1;
+            return true;
         c = ((int) str[i + n - 1] > 47 && (int) str[i + n - 1] <= 58);
     }
-    return 0;
+    return false;
 }
 
 static int get_signe(char const *str, int const n)
 {
     int signe = 1;
 
-    if (!str)
-        return 0;
+    ERR_D(PTR_ERR, "In: my_getnbr > get_signe", 0, (!str));
     for (int i = 0; i <= n; i++)
         signe *= 1 - 2 * (str[i] == '-');
     return (signe > 0);
 }
 
-static int int_less(char const *str, int const n)
+static bool int_less(char const *str, int const n)
 {
     char *max = "2147483647";
     int c;
@@ -41,75 +41,70 @@ static int int_less(char const *str, int const n)
     int size = 0;
     int signe = get_signe(str, n);
 
-    if (!str)
-        return 0;
+    ERR_D(PTR_ERR, "In: my_getnbr > int_less", false, (!str));
     for (; (int) str[size + n] > 47 && (int) str[size + n] < 58; size++);
     if (size != 10)
-        return 0;
+        return false;
     for (int i = 0; (int) str[i + n] > 47 && (int) str[i + n] < 58; i++) {
         cb = (str[i + n] == '8' && i == 9 && !signe);
         if (!(str[i + n] <= max[i] || cb))
-            return 1;
+            return true;
     }
-    return 0;
+    return false;
 }
 
-static int condition_2(int *cb, int *c, int *exist, int condition)
+static bool condition_2(int *cb, int *c, bool *exist, int condition)
 {
-    if (!cb || !c || !exist)
-        return 0;
+    ERR_D(PTR_ERR, "In: my_getnbr > cd_2", false, (!cb || !c || !exist));
     if (*cb) {
         *c += condition;
-        *exist = 1;
+        *exist = true;
     } else if (!*cb && *exist)
-        return 1;
-    return 0;
+        return true;
+    return false;
 }
 
-static int verif_size_int(char const *str)
+static bool verif_size_int(char const *str)
 {
-    int exist = 0;
+    bool exist = false;
     int c = 0;
     int cb;
     int c_send;
 
-    if (!str)
-        return 0;
+    ERR_D(PTR_ERR, "In: my_getnbr > verif_size_int", false, (!str));
     for (int i = 0; str[i]; i++) {
         cb = ((int) str[i] > 47 && (int) str[i] < 58);
         c_send = (size_int(str, i) || int_less(str, i));
         if (condition_2(&cb, &c, &exist, c_send))
             break;
         if (c > 0)
-            return 1;
+            return true;
     }
     if (!exist)
-        return 1;
-    return 0;
+        return true;
+    return false;
 }
 
-static int condition_1(int *c, int *size, int *already)
+static bool condition_1(int *c, int *size, bool *already)
 {
-    if (!c || !size || !already)
-        return 0;
+    ERR_D(PTR_ERR, "In: my_getnbr > cd_1", false, (!c || !size || !already));
     if (*c) {
         *size += 1;
-        *already = 1;
+        *already = true;
     } else if (!*c && *already)
-        return 1;
-    return 0;
+        return true;
+    return false;
 }
 
 static int get_first_number(char const *str)
 {
+    bool already = false;
     int my_int = 0;
-    int already = 0;
-    int size = 0;
+    int size = 1;
     int c = 0;
     int n;
 
-    if (!str)
-        return 0;
+    ERR_D(PTR_ERR, "In: my_getnbr > get_first_number", 0, (!str));
     for (int i = 0; str[i]; i++) {
         c = ((int) str[i] > 47 && (int) str[i] < 58);
         if (c && !already)
@@ -127,8 +122,7 @@ int my_getnbr(char const *str)
 {
     int my_int = 0;
 
-    if (!str || verif_size_int(str))
-        return 0;
+    ERR_D(PTR_ERR, "In: my_getnbr", 0, (!str || verif_size_int(str)));
     my_int = get_first_number(str);
     return my_int;
 }

@@ -5,12 +5,14 @@
 ** Sort an array of int
 */
 
+#include "include.h"
 #include "error.h"
 
-static int raaaa(int *already_sorted, int *changed, int *save_i, int smallest)
+static int set_sorted_array(int *already_sorted, int *changed,
+    int *save_i, int smallest)
 {
-    if (!already_sorted || !changed || !save_i)
-        return err_dispatch(PTR_ERR, "In: sort_int_array 3.1", 0);
+    ERR_D(PTR_ERR, "In: sort_int_array > set_sorted_array", 0,
+    (!already_sorted || !changed || !save_i));
     if (*changed != 1)
         already_sorted[*changed * -1] = 1;
     else
@@ -20,18 +22,17 @@ static int raaaa(int *already_sorted, int *changed, int *save_i, int smallest)
 
 static int get_smallest(int *array, int size, int *already_sorted)
 {
-    int first = 1;
+    bool first = true;
     int changed = 0;
     int smallest;
     int save_i;
 
-    if (!already_sorted)
-        return err_dispatch(PTR_ERR, "In: sort_int_array 2.1", 0);
+    ERR_D(PTR_ERR, "In: sort_int_array > get_smallest", 0, (!already_sorted));
     for (int i = 0; i < size; i++) {
         if (first && already_sorted[i] == 0) {
             smallest = array[i];
             changed = i * -1;
-            first = 0;
+            first = false;
         }
         if (!first && smallest >= array[i] && already_sorted[i] == 0) {
             changed = 1;
@@ -39,7 +40,7 @@ static int get_smallest(int *array, int size, int *already_sorted)
             save_i = i;
         }
     }
-    return raaaa(already_sorted, &changed, &save_i, smallest);
+    return set_sorted_array(already_sorted, &changed, &save_i, smallest);
 }
 
 int my_sort_int_array(int *array, int size)
@@ -47,10 +48,8 @@ int my_sort_int_array(int *array, int size)
     int sort_array[size];
     int already_sorted[size];
 
-    if (!array)
-        return err_dispatch(PTR_ERR, "In: sort_int_array 1", KO);
-    if (size < 0)
-        return err_dispatch(ARGV_ERR, "In: sort_int_array", KO);
+    ERR_D(PTR_ERR, "In: sort_int_array", KO, (!array));
+    ERR_D(ARGV_ERR, "In: sort_int_array", KO, (size < 0));
     for (int i = 0; i < size; i++)
         already_sorted[i] = 0;
     for (int i = 0; i < size; i++)

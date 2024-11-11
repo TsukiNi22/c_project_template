@@ -10,7 +10,6 @@
 
 int my_putchar(char c)
 {
-    if (write(1, &c, 1) != 1)
-        return err_dispatch(WRITE_ERR, "In: putchar", KO);
-    return 0;
+    ERR_D(WRITE_ERR, "In: my_putchar", KO, (write(1, &c, 1) != 1));
+    return OK;
 }

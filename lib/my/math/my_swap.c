@@ -9,11 +9,10 @@
 
 int my_swap(int *a, int *b)
 {
-    int tempo = *a;
+    int tmp = *a;
 
-    if (!a || !b)
-        return err_dispatch(PTR_ERR, "In: swap", KO);
+    ERR_D(PTR_ERR, "In: my_swap", KO, (!a || !b));
     *a = *b;
-    *b = tempo;
-    return 0;
+    *b = tmp;
+    return OK;
 }

@@ -71,8 +71,7 @@ int specifier_s(printf_data_t *data)
 
     if (!str)
         str = set_str_null(precision);
-    new_str = malloc(sizeof(char) * size + 1);
-    my_calloc_str(new_str, size + 1);
+    new_str = my_malloc(size + 1, sizeof(char));
     if (field > precision)
         set_space(new_str, field, precision, flag_negate_field);
     set_str(new_str, str, field * (1 - 2 * flag_negate_field), precision);

@@ -69,7 +69,7 @@ int specifier_o(printf_data_t *data)
     int flag_hashtag = flag_in(data->flag, '#');
     int size = my_strlen(my_nbr);
 
-    my_nbr = my_realloc_str(my_nbr, 2);
+    my_nbr = my_realloc(my_nbr, 2, my_strlen(my_nbr), sizeof(char));
     my_nbr[size + 1] = flag_hashtag + 48;
     put_zero(data, my_nbr, precision);
     return 0;

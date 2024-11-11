@@ -10,11 +10,8 @@
 
 int my_putstr(int output, char const *str)
 {
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: putstr", KO);
-    for (int i = 0; str[i]; i++) {
-        if (write(output, &str[i], 1) != 1)
-            return err_dispatch(WRITE_ERR, "In: putstr", KO);
-    }
-    return 0;
+    ERR_D(PTR_ERR, "In: putstr", KO, (!str));
+    for (int i = 0; str[i]; i++)
+        ERR_D(WRITE_ERR, "In: putstr", KO, (write(output, &str[i], 1) != 1));
+    return OK;
 }

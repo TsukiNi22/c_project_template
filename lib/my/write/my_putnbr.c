@@ -14,10 +14,8 @@ int my_putnbr(long long nb)
 {
     char *my_nb = my_itoa(nb);
 
-    if (!my_nb)
-        return err_dispatch(PTR_ERR, "In: putnbr", KO);
-    if (my_putstr(1, my_nb) == KO)
-        return err_dispatch(WRITE_ERR, "In: putnbr", KO);
+    ERR_D(PTR_ERR, "In: putnbr", KO, (!my_nb));
+    ERR_D(WRITE_ERR, "In: putnbr", KO, (my_putstr(1, my_nb) == KO));
     free(my_nb);
-    return 0;
+    return OK;
 }

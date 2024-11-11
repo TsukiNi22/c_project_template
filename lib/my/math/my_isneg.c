@@ -15,7 +15,6 @@ int my_isneg(int n)
 
     if (n < 0)
         c = 'N';
-    if (my_putchar(c) == KO)
-        return err_dispatch(WRITE_ERR, "In: isneg", KO);
-    return 0;
+    ERR_D(WRITE_ERR, "In: my_isneg", KO, (my_putchar(c) == KO));
+    return OK;
 }

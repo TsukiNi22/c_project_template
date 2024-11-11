@@ -5,15 +5,15 @@
 ** Return if the given string only contain printable char
 */
 
+#include "include.h"
 #include "error.h"
 
-int my_str_isprintable(char const *str)
+bool my_str_isprintable(char const *str)
 {
-    if (!str)
-        return err_dispatch(PTR_ERR, "In: str_isprintable", KO);
+    ERR_D(PTR_ERR, "In: my_str_isprintable", false, (!str));
     for (int i = 0; str[i]; i++) {
         if (!((int) str[i] >= 0 && (int) str[i] <= 127))
-            return 0;
+            return false;
     }
-    return 1;
+    return true;
 }

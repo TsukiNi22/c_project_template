@@ -6,17 +6,17 @@
 */
 
 #include "define.h"
+#include "include.h"
 #include "error.h"
 
 char *my_strcapitalize(char *str)
 {
-    int start_word = 0;
-    int c1;
-    int c2;
-    int c3;
+    bool start_word = 0;
+    bool c1;
+    bool c2;
+    bool c3;
 
-    if (!str)
-        err_dispatch_n(PTR_ERR, "In: strcapitalize");
+    ERR_DN(PTR_ERR, "In: my_strcapitalize",(!str));
     for (int i = 0; str[i]; i++) {
         c1 = (str[i] >= 'a' && str[i] <= 'z');
         c2 = (str[i] >= 'A' && str[i] <= 'Z');

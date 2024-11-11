@@ -18,8 +18,8 @@
     #define CUSTOM_PUT_ERROR 1
 
     /* error_return */
-    #define OK 0
     #define KO -1
+    #define OK 0
     #define ERROR 84
     #define ERR 84
 
@@ -33,6 +33,7 @@
     #define ARGC_NBR_ERR 4
     #define ARGV_ERR 5
     #define OP_FILE_ERR 6
+    #define STAT_ERR 7
 
     /* error_sentence */
     #define ERROR_MSG "Error: An Error have ocured in the error return"
@@ -44,6 +45,17 @@
     #define ARGC_NBR_MSG "Error: Incorrect number of argument given to main"
     #define ARGV_MSG "Error: Incorrect input in the given argument"
     #define OP_FILE_MSG "Error: 'Invalid Permision' or 'No Existant File'"
+    #define STAT_MSG "Error: Fail of the 'stat' function"
+
+    //----------------------------------------------------------------//
+    /* MACRO */
+
+    /* err_macro */
+    #define ERR_D(er, msg, ret, c) if (c) return err_dispatch(er, msg, ret)
+    #define ERR_DN(err, msg, c) if (c) return err_dispatch_n(err, msg)
+    #define ERR_DV(err, msg, c) if (c) return err_dispatch_v(err, msg)
+    #define ERR_C(msg, ret, c) if (c) return err_custom(msg, ret)
+
 
 //----------------------------------------------------------------//
 /* PROTOTYPE */

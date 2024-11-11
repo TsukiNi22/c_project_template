@@ -6,21 +6,18 @@
 */
 
 #include "char.h"
+#include "memory.h"
 #include "include.h"
 #include "define.h"
 #include "error.h"
 
 char *my_strdup(char const *src)
 {
-    int len = my_strlen(src);
-    char *array = malloc(len * sizeof(char));
+    char *str;
 
-    if (!src)
-        err_dispatch_n(PTR_ERR, "In: strdup 1");
-    if (!array)
-        err_dispatch_n(MALLOC_ERR, "In: strdup");
-    if (my_strcpy(array, src) == NULL)
-        err_dispatch_n(PTR_ERR, "In: strdup 2");
-    array[len] = '\0';
-    return array;
+    ERR_DN(PTR_ERR, "In: my_strdup 1", (!src));
+    str = my_malloc(my_strlen(src) + 1, sizeof(char));
+    ERR_DN(MALLOC_ERR, "In: my_strdup", (!str));
+    ERR_DN(PTR_ERR, "In: my_strdup 2", (!my_strcpy(str, src)));
+    return str;
 }

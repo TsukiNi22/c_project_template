@@ -23,23 +23,20 @@ static int get_size(unsigned long long nbr, int base_size)
 int my_putnbr_base(unsigned long long nbr, char const *base)
 {
     char *my_nbr;
-    int base_size = my_strlen(base);
+    int base_size;
     int size;
 
-    if (base_size < 0)
-        return err_dispatch(PTR_ERR, "In: putnbr_base 1", KO);
+    ERR_D(PTR_ERR, "In: my_putnbr_base 1", KO, (!base));
+    base_size = my_strlen(base);
+    ERR_D(UNDEF_ERR, "In: my_putnbr_base 1", KO, (base_size < 0));
     size = get_size(nbr, base_size);
-    my_nbr = malloc(sizeof(char) * size + 1);
-    if (!my_nbr)
-        return err_dispatch(MALLOC_ERR, "In: putnbr_base", KO);
-    if (my_calloc_str(my_nbr, size + 1) == KO)
-        return err_dispatch(PTR_ERR, "In: putnbr_base 2", KO);
+    my_nbr = my_malloc(size + 1, sizeof(char));
+    ERR_D(UNDEF_ERR, "In: my_putnbr_base 2", KO, (!my_nbr));
     for (int i = 0; nbr >= 1; i++) {
         my_nbr[size - i - 1] = base[nbr % base_size];
         nbr /= base_size;
     }
-    if (my_putstr(1, my_nbr) == KO)
-        return err_dispatch(UNDEF_ERR, "In: putnbr_base", KO);
+    ERR_D(UNDEF_ERR, "In: my_putnbr_base 3", KO, (my_putstr(1, my_nbr) == KO));
     free(my_nbr);
-    return 0;
+    return OK;
 }
