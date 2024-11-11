@@ -16,7 +16,7 @@ char *my_strcapitalize(char *str)
     bool c2;
     bool c3;
 
-    ERR_DN(PTR_ERR, "In: my_strcapitalize",(!str));
+    ERR_DN(PTR_ERR, "In: my_strcapitalize", (!str));
     for (int i = 0; str[i]; i++) {
         c1 = (str[i] >= 'a' && str[i] <= 'z');
         c2 = (str[i] >= 'A' && str[i] <= 'Z');

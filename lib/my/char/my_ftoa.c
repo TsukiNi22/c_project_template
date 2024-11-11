@@ -121,7 +121,7 @@ char *my_ftoa(long double nbr)
         for (depth = 0; get_d_decimal(nbr, &nbr_already, &depth, &str) == 0;);
     }
     if (depth >= 3) {
-        size =my_strlen(str);
+        size = my_strlen(str);
         str = my_realloc(str, 6, size, sizeof(char));
         ERR_DN(UNDEF_ERR, "In: my_ftoa 2", (!str));
         for (int i = 0; i < 6; i++)

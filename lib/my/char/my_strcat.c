@@ -13,9 +13,9 @@ char *my_strcat(char *dest, char const *src)
 {
     int len;
 
-    ERR_DN(PTR_ERR, "In: my_strcat",(!dest || !src));
+    ERR_DN(PTR_ERR, "In: my_strcat", (!dest || !src));
     len = my_strlen(dest);
-    ERR_DN(UNDEF_ERR, "In: my_strcat",(len < 0));
+    ERR_DN(UNDEF_ERR, "In: my_strcat", (len < 0));
     for (int i = 0; src[i]; i++)
         dest[len + i] = src[i];
     return dest;
