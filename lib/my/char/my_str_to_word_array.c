@@ -7,9 +7,10 @@
 
 #include "char.h"
 #include "memory.h"
-#include "include.h"
 #include "define.h"
 #include "error.h"
+#include <stdlib.h>
+#include <stdbool.h>
 
 static bool is_pr(char c)
 {
@@ -59,8 +60,8 @@ static int incrementation(char *word, char const *str, int *i_word, int i)
 char **my_str_to_word_array(char const *str)
 {
     int word_nbr = get_word_nbr(str);
-    char **word_array = my_malloc(word_nbr + 1, sizeof(char *));
-    char *word = my_malloc(my_strlen(str), sizeof(char));
+    char **word_array = malloc(sizeof(char *) * (word_nbr + 1));
+    char *word = malloc(sizeof(char) * my_strlen(str));
     int n = 0;
     int i_word = 0;
 
@@ -71,10 +72,10 @@ char **my_str_to_word_array(char const *str)
         (is_pr(str[i]) && incrementation(word, str, &i_word, i) == KO));
         if ((i > 0 && !is_pr(str[i]) && is_pr(str[i - 1])) || !str[i + 1]) {
             word[i_word] = '\0';
-            word_array[n] = my_malloc(my_strlen(word), sizeof(char));
-            ERR_DN(PTR_ERR, "In: my_str_to_word_array",
+            my_malloc_c(&word_array[n], my_strlen(word));
+            ERR_DN(UNDEF_ERR, "In: my_str_to_word_array",
             (!my_strcpy(word_array[n], word)));
-            ERR_DN(PTR_ERR, "In: s_t_w_arr", (reset_val(&n, &i_word) == KO));
+            ERR_DN(UNDEF_ERR, "In: s_t_w_arr", (reset_val(&n, &i_word) == KO));
         }
     }
     return word_array;

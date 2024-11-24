@@ -5,7 +5,7 @@
 ** Find the first prime above the given integer
 */
 
-#include <math.h>
+#include "math.h"
 
 int my_find_prime_sup(int nb)
 {

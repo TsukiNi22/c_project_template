@@ -5,8 +5,8 @@
 ** Write a given char
 */
 
-#include "include.h"
 #include "error.h"
+#include <unistd.h>
 
 int my_putchar(char c)
 {

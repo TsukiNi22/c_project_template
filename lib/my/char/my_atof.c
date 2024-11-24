@@ -7,8 +7,8 @@
 
 #include "math.h"
 #include "char.h"
-#include "include.h"
 #include "error.h"
+#include <stdbool.h>
 
 static long double my_atof_basic(const char *str)
 {
@@ -18,8 +18,9 @@ static long double my_atof_basic(const char *str)
     bool diff = false;
 
     ERR_D(PTR_ERR, "In: my_atof > my_atof_basic", 0, (!str));
+    if (!str[0])
+        return OK;
     size = my_strlen(str) - 1;
-    ERR_D(UNDEF_ERR, "In: my_atof > my_atof_basic", 0, (size < 0));
     for (int i = 0; str[i]; i++) {
         if (str[size - i] == '-' && size - i == 0)
             diff = true;
@@ -46,7 +47,7 @@ static int my_atof_second(const char *str, long double *my_float)
 
     ERR_D(UNDEF_ERR, "In: my_atof > my_atof_second", KO,
     (!str || !my_float || !first_array || !second_array ||
-    size < 0 || cut_place == KO * -1 || second_size < 0));
+    size < 0 || cut_place == KO || second_size < 0));
     if (first_int < 0)
         *my_float = first_int + second_int * mult * -1;
     else

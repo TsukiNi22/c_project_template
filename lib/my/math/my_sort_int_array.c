@@ -5,8 +5,8 @@
 ** Sort an array of int
 */
 
-#include "include.h"
 #include "error.h"
+#include <stdbool.h>
 
 static int set_sorted_array(int *already_sorted, int *changed,
     int *save_i, int smallest)

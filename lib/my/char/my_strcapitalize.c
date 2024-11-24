@@ -6,8 +6,8 @@
 */
 
 #include "define.h"
-#include "include.h"
 #include "error.h"
+#include <stdbool.h>
 
 char *my_strcapitalize(char *str)
 {

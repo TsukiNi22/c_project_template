@@ -23,7 +23,6 @@
 /* PROTOTYPE */
 
 /* math_gestion */
-int my_swap(int *a, int *b); // Error: KO
 int my_sort_int_array(int *tab, int size); // Error: KO
 int my_find_prime_sup(int nb); // Error: No
 char *my_convertnbr_base(unsigned long long nbr, char const *base); // NULL

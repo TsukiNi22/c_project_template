@@ -24,6 +24,7 @@ char *my_strcat(char *dest, char const *src); // Error: NULL
 char *my_strncat(char *dest, char const *src, int nb); // Error: NULL
 char *concat_params(int ac, char **av); // Error: NULL
 char **my_str_to_word_array(char const *str); // Error: NULL
+char **my_str_to_array(char const *str, char const *indentifier); // Err: NULL
 char *my_cut_str(const char *char_array, int before, int cut_place); // NULL
 
 /* char_information  */

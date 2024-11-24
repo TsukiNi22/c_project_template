@@ -5,8 +5,8 @@
 ** Verif if the given string is only number
 */
 
-#include "include.h"
 #include "error.h"
+#include <stdbool.h>
 
 bool my_str_isnum(char const *str)
 {

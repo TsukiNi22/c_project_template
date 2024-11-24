@@ -18,10 +18,19 @@
     #define CUSTOM_PUT_ERROR 1
 
     /* error_return */
-    #define KO -1
-    #define OK 0
-    #define ERROR 84
-    #define ERR 84
+    #ifndef KO
+        #define KO -1
+    #endif /* KO */
+    #ifndef OK
+        #define OK 0
+    #endif /* OK */
+    #ifndef ERROR
+        #define ERROR 84
+    #endif /* ERROR */
+    #ifndef ERR
+        #define ERR 84
+    #endif /* ERR */
+    #define EPITECH_ERR 84
 
     /* error_code */
     #define ERROR_ERR -2
@@ -30,10 +39,10 @@
     #define PTR_ERR 1
     #define MALLOC_ERR 2
     #define WRITE_ERR 3
-    #define ARGC_NBR_ERR 4
+    #define ARGC_ERR 4
     #define ARGV_ERR 5
     #define OP_FILE_ERR 6
-    #define STAT_ERR 7
+    #define READ_FILE_ERR 7
 
     /* error_sentence */
     #define ERROR_MSG "Error: An Error have ocured in the error return"
@@ -42,10 +51,10 @@
     #define PTR_MSG "Error: The given pointer is NULL"
     #define MALLOC_MSG "Error: The allocation attempt with malloc have fail"
     #define WRITE_MSG "Error: The write function have failed"
-    #define ARGC_NBR_MSG "Error: Incorrect number of argument given to main"
+    #define ARGC_MSG "Error: Incorrect number of argument given to main"
     #define ARGV_MSG "Error: Incorrect input in the given argument"
     #define OP_FILE_MSG "Error: 'Invalid Permision' or 'No Existant File'"
-    #define STAT_MSG "Error: Fail of the 'stat' function"
+    #define READ_FILE_MSG "Error: 'Can't' or 'Fail' to read the file"
 
     //----------------------------------------------------------------//
     /* MACRO */
@@ -76,6 +85,7 @@ int err_custom(char *error_info, int to_return);
 ** Error 4: Not enought argv
 ** Error 5: Wrong input in given argument
 ** Error 6: Can't open file
+** Error 6: Can't read file
 */
 
 #endif /* ERROR_H */

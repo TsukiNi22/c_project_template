@@ -7,7 +7,6 @@
 
 #include "char.h"
 #include "memory.h"
-#include "include.h"
 #include "define.h"
 #include "error.h"
 
@@ -18,8 +17,8 @@ static int get_alloc_size(char const *str, int before, int cut_place)
     ERR_D(PTR_ERR, "In: my_cut_str > get_alloc_size", KO, (!str));
     ERR_D(UNDEF_ERR, "In: my_cut_str > get_alloc_size", KO, (res < 0));
     if (before)
-        return cut_place - 1;
-    return res - cut_place;
+        return cut_place;
+    return res - (cut_place - 1);
 }
 
 char *my_cut_str(const char *str, const int before, int cut_place)
@@ -32,8 +31,8 @@ char *my_cut_str(const char *str, const int before, int cut_place)
     res = my_strlen(str);
     ERR_DN(UNDEF_ERR, "In: my_cut_str", (res < 0));
     ERR_DN(ARGV_ERR, "In: my_cut_str", (1 > cut_place || cut_place > res));
-    new_str = my_malloc(get_alloc_size(str, before, cut_place), sizeof(char));
-    ERR_DN(MALLOC_ERR, "In: my_cut_str", (!new_str));
+    ERR_DN(MALLOC_ERR, "In: my_cut_str",
+    (my_malloc_c(&new_str, get_alloc_size(str, before, cut_place) + 1) == KO));
     for (int i = 0; str[i]; i++) {
         if ((i < cut_place && before) || (i > cut_place && !before)) {
             new_str[actual_place] = str[i];

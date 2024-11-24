@@ -13,7 +13,7 @@ OFILE=$(CFILE:.c=.o)
 all: $(TARGET)
 
 $(TARGET):
-	@gcc $(CFILE) -I../include/ -o $(TARGET)
+	@gcc $(CFILE) -I include/ -o $(TARGET)
 
 clean:
 	@rm -f $(OFILE)

@@ -2,20 +2,17 @@
 ** EPITECH PROJECT, 2024
 ** my_atoi.c
 ** File description:
-** Vous savait je ne pense pas qu il y ait de bonne ou de mauvaise descrition
-** pour moi la vie c est avant tous des fonctions...
+** Str to int
 */
 
-#include "math.h"
 #include "char.h"
-#include "memory.h"
-#include "define.h"
-#include "include.h"
+#include "math.h"
 #include "error.h"
+#include <stdbool.h>
 
 long long my_atoi(const char *str)
 {
-    int array_size = my_strlen(str);
+    int array_size = my_strlen(str) - 1;
     bool negatif;
     long long my_int = 0;
     long long mult;

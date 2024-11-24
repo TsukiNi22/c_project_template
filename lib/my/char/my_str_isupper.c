@@ -5,8 +5,8 @@
 ** Verif if the given string is only upper case
 */
 
-#include "include.h"
 #include "error.h"
+#include <stdbool.h>
 
 bool my_str_isupper(char const *str)
 {

@@ -6,19 +6,91 @@
 */
 
 #include "memory.h"
-#include "include.h"
 #include "error.h"
+#include <stdlib.h>
+#include <stdbool.h>
 
-void *my_realloc(void *ptr, int add, int size, int type_size)
+int my_realloc_b(bool **ptr, int add, int size)
 {
-    void *new;
+    int type_size = sizeof(bool);
+    bool *new;
 
-    ERR_DN(PTR_ERR, "In: my_realloc", (!ptr));
-    ERR_DN(ARGV_ERR, "In: my_realloc", (add < 1 || size < 1 || type_size < 1));
-    new = my_malloc(size, type_size);
-    ERR_DN(UNDEF_ERR, "In: my_realloc", (!new));
-    for (int i = 0; i < size * type_size; i++)
-        ((unsigned char *) new)[i] = ((unsigned char *) ptr)[i];
-    free(ptr);
-    return new;
+    ERR_D(PTR_ERR, "In: my_realloc", KO, (!ptr || !(*ptr)));
+    ERR_D(ARGV_ERR, "In: my_realloc", KO,
+    (add < 1 || size < 1));
+    ERR_D(UNDEF_ERR, "In: my_realloc", KO,
+    (my_malloc_b(&new, size) == KO));
+    for (int i = 0; i < size; i++)
+        new[i] = (*ptr)[i];
+    free(*ptr);
+    (*ptr) = NULL;
+    ERR_D(UNDEF_ERR, "In: my_realloc", KO,
+    (my_malloc_b(ptr, size) == KO));
+    for (int i = 0; i < size; i++)
+        (*ptr)[i] = new[i];
+    free(new);
+    return OK;
+}
+
+int my_realloc_c(char **ptr, int add, int size)
+{
+    char *new;
+
+    ERR_D(PTR_ERR, "In: my_realloc", KO, (!ptr || !(*ptr)));
+    ERR_D(ARGV_ERR, "In: my_realloc", KO,
+    (add < 1 || size < 1));
+    ERR_D(UNDEF_ERR, "In: my_realloc", KO,
+    (my_malloc_c(&new, size) == KO));
+    for (int i = 0; i < size; i++)
+        new[i] = (*ptr)[i];
+    free(*ptr);
+    (*ptr) = NULL;
+    ERR_D(UNDEF_ERR, "In: my_realloc", KO,
+    (my_malloc_c(ptr, size) == KO));
+    for (int i = 0; i < size; i++)
+        (*ptr)[i] = new[i];
+    free(new);
+    return OK;
+}
+
+int my_realloc_i(int **ptr, int add, int size)
+{
+    int *new;
+
+    ERR_D(PTR_ERR, "In: my_realloc", KO, (!ptr || !(*ptr)));
+    ERR_D(ARGV_ERR, "In: my_realloc", KO,
+    (add < 1 || size < 1));
+    ERR_D(UNDEF_ERR, "In: my_realloc", KO,
+    (my_malloc_i(&new, size) == KO));
+    for (int i = 0; i < size; i++)
+        new[i] = (*ptr)[i];
+    free(*ptr);
+    (*ptr) = NULL;
+    ERR_D(UNDEF_ERR, "In: my_realloc", KO,
+    (my_malloc_i(ptr, size) == KO));
+    for (int i = 0; i < size; i++)
+        (*ptr)[i] = new[i];
+    free(new);
+    return OK;
+}
+
+int my_realloc_f(float **ptr, int add, int size)
+{
+    float *new;
+
+    ERR_D(PTR_ERR, "In: my_realloc", KO, (!ptr || !(*ptr)));
+    ERR_D(ARGV_ERR, "In: my_realloc", KO,
+    (add < 1 || size < 1));
+    ERR_D(UNDEF_ERR, "In: my_realloc", KO,
+    (my_malloc_f(&new, size) == KO));
+    for (int i = 0; i < size; i++)
+        new[i] = (*ptr)[i];
+    free(*ptr);
+    (*ptr) = NULL;
+    ERR_D(UNDEF_ERR, "In: my_realloc", KO,
+    (my_malloc_f(ptr, size) == KO));
+    for (int i = 0; i < size; i++)
+        (*ptr)[i] = new[i];
+    free(new);
+    return OK;
 }

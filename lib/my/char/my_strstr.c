@@ -6,7 +6,6 @@
 */
 
 #include "char.h"
-#include "include.h"
 #include "define.h"
 #include "error.h"
 

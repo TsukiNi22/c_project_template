@@ -5,9 +5,9 @@
 ** Find if the given number is prime
 */
 
-#include "include.h"
+#include <stdbool.h>
 
-int my_is_prime(int nb)
+bool my_is_prime(int nb)
 {
     if (nb < 2)
         return false;

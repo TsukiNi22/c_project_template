@@ -5,8 +5,8 @@
 ** Return if the given string only contain printable char
 */
 
-#include "include.h"
 #include "error.h"
+#include <stdbool.h>
 
 bool my_str_isprintable(char const *str)
 {

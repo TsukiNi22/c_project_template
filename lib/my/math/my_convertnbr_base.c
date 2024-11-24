@@ -8,7 +8,6 @@
 #include "char.h"
 #include "write.h"
 #include "memory.h"
-#include "include.h"
 #include "error.h"
 
 static int get_size(unsigned long long nbr, int base_size)
@@ -30,8 +29,8 @@ char *my_convertnbr_base(unsigned long long nbr, char const *base)
     base_size = my_strlen(base);
     ERR_DN(UNDEF_ERR, "In: my_putnbr_base 1", (base_size < 0));
     size = get_size(nbr, base_size);
-    my_nbr = my_malloc(size + 1, sizeof(char));
-    ERR_DN(UNDEF_ERR, "In: my_putnbr_base 2", (!my_nbr));
+    ERR_DN(UNDEF_ERR, "In: my_putnbr_base 2",
+    (my_malloc_c(&my_nbr, size + 1) == KO));
     for (int i = 0; nbr >= 1; i++) {
         my_nbr[size - i - 1] = base[nbr % base_size];
         nbr /= base_size;

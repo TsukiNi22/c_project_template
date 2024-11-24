@@ -11,25 +11,19 @@
 
 static int text_shape(int n)
 {
-    if (n == -1) {
-        text_shape(3);
-        text_shape(1);
-        text_shape(2);
-    }
-    if (n == -2) {
-        text_shape(2);
-        text_shape(1);
-        text_shape(3);
-    }
+    if (n == -2)
+        return my_putstr(2, "-------------\033[34m[INFO]\033[0m-------------");
+    if (n == -1)
+        return my_putstr(2, "-------------\033[32m[ERROR]\033[0m------------");
     if (n == 0)
-        return my_putstr(2, "---------------------KO---------------------");
+        return my_putstr(2, "---------------------ERROR---------------------");
     if (n == 1)
-        return my_putstr(2, "----------------------------------------------");
+        return my_putstr(2, "--------------------------------");
     if (n == 2)
         return my_putstr(2, "\n");
     if (n == 3)
         return my_putstr(2, "\n\n");
-    return KO;
+    return 0;
 }
 
 static int dispatch_1(int error_number)
@@ -44,12 +38,14 @@ static int dispatch_1(int error_number)
         return my_putstr(2, MALLOC_MSG);
     if (error_number == WRITE_ERR)
         return my_putstr(2, WRITE_MSG);
-    if (error_number == ARGC_NBR_ERR)
-        return my_putstr(2, ARGC_NBR_MSG);
+    if (error_number == ARGC_ERR)
+        return my_putstr(2, ARGC_MSG);
     if (error_number == ARGV_ERR)
         return my_putstr(2, ARGV_MSG);
     if (error_number == OP_FILE_ERR)
         return my_putstr(2, OP_FILE_MSG);
+    if (error_number == READ_FILE_ERR)
+        return my_putstr(2, READ_FILE_MSG);
     return KO;
 }
 
@@ -69,7 +65,7 @@ static int print_error(int error_number, int to_return)
     if (!PUT_ERROR)
         return to_return;
     res += text_shape(3);
-    res += text_shape(1);
+    res += text_shape(-1);
     res += text_shape(2);
     if (error_number == ERROR_ERR)
         res += my_putstr(2, ERROR_MSG);
@@ -87,9 +83,13 @@ static int print_error(int error_number, int to_return)
 static int print_error_info(char *error_info)
 {
     if (error_info) {
-        text_shape(-1);
-        my_putstr(2, error_info);
+        text_shape(3);
         text_shape(-2);
+        text_shape(2);
+        my_putstr(2, error_info);
+        text_shape(2);
+        text_shape(1);
+        text_shape(3);
     } else {
         error_error();
         return KO;

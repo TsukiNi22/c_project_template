@@ -7,8 +7,8 @@
 
 #include "char.h"
 #include "memory.h"
-#include "include.h"
 #include "error.h"
+#include <limits.h>
 
 static char *get_str_from_nbr(long long n, int negatif)
 {
@@ -21,8 +21,8 @@ static char *get_str_from_nbr(long long n, int negatif)
 
     for (; n / diviseur >= 10; diviseur *= 10);
         size++;
-    str = my_malloc(size + negatif, sizeof(char));
-    ERR_DN(UNDEF_ERR, "In: my_itoa > get_str_from_nbr", (!str));
+    ERR_DN(UNDEF_ERR, "In: my_itoa > get_str_from_nbr",
+    (my_malloc_c(&str, size + negatif) == KO));
     str[0] = '-' * negatif;
     for (; diviseur > 0; diviseur /= 10) {
         nb = (n / diviseur) - nbis;

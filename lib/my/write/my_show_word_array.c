@@ -6,9 +6,9 @@
 */
 
 #include "char.h"
-#include "include.h"
-#include "error.h"
 #include "write.h"
+#include "error.h"
+#include <unistd.h>
 
 int my_show_word_array(char const **tab)
 {

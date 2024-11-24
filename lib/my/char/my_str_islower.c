@@ -5,8 +5,8 @@
 ** Verif if the given string is only lowr case
 */
 
-#include "include.h"
 #include "error.h"
+#include <stdbool.h>
 
 bool my_str_islower(char const *str)
 {

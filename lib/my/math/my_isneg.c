@@ -6,7 +6,6 @@
 */
 
 #include "write.h"
-#include "include.h"
 #include "error.h"
 
 int my_isneg(int n)
@@ -15,6 +14,6 @@ int my_isneg(int n)
 
     if (n < 0)
         c = 'N';
-    ERR_D(WRITE_ERR, "In: my_isneg", KO, (my_putchar(c) == KO));
+    ERR_D(UNDEF_ERR, "In: my_isneg", KO, (my_putchar(c) == KO));
     return OK;
 }

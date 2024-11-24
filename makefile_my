@@ -21,6 +21,7 @@ Clear: Start CleanAll End
 UnitTest: Start CpUnitTest ExecuteUnitTest Clean End
 Executable: Start CpExecutable ExecutePrograme Clean End
 ExecutableCSFML: Start CpExecutableCSFML ExecutePrograme Clean End
+ExecutableNCURSE: Start CpExecutableNCURSE ExecutePrograme Clean End
 Valgrind: Start CpExecutableValgrind ExecuteValgrind Clean End
 Compile: Start CpExecutable CleanO End
 Verif: Start CpLib CpExecutableWall ExecuteValgrind CodingStyle GitStatus End
@@ -45,12 +46,17 @@ CpExecutableValgrind:
 	@gcc $(PROG_SRCS) $(MAIN) -I./include/ -L. -lmy -o $(TGR_PROG)
 
 CpExecutableCSFML:
-	@echo "Compiling files \".c\" to \".o\"..."
+	@echo "Compiling files \".c\" to \".o\"... (CSFML)"
 	@gcc $(PROG_SRCS) $(MAIN) -I./include/ -L. -lmy -o $(TGR_PROG) \
 	-lcsfml-graphics -lcsfml-window -lcsfml-system
 
+CpExecutableNCURSE:
+	@echo "Compiling files \".c\" to \".o\"... (NCURSE)"
+	@gcc $(PROG_SRCS) $(MAIN) -I./include/ -L. -lmy -o $(TGR_PROG) \
+	-lncurses
+
 CpExecutableWall:
-	@echo "Compiling files \".c\" to \".o\"... (Flag -W -Wall)"
+	@echo "Compiling files \".c\" to \".o\"... (Flag -W -Wall...)"
 	@gcc $(PROG_SRCS) -I./include/ -L. -lmy -o $(TGR_PROG) \
 	-Wall -Wpedantic -Werror
 
