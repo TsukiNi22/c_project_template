@@ -2,11 +2,9 @@
 ** EPITECH PROJECT, 2024
 ** test_my_printf_normal.c
 ** File description:
-** Test on normal string without %
+** Test sample
 */
 
-#include "printf.h"
-#include "define.h"
 #include "debug.h"
 
 Test(my_printf, test01_normal_string, .init = redirect)
