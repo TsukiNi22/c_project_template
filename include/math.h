@@ -40,6 +40,7 @@ int my_binomial(float n, float k); // Error: -1
 
 /* math_function */
 long double my_log(double base, double x); // Error: inf (div by 0)
+float get_rand(float min, float max); // Error: None
 
 /* math_trigonometrie */
 float my_sin(float x); // Error: KO

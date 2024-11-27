@@ -1,27 +1,45 @@
 ##
 ## EPITECH PROJECT, 2024
-## makefile
+## Makefile
 ## File description:
-## Sample makfile pour la ta
+## Sample makefile de la ta
 ##
 
-TARGET = a.out
-TGR_MY_LIB = libmy.a
+CC = gcc
 
-LIB_SRCS = $(shell find lib/my -name "*.c")
-CFILE = $(shell find src/ -name "*.c")
-all: $(TARGET)
+NAME = a.out
 
-$(TARGET):
-	@gcc -c $(LIB_SRCS) -I./include/
-	@ar rc $(TGR_MY_LIB) *.o
-	@gcc $(CFILE) -I ./include/ -L. -lmy -o $(TARGET)
+W = -Wall -Wextra -Wpedantic -Wconversion -Wshadow
+
+INC = -I ./include/
+LIB = -L ./lib/ -lmy
+
+CFLAGS = $(INC) $(LIB) $(W)
+
+GLOBAL =	main.c \
+		sample.c \
+		clean_data.c
+
+INIT =		init/init_data.c \
+		init/init_struct_main.c
+
+FILE = $(GLOBAL) $(INIT)
+SRC = $(addprefix src/, $(FILE))
+OBJ=$(SRC:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	@make -C lib/my
+	@gcc -o $(NAME) $(OBJ) $(CFLAGS)
 
 clean:
-	@rm -f $(shell find . -name "*.o")
+	@rm -f $(OBJ)
 
 fclean: clean
-	@rm -f $(TARGET)
-	@rm -f $(TGR_MY_LIB)
+	@rm -f $(NAME)
+	@make fclean -C lib/my
 
-re: fclean $(TARGET)
+re: fclean $(NAME)
+
+.PHONY: all clean fclean re

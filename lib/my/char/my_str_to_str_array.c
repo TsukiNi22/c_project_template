@@ -53,7 +53,7 @@ char **my_str_to_str_array(char const *str, char const *identifier, bool take)
     char **str_array = NULL;
     char const *start_ptr = str;
     int index = 0;
-    int count = 0;
+    int count = !take * -1;
     int i;
 
     ERR_DN(PTR_ERR, "In: my_str_to_str_array", (!str || !identifier));
