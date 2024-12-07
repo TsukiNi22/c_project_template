@@ -66,7 +66,6 @@ static int get_d_decimal(long double nbr, long double *nbr_already,
     long long ll_cast = 0;
     long double d_cast = 0;
     int signe = (nbr < 0);
-    char *tmp;
 
     ERR_D(PTR_ERR, "In: >d_decimal", false, (!nbr_already || !depth || !str));
     nbr = (nbr - *nbr_already * (1 - 2 * signe)) * (1 - 2 * signe);

@@ -9,7 +9,7 @@ CC = gcc
 
 NAME = libmy.a
 
-W = -Wall -Wextra -Wpedantic -Wconversion -Wshadow
+W = -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow -Werror
 
 INC = -I ../../include/
 
@@ -86,12 +86,11 @@ LINKED = 	linked/linked_add.c \
 
 FILE = 		file/get_file.c
 
-
-OTHERS = 	print_info.c \
-		error_handling.c
+OTHERS =	error_handling.c \
+		flag.c
 
 SRC = $(MATH) $(MEMORY) $(WRITE) $(CHAR) $(LINKED) $(FILE) $(OTHERS)
-OBJ=$(SRC:.c=.o)
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
@@ -107,4 +106,25 @@ fclean: clean
 
 re: fclean $(NAME)
 
-.PHONY: all clean fclean re
+get_unregistered_files:
+	@find . -name "*.c" | sed "s/\.\///g" | while read file; do \
+        	echo "$(SRC)" | grep -q "$$file" || \
+		echo "$$file" >> new_files_detected.txt; \
+        done
+	@if [ -f new_files_detected.txt ]; then \
+                cat new_files_detected.txt;\
+                rm -f new_files_detected.txt; \
+        fi
+
+get_unknow_files:
+	@for file in $(SRC); do \
+            if [ ! -f "$$file" ]; then \
+                echo "$$file" >> missing_files.txt; \
+            fi; \
+        done;
+	@if [ -f missing_files.txt ]; then \
+                cat missing_files.txt | sed "s/src\///g"; \
+                rm -f missing_files.txt; \
+        fi
+
+.PHONY: all clean fclean re get_unregistered_files get_unknow_files

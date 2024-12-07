@@ -69,9 +69,10 @@ static int print_error(int error_number, int to_return)
     res += text_shape(2);
     if (error_number == ERROR_ERR)
         res += my_putstr(2, ERROR_MSG);
-    if (error_number == UNDEF_ERR)
+    else if (error_number == UNDEF_ERR)
         res += my_putstr(2, UNDEF_MSG);
-    res += dispatch_1(error_number);
+    else
+        res += dispatch_1(error_number);
     res += text_shape(2);
     res += text_shape(1);
     res += text_shape(3);

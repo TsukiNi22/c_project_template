@@ -12,7 +12,6 @@
 
 int my_realloc_b(bool **ptr, int add, int size)
 {
-    int type_size = sizeof(bool);
     bool *new;
 
     ERR_D(PTR_ERR, "In: my_realloc", KO, (!ptr || !(*ptr)));

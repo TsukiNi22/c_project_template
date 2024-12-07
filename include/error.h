@@ -65,11 +65,10 @@
     #define ERR_DV(err, msg, c) if (c) return err_dispatch_v(err, msg)
     #define ERR_C(msg, ret, c) if (c) return err_custom(msg, ret)
 
-
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
-/* error_handling */
+/* error_handling */ // Error: None
 void err_dispatch_v(int error_number, char *error_info);
 void *err_dispatch_n(int error_number, char *error_info);
 int err_dispatch(int error_number, char *error_info, int to_return);
@@ -85,7 +84,7 @@ int err_custom(char *error_info, int to_return);
 ** Error 4: Not enought argv
 ** Error 5: Wrong input in given argument
 ** Error 6: Can't open file
-** Error 6: Can't read file
+** Error 7: Can't read file
 */
 
 #endif /* ERROR_H */

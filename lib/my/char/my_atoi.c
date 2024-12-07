@@ -18,14 +18,14 @@ long long my_atoi(const char *str)
     long long mult;
 
     ERR_D(PTR_ERR, "In: my_atoi", 0, (!str || array_size < 0));
-    negatif = (str[0] && str[0] == '-');
+    negatif = (str[0] == '-');
     for (int i = negatif; str[i]; i++) {
-        mult = my_pow(10, array_size - i - negatif);
+        mult = my_pow(10, array_size - (i - negatif) - negatif);
         my_int += ((long long) str[i] - 48) * mult;
     }
     if (negatif)
         my_int *= -1;
     ERR_D(OVERFLOW, "In: my_atoi", 0,
-    ((!negatif && my_int < 0) || (negatif && my_int >= 0)));
+    (((!negatif && my_int < 0) || (negatif && my_int >= 0)) && my_int != 0));
     return my_int;
 }

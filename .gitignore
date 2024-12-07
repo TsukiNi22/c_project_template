@@ -1,4 +1,4 @@
-*c.log
+*.log
 *.gc*
 *.sw*
 *.a
@@ -6,8 +6,8 @@
 *~
 vgcore.*
 main_test*.c
-test_sample.c
 a.out
+test_sample.c
 unit_test
 prog
 :

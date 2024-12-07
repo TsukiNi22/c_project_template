@@ -11,6 +11,16 @@
     #define MACRO
 
     //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include "sample.h" // MAIN_DATA_TYPE
+    #include <stdbool.h> // boolean
+
+    /* macro */
+    #include "error.h" // Error macro
+
+    //----------------------------------------------------------------//
     /* MACRO */
 
     /* __attribute__ */
@@ -19,18 +29,24 @@
     #define AUTOFREE __attribute__((cleanup(free)))
     #define AUTOCLOSE __attribute__((cleanup(close)))
 
+    /* flag_handle */
+    #define INFO(c, v, b) if (c > 1) res = print_info(c, v, b)
+    #define INFO_FLAG(c, v, b) if (c > 1) res = print_info_flag(c, v, b)
+    #define INIT_FLAG(c, v, d) ERR_C("Flag", KO, (init_flag(c, v, d) == KO))
+
     /* usefull */
-    #define INFO(c, v) if (c > 1 && v) return print_info(c, v)
-    #define INFO_FLAG(c, v) if (c > 2 && v) return print_info_flag(c, v)
+    #define EXIT(c, val) if (c) return val
 
     /* math */
-    #define ABS(value) ((value) * (1 - 2 * (value < 0 || value == -0)))
+    #define ABS(x) x = ((x) * (1 - 2 * (x < 0 || x == -0)))
 
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
-/* usefull */
-int print_info(int argc, char const *argv[]); // Error: EPITECH_ERR
-int print_info_flag(int argc, char const *argv[]); // Error: EPITECH_ERR
+/* flag */ // Error: KO
+int print_info(int argc, char const *argv[], bool *out);
+int print_info_flag(int argc, char const *argv[], bool *out);
+int init_flag(int argc, char const *argv[], main_data_t *data);
+int flag_init_null(int argc, char const *argv[], main_data_t *data);
 
 #endif

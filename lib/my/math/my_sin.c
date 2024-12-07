@@ -12,7 +12,6 @@
 float my_sin(float x)
 {
     float sum = 1;
-    float f1;
 
     ABS(x);
     ERR_D(OVERFLOW, "In: my_sin", KO, (x < 0));

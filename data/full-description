@@ -20,4 +20,4 @@
     [32m-e, --example [31m[[0mn[31m][0m
             Set the var to [31m[[0mn[31m][0m otherwise [31m[[0minf[31m][0m
             [36m(int) Value
-             inf > n >= 0[33m
+             inf > n >= 0[0m

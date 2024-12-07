@@ -28,7 +28,6 @@ char *concat_params(int ac, char **av)
 {
     int total_str_size = get_size(ac, av);
     char *str = NULL;
-    int res;
 
     ERR_DN(PTR_ERR, "In: my_concat_params", (!av));
     ERR_DN(ARGV_ERR, "In: my_concat_params", (total_str_size < 0));

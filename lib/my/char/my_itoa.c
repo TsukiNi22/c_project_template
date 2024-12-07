@@ -19,7 +19,7 @@ static char *get_str_from_nbr(long long n, int negatif)
     int size = 0;
     int i = negatif;
 
-    for (; n / diviseur >= 10; diviseur *= 10);
+    for (; n / diviseur >= 10; diviseur *= 10)
         size++;
     ERR_DN(UNDEF_ERR, "In: my_itoa > get_str_from_nbr",
     (my_malloc_c(&str, size + negatif) == KO));

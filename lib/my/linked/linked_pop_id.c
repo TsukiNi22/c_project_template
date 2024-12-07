@@ -13,8 +13,6 @@
 
 static int deincrement(linked_list_t *actual_linked_list)
 {
-    int nbr;
-
     ERR_D(PTR_ERR, "In: linked_pop_id > deincrement", KO,
     (!actual_linked_list));
     while (actual_linked_list->next) {
@@ -42,8 +40,6 @@ static int linked_pop_start(linked_list_t **linked_list)
 
 static int linked_pop_end(linked_list_t *actual_linked_list)
 {
-    linked_list_t *tmp_linked_list;
-
     ERR_D(PTR_ERR, "In: linked_pop_id > linked_pop_end", KO,
     (!actual_linked_list));
     if (actual_linked_list->previous)
