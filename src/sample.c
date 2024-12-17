@@ -11,8 +11,11 @@
 
 int sample(int argc, char const *argv[], main_data_t *data)
 {
-    ERR_D(PTR_ERR, "In: sample", KO, (!data || !argv));
-    ERR_D(UNDEF_ERR, "In: sample", KO, (init_data(data) == KO));
-    INIT_FLAG(argc, argv, data);
+    if (!data || !argv)
+        return err_prog(PTR_ERR, "In: sample", KO);
+    if (init_data(data) == KO)
+        return err_custom("Data initialisation error", KO);
+    if (init_flag(argc, argv, data) == KO)
+        return err_custom("Flag initialisation error", KO);
     return OK;
 }

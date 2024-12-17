@@ -11,7 +11,8 @@ double my_factorial(int x)
 {
     double sum = 1;
 
-    ERR_D(OVERFLOW, "In: my_factorial", KO, (x > 170));
+    if (x > 170)
+        return err_prog(OVERFLOW, "In: my_factorial", KO);
     for (; x > 1; x--)
         sum *= x;
     return sum;

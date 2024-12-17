@@ -12,7 +12,8 @@
 
 int linked_pop(linked_list_t *linked_list)
 {
-    ERR_D(PTR_ERR, "In: linked_pop", KO, (!linked_list));
+    if (!linked_list)
+        return err_prog(PTR_ERR, "In: linked_pop", KO);
     while (linked_list->next)
         linked_list = linked_list->next;
     if (linked_list->previous)

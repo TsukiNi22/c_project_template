@@ -10,7 +10,9 @@
 
 int init_data(main_data_t *data)
 {
-    ERR_D(PTR_ERR, "In: sample", KO, (!data));
-    ERR_D(UNDEF_ERR, "In: sample", KO, (init_struct_main(data) == KO));
+    if (!data)
+        return err_prog(PTR_ERR, "In: sample", KO);
+    if (init_struct_main(data) == KO)
+        return err_prog(UNDEF_ERR, "In: sample", KO);
     return OK;
 }

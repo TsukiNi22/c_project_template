@@ -14,7 +14,8 @@ float my_sin(float x)
     float sum = 1;
 
     ABS(x);
-    ERR_D(OVERFLOW, "In: my_sin", KO, (x < 0));
+    if (x < 0)
+        return err_prog(OVERFLOW, "In: my_sin", KO);
     for (; x > PI; x -= PI);
     sum = x;
     for (int i = 1; i * 2 + 1 < 170; i++)

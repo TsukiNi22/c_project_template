@@ -40,6 +40,8 @@ int my_realloc_c(char **ptr, int add, int size); // Error: KO
 int my_realloc_i(int **ptr, int add, int size); // Error: KO
 int my_realloc_f(float **ptr, int add, int size); // Error: KO
 
+int my_memset(void *ptr, int value, int size, int type_size); // Error: KO
+
 /* memory_char */
 char *my_strdup(char const *src); // Error: NULL
 

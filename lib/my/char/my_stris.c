@@ -11,12 +11,14 @@
 
 int my_str_is(char const *str, char const *char_in)
 {
-    int res;
+    int res = 0;
 
-    ERR_D(PTR_ERR, "In: my_str_isnum", false, (!str || !char_in));
+    if (!str || !char_in)
+        return err_prog(PTR_ERR, "In: my_str_isnum", false);
     for (int i = 0; str[i]; i++) {
         res = my_strfind(char_in, str[i]);
-        ERR_D(UNDEF_ERR, "In: my_str_isnum", false, (res == -2));
+        if (res == -2)
+            return err_prog(UNDEF_ERR, "In: my_str_isnum", false);
         if (res == -1)
             return 0;
     }

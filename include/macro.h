@@ -14,7 +14,7 @@
     /* INCLUDE */
 
     /* type */
-    #include "sample.h" // MAIN_DATA_TYPE
+    #include "sample.h" // main_data_t
     #include <stdbool.h> // boolean
 
     /* macro */
@@ -35,7 +35,7 @@
     #define INIT_FLAG(c, v, d) ERR_C("Flag", KO, (init_flag(c, v, d) == KO))
 
     /* usefull */
-    #define EXIT(c, val) if (c) return val
+    #define EXIT(condition, literal) if (condition) return literal
 
     /* math */
     #define ABS(x) x = ((x) * (1 - 2 * (x < 0 || x == -0)))

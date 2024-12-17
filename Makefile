@@ -7,18 +7,19 @@
 
 CC = gcc
 
-NAME = a.out
+TARGET = a.out
 
 W = -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow -Werror
 
-INC = -I ./include/
-LIB = -L ./lib/ -lmy
+DEBUG = -g -ggdb3
 
-CFLAGS = $(INC) $(LIB) $(W)
+CPPFLAGS = -I ./include/
+LDFLAGS = -L ./lib/ -lmy
+CFLAGS = $(W)
 
 GLOBAL =	main.c \
 		sample.c \
-		clean_data.c
+		free_data.c
 
 INIT =		init/init_data.c \
 		init/init_flag.c \
@@ -28,20 +29,20 @@ FILE = $(GLOBAL) $(INIT)
 SRC = $(addprefix src/, $(FILE))
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all: $(TARGET)
 
-$(NAME): $(OBJ)
-	@make -C lib/my
-	@gcc -o $@ $^ $(CFLAGS)
+$(TARGET): $(OBJ)
+	@make -C lib/my --no-print-directory
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
 	@rm -f $(OBJ)
 
 fclean: clean
-	@rm -f $(NAME)
-	@make fclean -C lib/my
+	@rm -f $(TARGET)
+	@make fclean -C lib/my --no-print-directory
 
-re: fclean $(NAME)
+re: fclean $(TARGET)
 
 get_unregistered_files:
 	@find src/ -name "*.c" | while read file; do \

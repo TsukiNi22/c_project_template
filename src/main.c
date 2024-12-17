@@ -13,22 +13,23 @@
 
 int main(int argc, char const *argv[])
 {
-    main_data_t *data = malloc(sizeof(main_data_t));
+    main_data_t *data = NULL;
     bool out = false;
-    int res = OK;
 
-    ERR_D(PTR_ERR, "In: main", EPITECH_ERR, (!argv));
-    ERR_D(MALLOC_ERR, "In: main", EPITECH_ERR, (!data));
-    INFO_FLAG(argc, argv, &out);
-    ERR_C("Info -h / -fh", EPITECH_ERR, (res == KO));
-    EXIT(out, OK);
-    INFO(argc, argv, &out);
-    ERR_C("Info -H", EPITECH_ERR, (res == KO));
-    EXIT(out, OK);
+    if (!argv)
+        return err_prog(PTR_ERR, "In: main", EPITECH_ERR);
+    data = malloc(sizeof(main_data_t));
+    if (!data)
+        return err_prog(MALLOC_ERR, "In: main", EPITECH_ERR);
+    if (print_info_flag(argc, argv, &out) == KO)
+        return err_custom("Info -h / -fh", EPITECH_ERR);
+    if (print_info(argc, argv, &out) == KO)
+        return err_custom("Info -H", EPITECH_ERR);
+    if (out)
+        return free_data(data);
     if (sample(argc, argv, data) == KO) {
-        ERR_C("clean_data have failed after an excution failed", KO,
-        (clean_data(data) == EPITECH_ERR));
-        return err_custom("Execution have failed", KO);
+        free_data(data);
+        return err_custom("Execution have failed", EPITECH_ERR);
     }
-    return clean_data(data);
+    return free_data(data);
 }

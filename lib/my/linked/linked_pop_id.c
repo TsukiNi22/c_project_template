@@ -13,8 +13,8 @@
 
 static int deincrement(linked_list_t *actual_linked_list)
 {
-    ERR_D(PTR_ERR, "In: linked_pop_id > deincrement", KO,
-    (!actual_linked_list));
+    if (!actual_linked_list)
+        return err_prog(PTR_ERR, "In: linked_pop_id > deincrement", KO);
     while (actual_linked_list->next) {
         actual_linked_list->id--;
         actual_linked_list = actual_linked_list->next;
@@ -25,10 +25,10 @@ static int deincrement(linked_list_t *actual_linked_list)
 
 static int linked_pop_start(linked_list_t **linked_list)
 {
-    linked_list_t *tmp_linked_list;
+    linked_list_t *tmp_linked_list = NULL;
 
-    ERR_D(PTR_ERR, "In: linked_pop_id > linked_pop_start", KO,
-    (!linked_list || !(*linked_list)));
+    if (!linked_list || !(*linked_list))
+        return err_prog(PTR_ERR, "In: linked_pop_id > linked_pop_start", KO);
     tmp_linked_list = (*linked_list)->next;
     free((*linked_list));
     if (tmp_linked_list) {
@@ -40,8 +40,8 @@ static int linked_pop_start(linked_list_t **linked_list)
 
 static int linked_pop_end(linked_list_t *actual_linked_list)
 {
-    ERR_D(PTR_ERR, "In: linked_pop_id > linked_pop_end", KO,
-    (!actual_linked_list));
+    if (!actual_linked_list)
+        return err_prog(PTR_ERR, "In: linked_pop_id > linked_pop_end", KO);
     if (actual_linked_list->previous)
         actual_linked_list->previous->next = NULL;
     free(actual_linked_list);
@@ -50,8 +50,8 @@ static int linked_pop_end(linked_list_t *actual_linked_list)
 
 static int linked_pop_at(linked_list_t *actual_linked_list)
 {
-    ERR_D(PTR_ERR, "In: linked_pop_id > linked_pop_at", KO,
-    (!actual_linked_list));
+    if (!actual_linked_list)
+        return err_prog(PTR_ERR, "In: linked_pop_id > linked_pop_at", KO);
     actual_linked_list->previous->next = actual_linked_list->next;
     actual_linked_list->next->previous = actual_linked_list->previous;
     deincrement(actual_linked_list);
@@ -61,9 +61,10 @@ static int linked_pop_at(linked_list_t *actual_linked_list)
 
 int linked_pop_id(linked_list_t **linked_list, int id)
 {
-    linked_list_t *actual_linked_list;
+    linked_list_t *actual_linked_list = NULL;
 
-    ERR_D(PTR_ERR, "In: linked_pop_id", KO, (!linked_list || !(*linked_list)));
+    if (!linked_list || !(*linked_list))
+        return err_prog(PTR_ERR, "In: linked_pop_id", KO);
     actual_linked_list = *linked_list;
     if ((*linked_list)->id >= id)
         return linked_pop_start(linked_list);

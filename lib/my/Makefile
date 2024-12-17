@@ -7,13 +7,12 @@
 
 CC = gcc
 
-NAME = libmy.a
+TARGET = libmy.a
 
 W = -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow -Werror
 
-INC = -I ../../include/
-
-CFLAGS = $(INC) $(W)
+CPPFLAGS = -I ../../include/
+CFLAGS = $(W)
 
 MATH = 		math/my_degree_rad.c \
 		math/my_gamma.c \
@@ -33,17 +32,31 @@ MATH = 		math/my_degree_rad.c \
 		math/my_sort_int_array.c \
 		math/my_get_rand.c
 
+MATRICE =	matrice/init_matrice.c \
+		matrice/transpose_matrice.c \
+		matrice/multiplie_matrice.c \
+		matrice/str_to_matrice.c \
+		matrice/free_matrice.c \
+		matrice/reduce_matrice.c \
+		matrice/determinant_matrice.c \
+		matrice/inverse_matrice.c \
+		matrice/cofacteur_matrice.c
+
+
 MEMORY =	memory/my_calloc.c \
 		memory/my_realloc.c \
 		memory/my_malloc.c \
 		memory/my_swap.c \
-         	memory/my_strdup.c
+         	memory/my_strdup.c \
+		memory/my_memeset.c
 
 WRITE = 	write/my_putnbr_base.c \
 		write/my_putchar.c \
 		write/my_show_word_array.c \
         	write/my_putnbr.c \
-		write/my_putstr.c
+		write/my_putstr.c \
+		write/display_matrice.c \
+		write/display_linked.c
 
 CHAR = 		char/my_strcat.c \
 		char/my_strcmp.c \
@@ -71,7 +84,6 @@ CHAR = 		char/my_strcat.c \
 		char/my_strcapitalize.c \
 		char/my_ftoa.c \
 		char/my_revstr.c \
-       		char/my_str_to_word_array.c \
 		char/my_strfind.c \
 		char/my_stris.c \
        		char/my_count_occurence.c \
@@ -86,15 +98,21 @@ LINKED = 	linked/linked_add.c \
 
 FILE = 		file/get_file.c
 
-OTHERS =	error_handling.c \
-		flag.c
+ERROR =		error/error_dispatch.c \
+		error/error_print.c \
+		error/error_prog.c \
+		error/error_custom.c \
+		error/error_system.c
 
-SRC = $(MATH) $(MEMORY) $(WRITE) $(CHAR) $(LINKED) $(FILE) $(OTHERS)
-OBJ = $(SRC:.c=.o)
+OTHERS =	flag.c
 
-all: $(NAME)
+SRC = 	$(MATH) $(MATRICE) $(MEMORY) $(WRITE) $(CHAR) $(LINKED) $(FILE) \
+	$(ERROR) $(OTHERS)
+OBJ = 	$(SRC:.c=.o)
 
-$(NAME): $(OBJ)
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
 	@ar rc $@ $^
 	@mv $@ ../
 
@@ -102,9 +120,9 @@ clean:
 	@rm -f $(OBJ)
 
 fclean: clean
-	@rm -f ../$(NAME)
+	@rm -f ../$(TARGET)
 
-re: fclean $(NAME)
+re: fclean $(TARGET)
 
 get_unregistered_files:
 	@find . -name "*.c" | sed "s/\.\///g" | while read file; do \
@@ -121,7 +139,7 @@ get_unknow_files:
             if [ ! -f "$$file" ]; then \
                 echo "$$file" >> missing_files.txt; \
             fi; \
-        done;
+        done
 	@if [ -f missing_files.txt ]; then \
                 cat missing_files.txt | sed "s/src\///g"; \
                 rm -f missing_files.txt; \

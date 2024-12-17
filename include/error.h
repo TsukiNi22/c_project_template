@@ -16,6 +16,7 @@
     /* error_return_write */
     #define PUT_ERROR 1
     #define CUSTOM_PUT_ERROR 1
+    #define SYSTEM_PUT_ERROR 1
 
     /* error_return */
     #ifndef KO
@@ -43,6 +44,7 @@
     #define ARGV_ERR 5
     #define OP_FILE_ERR 6
     #define READ_FILE_ERR 7
+    #define FLAG_ERR 8
 
     /* error_sentence */
     #define ERROR_MSG "Error: An Error have ocured in the error return"
@@ -55,24 +57,39 @@
     #define ARGV_MSG "Error: Incorrect input in the given argument"
     #define OP_FILE_MSG "Error: 'Invalid Permision' or 'No Existant File'"
     #define READ_FILE_MSG "Error: 'Can't' or 'Fail' to read the file"
+    #define FLAG_MSG "Error: Unknow flag given for execution"
 
     //----------------------------------------------------------------//
     /* MACRO */
 
     /* err_macro */
-    #define ERR_D(er, msg, ret, c) if (c) return err_dispatch(er, msg, ret)
-    #define ERR_DN(err, msg, c) if (c) return err_dispatch_n(err, msg)
-    #define ERR_DV(err, msg, c) if (c) return err_dispatch_v(err, msg)
+    #define ERR_D(er, msg, ret, c) if (c) return err_prog(er, msg, ret)
+    #define ERR_DN(err, msg, c) if (c) return err_prog_n(err, msg)
+    #define ERR_DV(err, msg, c) if (c) return err_prog_v(err, msg)
     #define ERR_C(msg, ret, c) if (c) return err_custom(msg, ret)
+    #define ERR_CN(msg, c) if (c) return err_custom_n(msg)
+    #define ERR_CV(msg, c) if (c) return err_custom_v(msg)
+    #define ERR_S(msg, c) if (c) return err_system(msg)
 
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
 /* error_handling */ // Error: None
-void err_dispatch_v(int error_number, char *error_info);
-void *err_dispatch_n(int error_number, char *error_info);
-int err_dispatch(int error_number, char *error_info, int to_return);
+void err_prog_v(int error_number, char *error_info);
+void *err_prog_n(int error_number, char *error_info);
+int err_prog(int error_number, char *error_info, int to_return);
+void err_custom_v(char *error_info);
+void *err_custom_n(char *error_info);
 int err_custom(char *error_info, int to_return);
+void err_system_v(char *error_info);
+void *err_system_n(char *error_info);
+int err_system(char *error_info);
+
+/* print_error_ouput */ // Error: None
+void error_error(void);
+void print_error(int error_number);
+void print_error_info(char *error_info);
+int dispatch(int code_error); // Error: KO
 
 /*
 ** Error -2: Can't return Error
@@ -85,6 +102,7 @@ int err_custom(char *error_info, int to_return);
 ** Error 5: Wrong input in given argument
 ** Error 6: Can't open file
 ** Error 7: Can't read file
+** Error 8: Flag is unknow
 */
 
 #endif /* ERROR_H */

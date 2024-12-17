@@ -10,7 +10,8 @@
 
 bool my_str_isupper(char const *str)
 {
-    ERR_D(PTR_ERR, "In: my_str_isupper", false, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_str_isupper", false);
     for (int i = 0; str[i]; i++) {
         if (!(str[i] >= 'A' && str[i] <= 'Z'))
             return false;

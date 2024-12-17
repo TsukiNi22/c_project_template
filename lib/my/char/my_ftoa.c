@@ -13,11 +13,12 @@
 #include <stdlib.h>
 #include <limits.h>
 
-static int my_strlen_local(char *str)
+static int len_local(char *str)
 {
     int len = 0;
 
-    ERR_D(PTR_ERR, "In: my_ftoa > my_strlen_local", KO, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_ftoa > len_local", KO);
     for (; str[len] != '\0'; len++);
     free(str);
     return len;
@@ -25,12 +26,14 @@ static int my_strlen_local(char *str)
 
 static char *my_strcat_local(char *dest, char *src)
 {
-    int len;
+    int len = 0;
     int i = 0;
 
-    ERR_DN(PTR_ERR, "In: my_ftoa > my_strcat_local", (!dest || !src));
+    if (!dest || !src)
+        return err_prog_n(PTR_ERR, "In: my_ftoa > my_strcat_local");
     len = my_strlen(dest);
-    ERR_DN(UNDEF_ERR, "In: my_ftoa > my_strcat_local", (len < 0));
+    if (len < 0)
+        return err_prog_n(UNDEF_ERR, "In: my_ftoa > my_strcat_local");
     for (; src[i]; i++)
         dest[len + i] = src[i];
     dest[len + i] = '\0';
@@ -41,19 +44,22 @@ static char *my_strcat_local(char *dest, char *src)
 static int get_d_integer(long double nbr, long double *nbr_already,
     int *depth, char **str)
 {
-    long long cast;
-    int signe;
+    long long cast = 0;
+    int signe = 0;
 
-    ERR_D(PTR_ERR, "In: >d_integer", false, (!nbr_already || !depth || !str));
+    if (!nbr_already || !depth || !str)
+        return err_prog(PTR_ERR, "In: >d_integer", false);
     nbr -= *nbr_already;
     signe = (nbr < 0);
     nbr *= 1 - 2 * (signe == 1 && *depth != 0);
     for (; nbr > LLONG_MAX; nbr /= 10)
         *nbr_already *= 10;
     cast = (long long) nbr;
-    ERR_D(UNDEF_ERR, "In: my_ftoa > get_d_integer 1", false, (my_realloc_c(str,
-    my_strlen_local(my_itoa(cast)), my_strlen(*str)) == KO));
-    ERR_D(UNDEF_ERR, "In: my_ftoa > get_d_integer 2", false, (!(*str)));
+    if (my_realloc_c(str, len_local(my_itoa(cast)),
+        my_strlen(*str)) == KO)
+        return err_prog(UNDEF_ERR, "In: my_ftoa > get_d_integer 1", false);
+    if (!(*str))
+        return err_prog(UNDEF_ERR, "In: my_ftoa > get_d_integer 2", false);
     my_strcat_local(*str, my_itoa(cast));
     *nbr_already += cast * (1 - 2 * (signe == 1));
     (*depth)++;
@@ -67,7 +73,8 @@ static int get_d_decimal(long double nbr, long double *nbr_already,
     long double d_cast = 0;
     int signe = (nbr < 0);
 
-    ERR_D(PTR_ERR, "In: >d_decimal", false, (!nbr_already || !depth || !str));
+    if (!nbr_already || !depth || !str)
+        return err_prog(PTR_ERR, "In: >d_decimal", false);
     nbr = (nbr - *nbr_already * (1 - 2 * signe)) * (1 - 2 * signe);
     if ((long long) (nbr * my_pow(10, my_log(LLONG_MAX, 10) - 1)) == 0)
         return true;
@@ -75,8 +82,8 @@ static int get_d_decimal(long double nbr, long double *nbr_already,
         nbr *= 10;
     ll_cast = (long long) nbr;
     d_cast = (long double) ll_cast;
-    ERR_D(UNDEF_ERR, "In: my_ftoa > get_d_decimal 1", false, (my_realloc_c(str,
-    my_strlen_local(my_itoa(ll_cast)), my_strlen(*str)) == KO));
+    if (my_realloc_c(str, len_local(my_itoa(ll_cast)), my_strlen(*str)) == KO)
+        return err_prog(UNDEF_ERR, "In: my_ftoa > get_d_decimal 1", false);
     my_strcat_local(*str, my_itoa(ll_cast));
     for (; d_cast > 1; d_cast /= 10);
     *nbr_already += d_cast * (1 - 2 * (signe == 1));
@@ -84,23 +91,26 @@ static int get_d_decimal(long double nbr, long double *nbr_already,
     return (ll_cast == 0 || *depth >= 10);
 }
 
-static int clear_char(char *str)
+static char *clear_char(char *str)
 {
-    ERR_D(PTR_ERR, "In: my_ftoa > clear_char", KO, (!str));
+    if (!str)
+        return err_prog_n(PTR_ERR, "In: my_ftoa > clear_char");
     for (int i = 0; str[i]; i++) {
         if ((str[i] < '0' || str[i] > '9') && str[i] != '-' && str[i] != '.')
             str[i] = '0';
     }
-    return OK;
+    return str;
 }
 
 static int set_dot(char *str)
 {
-    int len;
+    int len = 0;
 
-    ERR_D(PTR_ERR, "In: my_ftoa > set_dot", KO, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_ftoa > set_dot", KO);
     len = my_strlen(str);
-    ERR_D(UNDEF_ERR, "In: my_ftoa > set_dot", KO, (len < 0));
+    if (len < 0)
+        return err_prog(UNDEF_ERR, "In: my_ftoa > set_dot", KO);
     str[len] = '.';
     str[len + 1] = '\0';
     return OK;
@@ -111,9 +121,10 @@ char *my_ftoa(long double nbr)
     char *str = malloc(sizeof(char));
     long double nbr_already = 0;
     int depth = 0;
-    int size;
+    int size = 0;
 
-    ERR_DN(UNDEF_ERR, "In: my_ftoa 1", (!str || my_calloc_c(&str, 1) == KO));
+    if (!str || my_calloc_c(&str, 1) == KO)
+        return err_prog_n(UNDEF_ERR, "In: my_ftoa 1");
     while (get_d_integer(nbr, &nbr_already, &depth, &str) == 0);
     set_dot(str);
     if (depth < 3) {
@@ -121,10 +132,10 @@ char *my_ftoa(long double nbr)
     }
     if (depth >= 3) {
         size = my_strlen(str);
-        ERR_DN(UNDEF_ERR, "In: ftoa 2", (my_realloc_c(&str, 6, size) == KO));
+        if (my_realloc_c(&str, 6, size) == KO)
+            return err_prog_n(UNDEF_ERR, "In: ftoa 2");
         for (int i = 0; i < 6; i++)
             str[size + i] = '0';
     }
-    ERR_DN(UNDEF_ERR, "In: my_ftoa 3", (clear_char(str) == KO));
-    return str;
+    return clear_char(str);
 }

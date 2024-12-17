@@ -2,13 +2,15 @@
 *.gc*
 *.sw*
 *.a
+*.o
 \#*#
 *~
 vgcore.*
 main_test*.c
-a.out
 test_sample.c
+a.out
 unit_test
 prog
 :
 q
+vg

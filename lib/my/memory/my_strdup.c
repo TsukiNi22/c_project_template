@@ -12,14 +12,17 @@
 
 char *my_strdup(char const *src)
 {
-    char *str;
-    int len;
+    char *str = NULL;
+    int len = 0;
 
-    ERR_DN(PTR_ERR, "In: my_strdup", (!src));
+    if (!src)
+        return err_prog_n(PTR_ERR, "In: my_strdup");
     len = my_strlen(src);
-    ERR_DN(UNDEF_ERR, "In: my_strdup 1", (len < 0));
-    ERR_DN(MALLOC_ERR, "In: my_strdup",
-    (my_malloc_c(&str, my_strlen(src) + 1) == KO));
-    ERR_DN(UNDEF_ERR, "In: my_strdup 2", (!my_strcpy(str, src)));
+    if (len < 0)
+        return err_prog_n(UNDEF_ERR, "In: my_strdup 1");
+    if (my_malloc_c(&str, my_strlen(src) + 1) == KO)
+        return err_prog_n(MALLOC_ERR, "In: my_strdup");
+    if (!my_strcpy(str, src))
+        return err_prog_n(UNDEF_ERR, "In: my_strdup 2");
     return str;
 }

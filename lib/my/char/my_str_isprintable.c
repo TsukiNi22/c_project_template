@@ -10,7 +10,8 @@
 
 bool my_str_isprintable(char const *str)
 {
-    ERR_D(PTR_ERR, "In: my_str_isprintable", false, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_str_isprintable", false);
     for (int i = 0; str[i]; i++) {
         if (!((unsigned) str[i] >= 0 && (unsigned) str[i] <= 127))
             return false;

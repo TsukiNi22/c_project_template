@@ -12,6 +12,7 @@
 double my_tan(float x)
 {
     ABS(x);
-    ERR_D(OVERFLOW, "In: my_tan", 0, (x < 0));
+    if (x < 0)
+        return err_prog(OVERFLOW, "In: my_tan", 0);
     return (double) my_sin(x) / (double) my_cos(x);
 }

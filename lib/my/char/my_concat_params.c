@@ -13,12 +13,14 @@
 static int get_size(int ac, char **av)
 {
     int size = 0;
-    int res;
+    int res = 0;
 
-    ERR_D(PTR_ERR, "In: my_concat_params", KO, (!av));
+    if (!av)
+        return err_prog(PTR_ERR, "In: my_concat_params", KO);
     for (int i = 0; i < ac; i++) {
         res = my_strlen(av[i]);
-        ERR_D(UNDEF_ERR, "In: my_concat_params > get_size", KO, (res < 0));
+        if (res < 0)
+            return err_prog(UNDEF_ERR, "In: my_concat_params > get_size", KO);
         size += res;
     }
     return size;
@@ -29,11 +31,15 @@ char *concat_params(int ac, char **av)
     int total_str_size = get_size(ac, av);
     char *str = NULL;
 
-    ERR_DN(PTR_ERR, "In: my_concat_params", (!av));
-    ERR_DN(ARGV_ERR, "In: my_concat_params", (total_str_size < 0));
-    ERR_DN(UNDEF_ERR, "In: my_concat_params",
-    (my_malloc_c(&str, total_str_size + ac) == KO));
-    for (int i = 0; i < ac; i++)
-        ERR_DN(UNDEF_ERR, "In: concat_params 2", (!my_strcat(str, av[i])));
+    if (!av)
+        return err_prog_n(PTR_ERR, "In: my_concat_params");
+    if (total_str_size < 0)
+        return err_prog_n(ARGV_ERR, "In: my_concat_params");
+    if (my_malloc_c(&str, total_str_size + ac) == KO)
+        return err_prog_n(UNDEF_ERR, "In: my_concat_params");
+    for (int i = 0; i < ac; i++) {
+        if (!my_strcat(str, av[i]))
+            return err_prog_n(UNDEF_ERR, "In: concat_params 2");
+    }
     return str;
 }

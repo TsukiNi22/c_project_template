@@ -11,7 +11,8 @@ int my_strcmp(char const *s1, char const *s2)
 {
     int i = 0;
 
-    ERR_D(PTR_ERR, "In: my_strcmp", 1000, (!s1 || !s2));
+    if (!s1 || !s2)
+        return err_prog(PTR_ERR, "In: my_strcmp", 501);
     for (; s1[i] && s2[i]; i++) {
         if (s1[i] != s2[i])
             return (s1[i] - s2[i]);

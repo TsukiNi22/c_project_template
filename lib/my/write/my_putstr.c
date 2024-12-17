@@ -11,11 +11,14 @@
 
 int my_putstr(int output, char const *str)
 {
-    int len;
+    int len = 0;
 
-    ERR_D(PTR_ERR, "In: putstr", KO, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: putstr", KO);
     len = my_strlen(str);
-    ERR_D(UNDEF_ERR, "In: putstr", KO, (len < 0));
-    ERR_D(WRITE_ERR, "In: putstr", KO, (write(output, str, len) != len));
+    if (len < 0)
+        return err_prog(UNDEF_ERR, "In: putstr", KO);
+    if (write(output, str, len) != len)
+        return err_prog(WRITE_ERR, "In: putstr", KO);
     return OK;
 }

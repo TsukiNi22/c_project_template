@@ -29,7 +29,6 @@ char *my_strcapitalize(char *str);
 char *my_strcat(char *dest, char const *src);
 char *my_strncat(char *dest, char const *src, int nb);
 char *concat_params(int ac, char **av);
-char **my_str_to_word_array(char const *str);
 char **my_str_to_str_array(char const *str, char const *identifier, bool take);
 char *my_cut_str(const char *char_array, int before, int cut_place);
 char *get_full_path(char const *cr_path, char const *file);
@@ -41,8 +40,8 @@ int count_occurence(char const *str, char const c); // Error: -1
 int my_strfind(const char *char_array, const char find_char); // Error: -2
 
 /* char_comparaison */
-int my_strcmp(char const *s1, char const *s2); // Error: KO
-int my_strncmp(char const *s1, char const *s2, int n); // Error: KO
+int my_strcmp(char const *s1, char const *s2); // Error: 501
+int my_strncmp(char const *s1, char const *s2, int n); // Error: 501
 int my_str_isalpha(char const *str); // Error: KO
 int my_str_isnum(char const *str); // Error: KO
 int my_str_islower(char const *str); // Error: KO

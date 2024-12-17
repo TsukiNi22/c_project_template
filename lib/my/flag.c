@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** print_info.c
 ** File description:
-** Print the executable info (-h)
+** Print the info (-h / -fh / -H)
 */
 
 #include "char.h"
@@ -15,9 +15,10 @@
 
 static int print_file(char *file, char *path)
 {
-    ERR_D(PTR_ERR, "In: print_file", KO, (!file));
-    ERR_D(UNDEF_ERR, "In: print_info 2", KO,
-    (my_putstr(1, file) == KO));
+    if (!file)
+        return err_prog(PTR_ERR, "In: print_file", KO);
+    if (my_putstr(1, file) == KO)
+        return err_prog(UNDEF_ERR, "In: print_info 2", KO);
     free(file);
     if (path)
         free(path);
@@ -28,21 +29,20 @@ static int check_flag_help(char const *argv, bool *out)
 {
     char *file = NULL;
 
-    ERR_D(PTR_ERR, "In: check_flag_help", KO, (!argv || !out));
+    if (!argv || !out)
+        return err_prog(PTR_ERR, "In: check_flag_help", KO);
     if (my_strcmp(argv, "-h") == 0
         || my_strcmp(argv, "--help") == 0) {
         file = get_file("data/short-description");
-        ERR_D(UNDEF_ERR, "In: check_flag_help 1", KO, (!file));
-        ERR_D(UNDEF_ERR, "In: check_flag_help 2", KO,
-        (print_file(file, NULL) == KO));
+        if (print_file(file, NULL) == KO)
+            return err_prog(UNDEF_ERR, "In: check_flag_help 1", KO);
         *out = true;
     }
     if (my_strcmp(argv, "-fh") == 0
         || my_strcmp(argv, "--full-help") == 0) {
         file = get_file("data/full-description");
-        ERR_D(UNDEF_ERR, "In: check_flag_help 3", KO, (!file));
-        ERR_D(UNDEF_ERR, "In: check_flag_help 4", KO,
-        (print_file(file, NULL) == KO));
+        if (print_file(file, NULL) == KO)
+            return err_prog(UNDEF_ERR, "In: check_flag_help 2", KO);
         *out = true;
     }
     return OK;
@@ -50,16 +50,21 @@ static int check_flag_help(char const *argv, bool *out)
 
 int print_info(int argc, char const *argv[], bool *out)
 {
-    ERR_D(PTR_ERR, "In: print_info", KO, (!argv || !out));
-    for (int i = 0; i < argc && !(*out); i++)
-        ERR_D(UNDEF_ERR, "In: print_info", KO,
-        (check_flag_help(argv[i], out) == KO));
+    if (!argv || !out)
+        return err_prog(PTR_ERR, "In: print_info", KO);
+    if (*out)
+        return OK;
+    for (int i = 0; i < argc && !(*out); i++) {
+        if (check_flag_help(argv[i], out) == KO)
+            return err_prog(UNDEF_ERR, "In: print_info", KO);
+    }
     return OK;
 }
 
 static bool my_str_isin(char **flags, char const *flag, int *indice)
 {
-    ERR_D(PTR_ERR, "In: my_str_isin", false, (!flags || !flag || !indice));
+    if (!flags || !flag || !indice)
+        return err_prog(PTR_ERR, "In: my_str_isin", false);
     for (int i = 0; flags[i]; i += 2) {
         if (my_strcmp(flags[i], flag) == 0) {
             *indice = i;
@@ -75,12 +80,13 @@ static int check_flag_up_h(char **flags, char const *argv, bool *out)
     char *path = NULL;
     int indice = 0;
 
-    ERR_D(PTR_ERR, "In: check_flag_help", KO, (!argv || !out));
+    if (!argv || !out)
+        return err_prog(PTR_ERR, "In: check_flag_help", KO);
     if (my_str_isin(flags, argv, &indice)) {
         path = get_full_path("data/flag/", flags[indice + 1]);
         file = get_file(path);
-        ERR_D(UNDEF_ERR, "In: check_flag_help", KO,
-        (print_file(file, path) == KO || !file));
+        if (print_file(file, path) == KO || !file)
+            return err_prog(UNDEF_ERR, "In: check_flag_help", KO);
         *out = true;
     }
     return OK;
@@ -91,14 +97,16 @@ int print_info_flag(int argc, char const *argv[], bool *out)
     char **flags = NULL;
     char *flag = NULL;
 
-    ERR_D(PTR_ERR, "In: print_info_flag", KO, (!argv || !out));
+    if (!argv || !out)
+        return err_prog(PTR_ERR, "In: print_info_flag", KO);
     flag = get_file("data/flag/flag-list");
     flags = my_str_to_str_array(flag, ":\n", false);
-    ERR_D(UNDEF_ERR, "In: print_info_flag 1", KO, (!flags));
+    if (!flags)
+        return err_prog(UNDEF_ERR, "In: print_info_flag 1", KO);
     for (int i = 0; i < argc - 1 && !(*out); i++) {
-        if (my_strcmp(argv[i + 1], "-H") == 0)
-            ERR_D(UNDEF_ERR, "In: print_info_flag 2", KO,
-            (check_flag_up_h(flags, argv[i], out) == KO));
+        if (my_strcmp(argv[i + 1], "-H") == 0 &&
+            check_flag_up_h(flags, argv[i], out) == KO)
+            return err_prog(UNDEF_ERR, "In: print_info_flag 2", KO);
     }
     for (int i = 0; flags[i]; i++)
         free(flags[i]);

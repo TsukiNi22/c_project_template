@@ -10,6 +10,7 @@
 
 int init_struct_main(main_data_t *data)
 {
-    ERR_D(PTR_ERR, "In: init_struct_main", KO, (!data));
+    if (!data)
+        return err_prog(PTR_ERR, "In: init_struct_main", KO);
     return OK;
 }

@@ -11,8 +11,8 @@ static long double my_pow_float_aproximation(double n, double power)
 {
     long double aprox = 1;
     double stockage_aprox = 1;
-    double r1;
-    double r2;
+    double r1 = 0.0;
+    double r2 = 0.0;
     double u = n - 1;
 
     if (n > 2) {

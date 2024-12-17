@@ -11,7 +11,8 @@ int my_strlen(char const *str)
 {
     int len = 0;
 
-    ERR_D(PTR_ERR, "In: my_strlen", KO, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_strlen", KO);
     for (; str[len]; len++);
     return len;
 }

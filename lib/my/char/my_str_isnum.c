@@ -10,7 +10,8 @@
 
 bool my_str_isnum(char const *str)
 {
-    ERR_D(PTR_ERR, "In: my_str_isnum", false, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_str_isnum", false);
     for (int i = 0; str[i]; i++) {
         if (!(str[i] >= '0' && str[i] <= '9'))
             return false;

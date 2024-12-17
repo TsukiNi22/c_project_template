@@ -11,7 +11,8 @@ int my_strlen_stop_at(char const *str, char c)
 {
     int len = 0;
 
-    ERR_D(PTR_ERR, "In: my_strlen", KO, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_strlen_stop_at", KO);
     for (; str[len] && str[len] != c; len++);
     return len;
 }

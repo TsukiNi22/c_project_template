@@ -1,17 +1,18 @@
 /*
 ** EPITECH PROJECT, 2024
-** clean_data.c
+** free_data.c
 ** File description:
-** Clean data
+** Free data
 */
 
 #include "sample.h"
 #include "error.h"
 #include <stdlib.h>
 
-int clean_data(main_data_t *data)
+int free_data(main_data_t *data)
 {
-    ERR_D(PTR_ERR, "In: clean_data", EPITECH_ERR, (!data));
+    if (!data)
+        return err_prog(PTR_ERR, "In: free_data", EPITECH_ERR);
     free(data);
     return OK;
 }

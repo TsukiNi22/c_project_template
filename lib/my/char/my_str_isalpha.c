@@ -10,10 +10,11 @@
 
 bool my_str_isalpha(char const *str)
 {
-    int c1;
-    int c2;
+    bool c1 = false;
+    bool c2 = false;
 
-    ERR_D(PTR_ERR, "In: my_str_isalpha", false, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_str_isalpha", false);
     for (int i = 0; str[i]; i++) {
         c1 = (str[i] >= 'A' && str[i] <= 'Z');
         c2 = (str[i] >= 'a' && str[i] <= 'z');

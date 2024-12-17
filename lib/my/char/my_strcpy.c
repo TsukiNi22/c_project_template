@@ -12,7 +12,8 @@ char *my_strcpy(char *dest, char const *src)
 {
     int i = 0;
 
-    ERR_DN(PTR_ERR, "In: my_strcpy", (!dest || !src));
+    if (!dest || !src)
+        return err_prog_n(PTR_ERR, "In: my_strcpy");
     for (; src[i]; i++)
         dest[i] = src[i];
     dest[i] = '\0';

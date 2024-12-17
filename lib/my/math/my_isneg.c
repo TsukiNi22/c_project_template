@@ -14,6 +14,7 @@ int my_isneg(int n)
 
     if (n < 0)
         c = 'N';
-    ERR_D(UNDEF_ERR, "In: my_isneg", KO, (my_putchar(c) == KO));
+    if (my_putchar(c) == KO)
+        return err_prog(UNDEF_ERR, "In: my_isneg", KO);
     return OK;
 }

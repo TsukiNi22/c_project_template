@@ -27,6 +27,6 @@ int init_data(main_data_t *data); // Error: KO
 int init_struct_main(main_data_t *data); // Error: KO
 
 /* exit */
-int clean_data(main_data_t *data); // Error: EPITECH_ERR
+int free_data(main_data_t *data); // Error: EPITECH_ERR
 
 #endif /* SAMPLE */

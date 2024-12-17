@@ -12,12 +12,13 @@
 
 static long double my_atof_basic(const char *str)
 {
-    long double my_double = 0;
-    long double mult;
-    int size;
+    long double my_double = 0.0;
+    long double mult = 0.0;
+    int size = 0;
     bool diff = false;
 
-    ERR_D(PTR_ERR, "In: my_atof > my_atof_basic", 0, (!str));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_atof > my_atof_basic", 0);
     if (!str[0])
         return OK;
     size = my_strlen(str) - 1;
@@ -29,8 +30,7 @@ static long double my_atof_basic(const char *str)
             my_double += (((long double) str[size - i]) - 48) * mult;
         }
     }
-    if (str[0] && str[0] == '-' && my_double > 0)
-        my_double *= -1;
+    my_double *= 1 - 2 * (str[0] && str[0] == '-' && my_double > 0);
     return my_double;
 }
 
@@ -45,9 +45,9 @@ static int my_atof_second(const char *str, long double *my_float)
     long double first_int = my_atof_basic(first_array);
     long double second_int = my_atof_basic(second_array);
 
-    ERR_D(UNDEF_ERR, "In: my_atof > my_atof_second", KO,
-    (!str || !my_float || !first_array || !second_array ||
-    size < 0 || cut_place == KO || second_size < 0));
+    if (!str || !my_float || !first_array || !second_array
+        || size < 0 || cut_place == KO || second_size < 0)
+        return err_prog(UNDEF_ERR, "In: my_atof > my_atof_second", KO);
     if (first_int < 0)
         *my_float = first_int + second_int * mult * -1;
     else
@@ -57,9 +57,9 @@ static int my_atof_second(const char *str, long double *my_float)
 
 long double my_atof(const char *str)
 {
-    long double my_float;
+    long double my_float = 0.0;
 
-    ERR_D(PTR_ERR, "In: my_atof", 0,
-    (!str || my_atof_second(str, &my_float) == KO));
+    if (!str || my_atof_second(str, &my_float) == KO)
+        return err_prog(PTR_ERR, "In: my_atof", 0);
     return my_float;
 }

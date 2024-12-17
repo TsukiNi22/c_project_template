@@ -11,7 +11,8 @@
 
 void *linked_get_data(linked_list_t *linked_list, int id)
 {
-    ERR_DN(PTR_ERR, "In: linked_get_data", (!linked_list));
+    if (!linked_list)
+        return err_prog_n(PTR_ERR, "In: linked_get_data");
     if (linked_list->id > id)
         return NULL;
     while (linked_list->next && linked_list->id != id)

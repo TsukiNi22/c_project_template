@@ -14,14 +14,16 @@
 
 char *my_revstr(char *str)
 {
-    char *evil_str;
-    int len;
+    char *evil_str = NULL;
+    int len = 0;
 
-    ERR_DN(PTR_ERR, "In: my_revstr", (!str));
+    if (!str)
+        return err_prog_n(PTR_ERR, "In: my_revstr");
     len = my_strlen(str);
-    ERR_DN(UNDEF_ERR, "In: my_revstr 1", (len < 0));
-    ERR_DN(UNDEF_ERR, "In: my_revstr 2",
-    (my_malloc_c(&evil_str, len) == KO));
+    if (len < 0)
+        return err_prog_n(UNDEF_ERR, "In: my_revstr 1");
+    if (my_malloc_c(&evil_str, len) == KO)
+        return err_prog_n(UNDEF_ERR, "In: my_revstr 2");
     for (int i = 0; str[i]; i++)
         evil_str[len - (i + 1)] = str[i];
     for (int i = 0; str[i]; i++)

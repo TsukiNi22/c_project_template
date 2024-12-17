@@ -11,7 +11,8 @@ int my_swap_c(char *a, char *b)
 {
     char tmp = (*a);
 
-    ERR_D(PTR_ERR, "In: my_swap", KO, (!a || !b));
+    if (!a || !b)
+        return err_prog(PTR_ERR, "In: my_swap_c", KO);
     (*a) = (*b);
     (*b) = tmp;
     return OK;
@@ -21,7 +22,8 @@ int my_swap_i(int *a, int *b)
 {
     int tmp = (*a);
 
-    ERR_D(PTR_ERR, "In: my_swap", KO, (!a || !b));
+    if (!a || !b)
+        return err_prog(PTR_ERR, "In: my_swap_i", KO);
     (*a) = (*b);
     (*b) = tmp;
     return OK;
@@ -31,7 +33,8 @@ int my_swap_f(float *a, float *b)
 {
     float tmp = (*a);
 
-    ERR_D(PTR_ERR, "In: my_swap", KO, (!a || !b));
+    if (!a || !b)
+        return err_prog(PTR_ERR, "In: my_swap_f", KO);
     (*a) = (*b);
     (*b) = tmp;
     return OK;

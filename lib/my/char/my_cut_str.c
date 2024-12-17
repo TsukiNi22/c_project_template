@@ -10,12 +10,14 @@
 #include "define.h"
 #include "error.h"
 
-static int get_alloc_size(char const *str, int before, int cut_place)
+static int get_size(char const *str, int before, int cut_place)
 {
     int res = my_strlen(str);
 
-    ERR_D(PTR_ERR, "In: my_cut_str > get_alloc_size", KO, (!str));
-    ERR_D(UNDEF_ERR, "In: my_cut_str > get_alloc_size", KO, (res < 0));
+    if (!str)
+        return err_prog(PTR_ERR, "In: my_cut_str > get_alloc_size", KO);
+    if (res < 0)
+        return err_prog(UNDEF_ERR, "In: my_cut_str > get_alloc_size", KO);
     if (before)
         return cut_place;
     return res - (cut_place - 1);
@@ -23,16 +25,19 @@ static int get_alloc_size(char const *str, int before, int cut_place)
 
 char *my_cut_str(const char *str, const int before, int cut_place)
 {
-    char *new_str;
+    char *new_str = NULL;
     int actual_place = 0;
-    int res;
+    int res = 0;
 
-    ERR_DN(PTR_ERR, "In: my_cut_str", (!str));
+    if (!str)
+        return err_prog_n(PTR_ERR, "In: my_cut_str");
     res = my_strlen(str);
-    ERR_DN(UNDEF_ERR, "In: my_cut_str", (res < 0));
-    ERR_DN(ARGV_ERR, "In: my_cut_str", (1 > cut_place || cut_place > res));
-    ERR_DN(MALLOC_ERR, "In: my_cut_str",
-    (my_malloc_c(&new_str, get_alloc_size(str, before, cut_place) + 1) == KO));
+    if (res < 0)
+        return err_prog_n(UNDEF_ERR, "In: my_cut_str");
+    if (1 > cut_place || cut_place > res)
+        return err_prog_n(ARGV_ERR, "In: my_cut_str");
+    if (my_malloc_c(&new_str, get_size(str, before, cut_place) + 1) == KO)
+        return err_prog_n(MALLOC_ERR, "In: my_cut_str");
     for (int i = 0; str[i]; i++) {
         if ((i < cut_place && before) || (i > cut_place && !before)) {
             new_str[actual_place] = str[i];
