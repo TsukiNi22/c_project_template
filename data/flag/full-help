@@ -1,1 +1,3 @@
-a full help
+[0mOPTIONS
+    [32m-fh, --full-h[0m
+            Write all the informations of the executable

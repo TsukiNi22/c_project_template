@@ -1,12 +1,12 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** str_to_matrice.c
 ** File description:
 ** Convert a str to a quare matrice
 */
 
-#include "math.h"
-#include "char.h"
+#include "my_math.h"
+#include "string.h"
 #include "define.h"
 #include "matrice.h"
 #include "error.h"

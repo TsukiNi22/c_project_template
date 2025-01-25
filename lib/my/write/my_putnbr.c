@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_put_nbr
 ** File description:
 ** Display the given number
 */
 
-#include "char.h"
+#include "string.h"
 #include "write.h"
 #include "error.h"
 #include <stdlib.h>

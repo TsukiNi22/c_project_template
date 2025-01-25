@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_putnbr_base.c
 ** File description:
 ** Convert the given number in the given base
 */
 
-#include "char.h"
+#include "string.h"
 #include "write.h"
 #include "error.h"
 

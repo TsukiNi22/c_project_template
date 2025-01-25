@@ -1,14 +1,12 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** math.h
 ** File description:
 ** Header for all thing who have a link with memory
 */
 
-#pragma once
-
-#ifndef MEMORY
-    #define MEMORY
+#ifndef MEMORY_H
+    #define MEMORY_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
@@ -50,4 +48,4 @@ int my_swap_c(char *a, char *b); // Error: KO
 int my_swap_i(int *a, int *b); // Error: KO
 int my_swap_f(float *a, float *b); // Error: KO
 
-#endif /* MEMORY */
+#endif /* MEMORY_H */

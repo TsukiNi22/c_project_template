@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** linked_add.c
 ** File description:
 ** Get the data of the given id

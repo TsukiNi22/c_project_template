@@ -1,1 +1,3 @@
-Test flag help
+[0mOPTIONS
+    [31m[[0mflag[31m][0m [32m-H[0m
+            Write all the informations about the flag

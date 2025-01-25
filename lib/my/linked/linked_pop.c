@@ -1,11 +1,10 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** linked_add.c
 ** File description:
 ** Pop the last node
 */
 
-#include "typedef.h"
 #include "linked.h"
 #include "error.h"
 #include <stdlib.h>

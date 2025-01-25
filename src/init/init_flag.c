@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** print_info.c
 ** File description:
 ** Init data with the given flag
 */
 
-#include "char.h"
+#include "string.h"
 #include "file.h"
 #include "sample.h"
 #include "macro.h"
@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-static int (*flag_function[])(int, char const **, main_data_t *) = {
-    &flag_init_null, // ./a.out
+static int (*flag_function[])(int *, char const **, main_data_t *) = {
+    &flag_init_null, // ./binary
     &flag_init_null, // -h
     &flag_init_null, // --help
     &flag_init_null, // -fh
@@ -64,15 +64,15 @@ int init_flag(int argc, char const *argv[], main_data_t *data)
         res = my_str_isflag(flags, argv[i], &indice);
         if (res == KO)
             return err_prog(UNDEF_ERR, "In: init_flag 2", KO);
-        if (res && flag_function[indice](i, argv, data) == KO)
+        if (res && flag_function[indice / 2](&i, argv, data) == KO)
             return err_prog(UNDEF_ERR, "In: init_flag 3", KO);
     }
     return clean_flag(flags, flag);
 }
 
-int flag_init_null(int argc, char const *argv[], main_data_t *data)
+int flag_init_null(UNUSED int *i, char const *argv[], main_data_t *data)
 {
-    if (argc || !argv || !data)
+    if (!argv || !data)
         return err_prog(PTR_ERR, "In: flag_init_null", KO);
     return OK;
 }

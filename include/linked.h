@@ -1,18 +1,25 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** linked.h
 ** File description:
 ** Header for the linked
 */
 
-#ifndef LINKED
-    #define LINKED
+#ifndef LINKED_H
+    #define LINKED_H
+
+    //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include <stdbool.h> // boolean
 
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
 /* linked */
 typedef struct linked_list_s {
+    bool id_status;
     int id;
     void *data;
     struct linked_list_s *previous;
@@ -31,4 +38,4 @@ int linked_pop_id(linked_list_t **linked_list, int id);
 /* get_info */
 void *linked_get_data(linked_list_t *linked_list, int id); // Error: NULL
 
-#endif /* LINKED */
+#endif /* LINKED_H */

@@ -1,48 +1,73 @@
 ##
-## EPITECH PROJECT, 2024
+## EPITECH PROJECT, 2025
 ## Makefile
 ## File description:
-## Sample makefile de la ta
+## Radar makefile de la ta
 ##
 
-CC = gcc
+CC := gcc
 
-TARGET = a.out
+TARGET := a.out
+TEST_TARGET := unit_tests
+BUILD_DIR := .obj
 
-W = -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow -Werror
+W := -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow -Werror
 
-DEBUG = -g -ggdb3
+DEBUG := -g -ggdb3
 
-CPPFLAGS = -I ./include/
-LDFLAGS = -L ./lib/ -lmy
-CFLAGS = $(W)
+CPPFLAGS := -I ./include/
+LDFLAGS := -L ./lib/ -lmy
+CFLAGS := $(W)
 
-GLOBAL =	main.c \
+ifeq ($(d), t)
+	CFLAGS := $(DEBUG)
+endif
+
+GLOBAL :=	main.c \
 		sample.c \
 		free_data.c
 
-INIT =		init/init_data.c \
+INIT :=		init/init_data.c \
 		init/init_flag.c \
 		init/init_struct_main.c
 
-FILE = $(GLOBAL) $(INIT)
-SRC = $(addprefix src/, $(FILE))
-OBJ = $(SRC:.c=.o)
+FILES := $(GLOBAL) $(INIT)
+SRC := $(addprefix src/, $(FILES))
+OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
+
+TEST_OBJ := $(filter-out main.o, $(OBJ))
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	@make -C lib/my --no-print-directory
+	@make -C lib/my --no-print-directory D=$(d)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
+$(BUILD_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
+
 clean:
-	@rm -f $(OBJ)
+	@rm -rf $(BUILD_DIR)
+	@rm -f tests/*.o
+	@rm -f *.gc*
+	@rm -f vgcore.*
 
 fclean: clean
 	@rm -f $(TARGET)
+	@rm -f $(TEST_TARGET)
 	@make fclean -C lib/my --no-print-directory
 
+.NOTPARALLEL:
 re: fclean $(TARGET)
+
+unit_tests:
+	$(CC) -o $(TEST_TARGET) $(TEST_OBJ) tests/*.c \
+	$(CPPFLAGS) $(LDFLAGS) --coverage -lcriterion
+
+tests_run:    unit_tests
+	./$(TEST_TARGET)
+	gcovr . --exclude tests/ --exclude lib/
 
 get_unregistered_files:
 	@find src/ -name "*.c" | while read file; do \
@@ -65,4 +90,4 @@ get_unknow_files:
                 rm -f missing_files.txt; \
         fi
 
-.PHONY: all clean fclean re get_unregistered_files get_unknow_files
+.PHONY: all clean fclean re tests_run get_unregistered_files get_unknow_files

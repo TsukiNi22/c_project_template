@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_binomial.c
 ** File description:
 ** My binomial
 */
 
-#include "math.h"
+#include "my_math.h"
 #include "error.h"
 
 int my_binomial(float n, float k)

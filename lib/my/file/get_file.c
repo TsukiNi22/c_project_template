@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** get_file.c
 ** File description:
 ** Read and put a file in a str
 */
 
-#include "char.h"
+#include "string.h"
 #include "memory.h"
 #include "define.h"
 #include "error.h"

@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_sin.c
 ** File description:
 ** The sin function
 */
 
-#include "math.h"
+#include "my_math.h"
 #include "macro.h"
 #include "error.h"
 

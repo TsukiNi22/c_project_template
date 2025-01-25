@@ -5,12 +5,13 @@
 *.o
 \#*#
 *~
+.obj
+.file_function
 vgcore.*
 main_test*.c
 test_sample.c
 a.out
-unit_test
-prog
+unit_tests
 :
 q
 vg

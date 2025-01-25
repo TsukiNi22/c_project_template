@@ -1,12 +1,12 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** matrice.h
 ** File description:
 ** Header for the matrice
 */
 
-#ifndef MATRICE
-    #define MATRICE
+#ifndef MATRICE_H
+    #define MATRICE_H
 
 //----------------------------------------------------------------//
 /* TYPDEF */
@@ -39,4 +39,4 @@ matrice_t *inverse_matrice_2(matrice_t *matrice);
 matrice_t *inverse_matrice(matrice_t *matrice);
 matrice_t *reduce_matrice(matrice_t *matrice, int y_remove, int x_remove);
 
-#endif /* MATRICE */
+#endif /* MATRICE_H */

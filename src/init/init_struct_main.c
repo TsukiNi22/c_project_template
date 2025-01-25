@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** init_struct_main.c
 ** File description:
 ** Init struct for main data

@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** error_handling.c
 ** File description:
 ** Error handling
@@ -7,6 +7,7 @@
 
 #include "write.h"
 #include "error.h"
+#include <stdbool.h>
 
 void error_error(void)
 {
@@ -34,7 +35,7 @@ void print_error(int error_number)
         error_error();
 }
 
-void print_error_info(char *error_info)
+void print_error_info(char *error_info, bool custom)
 {
     int res = 0;
 
@@ -43,7 +44,10 @@ void print_error_info(char *error_info)
         return;
     }
     res += my_putstr(2, "\n\n");
-    res += my_putstr(2, "-------------\033[34m[INFO]\033[0m-------------");
+    if (custom)
+        res += my_putstr(2, "-------------\033[34m[INFO]\033[0m-------------");
+    else
+        res += my_putstr(2, "-------------\033[36m[INFO]\033[0m-------------");
     res += my_putstr(2, "\n");
     res += my_putstr(2, error_info);
     res += my_putstr(2, "\n");

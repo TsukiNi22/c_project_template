@@ -1,12 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** linked_pop.c
 ** File description:
 ** Add a node at id
 */
 
 #include "linked.h"
-#include "typedef.h"
 #include "error.h"
 #include <stdlib.h>
 #include <stdbool.h>

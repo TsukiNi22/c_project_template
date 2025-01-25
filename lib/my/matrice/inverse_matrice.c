@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** str_to_matrice.c
 ** File description:
 ** Mutiplie two matrice
 */
 
-#include "math.h"
+#include "my_math.h"
 #include "define.h"
 #include "matrice.h"
 #include "error.h"

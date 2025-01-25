@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_pow.c
 ** File description:
 ** My pow made with the Series of Taylor for (u + 1)^a
 */
 
-#include "math.h"
+#include "my_math.h"
 
 static long double my_pow_float_aproximation(double n, double power)
 {

@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_log.c
 ** File description:
 ** Log with my formula
 */
 
-#include "math.h"
+#include "my_math.h"
 
 long double my_log(double x, double base)
 {

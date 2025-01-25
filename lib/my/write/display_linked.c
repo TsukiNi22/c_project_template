@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** display_linked.c
 ** File description:
 ** Display the content of the linked list

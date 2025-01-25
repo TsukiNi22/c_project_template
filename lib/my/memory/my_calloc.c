@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_calloc_str.c
 ** File description:
 ** Set to zero every char of the given array

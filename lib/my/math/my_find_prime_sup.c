@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_find_prime_sup.c
 ** File description:
 ** Find the first prime above the given integer
 */
 
-#include "math.h"
+#include "my_math.h"
 
 int my_find_prime_sup(int nb)
 {

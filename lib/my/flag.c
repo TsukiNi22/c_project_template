@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** print_info.c
 ** File description:
 ** Print the info (-h / -fh / -H)
 */
 
-#include "char.h"
+#include "string.h"
 #include "file.h"
 #include "write.h"
 #include "define.h"

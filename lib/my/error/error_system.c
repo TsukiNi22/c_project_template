@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** error_handling.c
 ** File description:
 ** Error handling
@@ -15,6 +15,8 @@ void err_system_v(char *error_info)
         return;
     if (my_putstr(2, error_info) == KO)
         error_error();
+    if (my_putchar('\n') == KO)
+        error_error();
 }
 
 void *err_system_n(char *error_info)
@@ -23,14 +25,18 @@ void *err_system_n(char *error_info)
         return NULL;
     if (my_putstr(2, error_info) == KO)
         error_error();
+    if (my_putchar('\n') == KO)
+        error_error();
     return NULL;
 }
 
-int err_system(char *error_info)
+int err_system(char *error_info, int to_return)
 {
     if (!SYSTEM_PUT_ERROR)
-        return KO;
+        return to_return;
     if (my_putstr(2, error_info) == KO)
         error_error();
-    return KO;
+    if (my_putchar('\n') == KO)
+        error_error();
+    return to_return;
 }

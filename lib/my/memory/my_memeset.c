@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_memset.c
 ** File description:
 ** Set the memory of the ptr to given value

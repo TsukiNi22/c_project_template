@@ -1,14 +1,12 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** write.h
 ** File description:
 ** Header for all function who print something
 */
 
-#pragma once
-
-#ifndef WRITE
-    #define WRITE
+#ifndef WRITE_H
+    #define WRITE_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
@@ -20,13 +18,17 @@
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
-/* write */
+/* string */
 int my_putchar(char c); // Error: KO
-int my_putnbr(long long nb); // Error: KO
 int my_putstr(int output, char const *str); // Error: KO
 int my_show_word_array(char const **tab); // Error: KO
+
+/* math */
+int my_putnbr(long long nb); // Error: KO
 int my_putnbr_base(unsigned long long nbr, char const *base); // Error: KO
-int display_linked(linked_list_t *linked_list); // Error: KO
 int display_matrice(matrice_t *matrice); // Error: KO
 
-#endif /* WRITE */
+/* other */
+int display_linked(linked_list_t *linked_list); // Error: KO
+
+#endif /* WRITE_H */

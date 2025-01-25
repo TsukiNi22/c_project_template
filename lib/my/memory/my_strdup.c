@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_strdup.c
 ** File description:
 ** Allocate memory and copy an array in
 */
 
-#include "char.h"
+#include "string.h"
 #include "memory.h"
 #include "define.h"
 #include "error.h"

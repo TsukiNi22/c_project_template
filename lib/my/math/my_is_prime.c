@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_is_prime.c
 ** File description:
 ** Find if the given number is prime

@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_putstr.c
 ** File description:
 ** Write a str
 */
 
-#include "char.h"
+#include "string.h"
 #include "error.h"
 #include <unistd.h>
 

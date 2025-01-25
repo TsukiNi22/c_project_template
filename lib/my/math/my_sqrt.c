@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_sqrt.c
 ** File description:
 ** A square root using the pow aproximation
 */
 
-#include "math.h"
+#include "my_math.h"
 
 float my_sqrt(float x)
 {

@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** free_data.c
 ** File description:
 ** Free data
@@ -13,6 +13,5 @@ int free_data(main_data_t *data)
 {
     if (!data)
         return err_prog(PTR_ERR, "In: free_data", EPITECH_ERR);
-    free(data);
     return OK;
 }

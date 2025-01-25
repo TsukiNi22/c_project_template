@@ -1,11 +1,9 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** math.h
 ** File description:
 ** Header for all thing who have a link with file gestion
 */
-
-#pragma once
 
 #ifndef FILE_H
     #define FILE_H

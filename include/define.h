@@ -1,14 +1,12 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** define.h
 ** File description:
 ** Header for all global define with no real apartenance to other thing
 */
 
-#pragma once
-
-#ifndef DEFINE
-    #define DEFINE
+#ifndef DEFINE_H
+    #define DEFINE_H
 
     //----------------------------------------------------------------//
     /* DEFINE */
@@ -16,4 +14,7 @@
     /* global */
     #define NULL ((void *)0)
 
-#endif /* DEFINE */
+    /* acii */
+    #define EOF -1
+
+#endif /* DEFINE_H */

@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_rad_degree.c
 ** File description:
 ** Convert rad in degree°
 */
 
-#include "math.h"
+#include "my_math.h"
 
 float my_rad_degree(float x)
 {

@@ -1,14 +1,12 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_macro_abs.h
 ** File description:
 ** Header for all macro
 */
 
-#pragma once
-
-#ifndef MACRO
-    #define MACRO
+#ifndef MACRO_H
+    #define MACRO_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
@@ -40,13 +38,17 @@
     /* math */
     #define ABS(x) x = ((x) * (1 - 2 * (x < 0 || x == -0)))
 
+    /* binary */
+    #define LEFT_BITS_ROTATE(n, r, s) n = (n << r) | (n >> (s - r))
+    #define RIGHT_BITS_ROTATE(n, r, s) n = (n >> r) | (n << (s - r))
+
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
-/* flag */ // Error: KO
-int print_info(int argc, char const *argv[], bool *out);
-int print_info_flag(int argc, char const *argv[], bool *out);
-int init_flag(int argc, char const *argv[], main_data_t *data);
-int flag_init_null(int argc, char const *argv[], main_data_t *data);
+/* flag */
+int print_info(int argc, char const *argv[], bool *out); // Error: KO
+int print_info_flag(int argc, char const *argv[], bool *out); // Error: KO
+int init_flag(int argc, char const *argv[], main_data_t *data); // Error: KO
+int flag_init_null(int *i, char const *argv[], main_data_t *data); // Error: KO
 
-#endif
+#endif /* MACRO_H */

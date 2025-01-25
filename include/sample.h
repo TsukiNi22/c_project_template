@@ -1,12 +1,12 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** sample.h
 ** File description:
 ** Sample header
 */
 
-#ifndef SAMPLE
-    #define SAMPLE
+#ifndef SAMPLE_H
+    #define SAMPLE_H
 
 //----------------------------------------------------------------//
 /* TYPEDEF */
@@ -29,4 +29,4 @@ int init_struct_main(main_data_t *data); // Error: KO
 /* exit */
 int free_data(main_data_t *data); // Error: EPITECH_ERR
 
-#endif /* SAMPLE */
+#endif /* SAMPLE_H */

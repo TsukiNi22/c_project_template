@@ -1,1 +1,3 @@
-help
+[0mOPTIONS
+    [32m-h, --help[0m
+            Write the short version of the informations of the executable

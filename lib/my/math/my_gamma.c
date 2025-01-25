@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_gamma.c
 ** File description:
 ** My gamma is like n! but for all number
 */
 
-#include "math.h"
+#include "my_math.h"
 
 double my_gamma(float x)
 {

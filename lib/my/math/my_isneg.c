@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_isneg
 ** File description:
 ** Write P when the given parameter is greter than 0 or N in oser cases

@@ -1,11 +1,9 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** error.h
 ** File description:
 ** Header for the error handling / error code
 */
-
-#pragma once
 
 #ifndef ERROR_H
     #define ERROR_H
@@ -25,6 +23,9 @@
     #ifndef OK
         #define OK 0
     #endif /* OK */
+    #ifndef FATAL_ERR
+        #define FATAL_ERR 255
+    #endif /* FATAL_ERR */
     #ifndef ERROR
         #define ERROR 84
     #endif /* ERROR */
@@ -71,24 +72,30 @@
     #define ERR_CV(msg, c) if (c) return err_custom_v(msg)
     #define ERR_S(msg, c) if (c) return err_system(msg)
 
+    //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include <stdbool.h>
+
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
-/* error_handling */ // Error: None
-void err_prog_v(int error_number, char *error_info);
-void *err_prog_n(int error_number, char *error_info);
-int err_prog(int error_number, char *error_info, int to_return);
-void err_custom_v(char *error_info);
-void *err_custom_n(char *error_info);
-int err_custom(char *error_info, int to_return);
-void err_system_v(char *error_info);
-void *err_system_n(char *error_info);
-int err_system(char *error_info);
+/* error_handling */
+void err_prog_v(int error_number, char *error_info); // Error: None
+void *err_prog_n(int error_number, char *error_info); // Error: None
+int err_prog(int error_number, char *error_info, int to_return); // Error: None
+void err_custom_v(char *error_info); // Error: None
+void *err_custom_n(char *error_info); // Error: None
+int err_custom(char *error_info, int to_return); // Error: None
+void err_system_v(char *error_info); // Error: None
+void *err_system_n(char *error_info); // Error: None
+int err_system(char *error_info, int to_return); // Error: None
 
-/* print_error_ouput */ // Error: None
-void error_error(void);
-void print_error(int error_number);
-void print_error_info(char *error_info);
+/* print_error_ouput */
+void error_error(void); // Error: None
+void print_error(int error_number); // Error: None
+void print_error_info(char *error_info, bool custom); // Error: None
 int dispatch(int code_error); // Error: KO
 
 /*

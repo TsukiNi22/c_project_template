@@ -1,12 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** linked_add.c
 ** File description:
 ** Add a node at id
 */
 
 #include "linked.h"
-#include "typedef.h"
 #include "error.h"
 #include "define.h"
 #include <stdlib.h>

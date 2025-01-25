@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** init_matrice.c
 ** File description:
 ** Setup a matrice of x, y size

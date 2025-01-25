@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_get_rand.c
 ** File description:
 ** Obtain a random number between min and max

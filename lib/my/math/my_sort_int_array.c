@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_sort_int_array.c
 ** File description:
 ** Sort an array of int
@@ -11,8 +11,8 @@
 static int set_sorted_array(int *already_sorted, int *changed,
     int *save_i, int smallest)
 {
-    ERR_D(PTR_ERR, "In: sort_int_array > set_sorted_array", 0,
-    (!already_sorted || !changed || !save_i));
+    if (!already_sorted || !changed || !save_i)
+        return err_prog(PTR_ERR, "In: sort_int_array > set_sorted_array", 0);
     if (*changed != 1)
         already_sorted[*changed * -1] = 1;
     else
@@ -27,7 +27,8 @@ static int get_smallest(int *array, int size, int *already_sorted)
     int smallest;
     int save_i;
 
-    ERR_D(PTR_ERR, "In: sort_int_array > get_smallest", 0, (!already_sorted));
+    if (!already_sorted)
+        return err_prog(PTR_ERR, "In: sort_int_array > get_smallest", 0);
     for (int i = 0; i < size; i++) {
         if (first && already_sorted[i] == 0) {
             smallest = array[i];
@@ -48,8 +49,10 @@ int my_sort_int_array(int *array, int size)
     int sort_array[size];
     int already_sorted[size];
 
-    ERR_D(PTR_ERR, "In: sort_int_array", KO, (!array));
-    ERR_D(ARGV_ERR, "In: sort_int_array", KO, (size < 0));
+    if (!array)
+        return err_prog(PTR_ERR, "In: sort_int_array", KO);
+    if (size < 0)
+        return err_prog(ARGV_ERR, "In: sort_int_array", KO);
     for (int i = 0; i < size; i++)
         already_sorted[i] = 0;
     for (int i = 0; i < size; i++)

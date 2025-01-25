@@ -1,11 +1,11 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** my_cos.c
 ** File description:
 ** The cos function
 */
 
-#include "math.h"
+#include "my_math.h"
 #include "macro.h"
 #include "error.h"
 

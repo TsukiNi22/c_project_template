@@ -1,21 +1,24 @@
 /*
-** EPITECH PROJECT, 2024
+** EPITECH PROJECT, 2025
 ** debug.h
 ** File description:
 ** Header with include useful for debugin
 */
 
-#ifndef DEBUG
-    #define DEBUG
+#ifndef DEBUG_H
+    #define DEBUG_H
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* debug */
-    #include <stdio.h> // printf
     #include <criterion/criterion.h> // unit test
     #include <criterion/redirect.h> // unit test -> stderr / stdout
 
+//----------------------------------------------------------------//
+/* PROTOTYPE */
+
+/* sdtout_stderr */
 void redirect(void);
 
-#endif /* DEBUG */
+#endif /* DEBUG_H */
