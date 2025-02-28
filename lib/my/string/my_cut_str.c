@@ -5,7 +5,7 @@
 ** Return the array after or befor the given point
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "memory.h"
 #include "define.h"
 #include "error.h"

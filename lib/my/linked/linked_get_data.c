@@ -9,15 +9,11 @@
 #include "linked.h"
 #include "error.h"
 
-void *linked_get_data(linked_list_t *linked_list, int id)
+void *linked_get_data(linked_list_t *head, int at)
 {
-    if (!linked_list)
+    if (!head)
         return err_prog_n(PTR_ERR, "In: linked_get_data");
-    if (linked_list->id > id)
-        return NULL;
-    while (linked_list->next && linked_list->id != id)
-        linked_list = linked_list->next;
-    if (linked_list->id != id)
-        return NULL;
-    return linked_list->data;
+    for (int i = 1; head->next && i < at; i++)
+        head = head->next;
+    return head->data;
 }

@@ -15,7 +15,7 @@ int my_memset(void *ptr, int value, int size, int type_size)
 
     if (!ptr)
         return err_prog(PTR_ERR, "In: my_memeset", KO);
-    if (size < 1)
+    if (size < 1 || type_size < 1)
         return err_prog(ARGV_ERR, "In: my_memeset", KO);
     cast_ptr = (unsigned char *) ptr;
     cast_value = (unsigned char) value;

@@ -5,7 +5,7 @@
 ** Verif if the given string is only number
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "error.h"
 #include <stdbool.h>
 

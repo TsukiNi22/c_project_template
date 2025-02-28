@@ -1,6 +1,0 @@
-./a.out:prog
--h:help
---help:help
--fh:full-help
---full-h:full-help
--H:flag-help

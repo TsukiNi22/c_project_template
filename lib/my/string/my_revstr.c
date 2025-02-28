@@ -5,7 +5,7 @@
 ** Return the string but reversed
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "memory.h"
 #include "define.h"
 #include "error.h"

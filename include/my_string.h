@@ -26,7 +26,7 @@ char *my_strlowcase(char *str);
 char *my_strcapitalize(char *str);
 char *my_strcat(char *dest, char const *src);
 char *my_strncat(char *dest, char const *src, int nb);
-char *concat_params(int ac, char **av);
+char *concat_params(int argc, char **agrv);
 char **my_str_to_str_array(char const *str, char const *identifier, bool take);
 char *my_cut_str(const char *char_array, int before, int cut_place);
 char *get_full_path(char const *cr_path, char const *file);
@@ -43,6 +43,7 @@ int my_strcmp(char const *s1, char const *s2); // Error: 501
 int my_strncmp(char const *s1, char const *s2, int n); // Error: 501
 bool my_str_isalpha(char const *str); // Error: false
 bool my_str_isnum(char const *str); // Error: false
+bool my_str_isnumber(char const *str); // Error: false
 bool my_str_islower(char const *str); // Error: false
 bool my_str_isupper(char const *str); // Error: false
 bool my_str_isprintable(char const *str); // Error: false
@@ -55,7 +56,6 @@ char *my_itoa(long long n); // Error: NULL
 char *my_ftoa(long double n); // Error: NULL
 
 /* str_to_int_float */
-int my_getnbr(char const *str); // Error: 0
 long long my_atoi(const char *char_array); // Error: 0
 long double my_atof(const char *char_array); // Error: 0
 

@@ -5,7 +5,7 @@
 ** Find the first occurence of a sting in a string
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "define.h"
 #include "error.h"
 

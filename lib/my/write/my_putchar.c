@@ -8,9 +8,9 @@
 #include "error.h"
 #include <unistd.h>
 
-int my_putchar(char c)
+int my_putchar(int fd, char const c)
 {
-    if (write(1, &c, 1) != 1)
+    if (write(fd, &c, 1) != 1)
         return err_prog(WRITE_ERR, "In: my_putchar", KO);
     return OK;
 }

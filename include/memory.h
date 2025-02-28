@@ -47,5 +47,6 @@ char *my_strdup(char const *src); // Error: NULL
 int my_swap_c(char *a, char *b); // Error: KO
 int my_swap_i(int *a, int *b); // Error: KO
 int my_swap_f(float *a, float *b); // Error: KO
+int my_swap(int *a, int *b); // Error: KO
 
 #endif /* MEMORY_H */

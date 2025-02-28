@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2025
-** my_swap
+** my_swap.c
 ** File description:
 ** Swaps the content of two ptr
 */
@@ -37,5 +37,15 @@ int my_swap_f(float *a, float *b)
         return err_prog(PTR_ERR, "In: my_swap_f", KO);
     (*a) = (*b);
     (*b) = tmp;
+    return OK;
+}
+
+int my_swap(int *a, int *b)
+{
+    if (!a || !b)
+        return err_prog(PTR_ERR, "In: my_swap", KO);
+    *a = *a ^ *b;
+    *b = *a ^ *b;
+    *a = *a ^ *b;
     return OK;
 }

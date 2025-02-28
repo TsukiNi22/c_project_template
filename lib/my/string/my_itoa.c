@@ -5,7 +5,7 @@
 ** Return the given int in an array
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "memory.h"
 #include "error.h"
 #include "define.h"

@@ -5,7 +5,7 @@
 ** Cat tow system path
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "memory.h"
 #include "define.h"
 #include "error.h"
@@ -28,7 +28,7 @@ char *get_full_path(char const *cr_path, char const *file)
     len[2] = my_strlen(path);
     if (len[2] < 0)
         return err_prog_n(UNDEF_ERR, "In: get_full_path 4");
-    if ((path[len[2] - 1] != '/' && !my_strcat(path, "/\0"))
+    if ((path[len[2] - 1] != '/' && !my_strcat(path, "/"))
         || !my_strcat(path, file))
         return err_prog_n(UNDEF_ERR, "In: get_full_path 5");
     return path;

@@ -10,7 +10,8 @@ CC := gcc
 TARGET := libmy.a
 BUILD_DIR := .obj
 
-W := -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow -Werror
+W := -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow
+W += -Wuninitialized -Wmaybe-uninitialized -Werror
 
 DEBUG := -g -ggdb3
 
@@ -19,6 +20,8 @@ CFLAGS := $(W)
 
 ifeq ($(d), t)
 	CFLAGS := $(DEBUG)
+else ifeq ($(d), o)
+	CFLAGS += -O1
 endif
 
 MATH := 	math/my_degree_rad.c \
@@ -62,7 +65,9 @@ WRITE := 	write/my_putnbr_base.c \
         	write/my_putnbr.c \
 			write/my_putstr.c \
 			write/display_matrice.c \
-			write/display_linked.c
+			write/display_linked.c \
+			write/ht_dump.c \
+			write/edit_ouput.c
 
 STRING := 	string/my_strcat.c \
 			string/my_strcmp.c \
@@ -75,11 +80,10 @@ STRING := 	string/my_strcat.c \
        		string/my_cut_str.c \
 			string/my_strlen.c \
 			string/my_strstr.c \
-			string/my_char_islower.c \
-       		string/my_char_isupper.c \
 			string/my_str_isalpha.c \
 			string/my_str_islower.c \
        		string/my_str_isnum.c \
+       		string/my_str_isnumber.c \
 			string/my_str_isprintable.c \
 			string/my_str_isupper.c \
        		string/my_strupcase.c \
@@ -98,10 +102,37 @@ STRING := 	string/my_strcat.c \
 			string/my_get_index.c
 
 LINKED := 	linked/linked_add.c \
-			linked/linked_add_id.c \
+			linked/linked_add_at.c \
 			linked/linked_pop.c \
-         	linked/linked_pop_id.c \
+			linked/linked_pop_at.c \
+			linked/linked_pop_this.c \
+			linked/delete_linked.c \
+			linked/update_mid.c \
 			linked/linked_get_data.c
+
+HASH :=		hashtable/hash.c \
+			hashtable/new_hashtable.c \
+			hashtable/delete_hashtable.c \
+			hashtable/ht_search.c \
+			hashtable/ht_delete.c \
+			hashtable/ht_insert.c \
+			hashtable/ht_keys.c
+
+PRINTF :=	printf/printf.c \
+			printf/identifier.c \
+			printf/dispatch.c \
+			printf/specifiers/null.c \
+			printf/specifiers/identifier.c \
+			printf/specifiers/ouput.c \
+			printf/specifiers/boolean.c \
+			printf/specifiers/reset.c \
+			printf/specifiers/strong.c \
+			printf/specifiers/color.c \
+			printf/specifiers/i.c \
+			printf/specifiers/base.c \
+			printf/specifiers/c.c \
+			printf/specifiers/s.c \
+			printf/specifiers/p.c
 
 FILE := 	file/get_file.c
 
@@ -111,16 +142,14 @@ ERROR :=	error/error_dispatch.c \
 			error/error_custom.c \
 			error/error_system.c
 
-OTHERS :=	flag.c
-
-SRC := $(MATH) $(MATRICE) $(MEMORY) $(WRITE) $(STRING) $(LINKED) $(FILE)
-SRC += $(ERROR) $(OTHERS)
+SRC := $(MATH) $(MATRICE) $(MEMORY) $(WRITE) $(STRING) $(LINKED)
+SRC += $(HASH) $(PRINTF) $(FILE) $(ERROR)
 OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	ar rc $@ $^
+	@ar rc $@ $^
 	@mv $@ ../
 
 $(BUILD_DIR)/%.o: %.c

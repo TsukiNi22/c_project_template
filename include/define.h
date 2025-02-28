@@ -16,5 +16,6 @@
 
     /* acii */
     #define EOF -1
+    #define ESC 27
 
 #endif /* DEFINE_H */

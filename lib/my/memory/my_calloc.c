@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2025
-** my_calloc_str.c
+** my_calloc.c
 ** File description:
-** Set to zero every char of the given array
+** Set to zero every byte of the given array
 */
 
 #include "error.h"

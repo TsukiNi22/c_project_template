@@ -5,7 +5,7 @@
 ** Read and put a file in a str
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "memory.h"
 #include "define.h"
 #include "error.h"
@@ -22,11 +22,11 @@ static int get_file_size(char const *file)
     if (!file)
         return err_prog(PTR_ERR, "In: get_file_size", KO);
     fd = open(file, O_RDONLY);
-    if (fd == -1)
+    if (fd == KO)
         return err_prog(OP_FILE_ERR, "In: get_file_size", KO);
     while (res == 4096) {
         res = read(fd, tmp, 4096);
-        if (res == -1)
+        if (res == KO)
             return err_prog(READ_FILE_ERR, "In: get_file_size", KO);
         size += res;
     }
@@ -47,10 +47,8 @@ char *get_file(char const *file)
         return err_prog_n(UNDEF_ERR, "In: get_file 1");
     if (my_malloc_c(&file_c, size + 1) == KO)
         return err_prog_n(UNDEF_ERR, "In: get_file 2");
-    if (!file_c)
-        return err_prog_n(UNDEF_ERR, "In: get_file 3");
     fd = open(file, O_RDONLY);
-    if (fd == -1)
+    if (fd == KO)
         return err_prog_n(OP_FILE_ERR, "In: get_file");
     if (read(fd, file_c, size) != size)
         return err_prog_n(READ_FILE_ERR, "In: get_file");

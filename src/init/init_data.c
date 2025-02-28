@@ -11,8 +11,8 @@
 int init_data(main_data_t *data)
 {
     if (!data)
-        return err_prog(PTR_ERR, "In: sample", KO);
-    if (init_struct_main(data) == KO)
-        return err_prog(UNDEF_ERR, "In: sample", KO);
+        return err_prog(PTR_ERR, "In: init_data", KO);
+    if (init_global(data) == KO)
+        return err_prog(UNDEF_ERR, "In: init_data", KO);
     return OK;
 }

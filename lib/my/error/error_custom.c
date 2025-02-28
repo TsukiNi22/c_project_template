@@ -1,11 +1,10 @@
 /*
 ** EPITECH PROJECT, 2025
-** error_handling.c
+** error_custom.c
 ** File description:
-** Error handling
+** Error print for custom version
 */
 
-#include "write.h"
 #include "define.h"
 #include "error.h"
 #include <stdbool.h>

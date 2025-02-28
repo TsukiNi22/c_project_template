@@ -1,24 +1,15 @@
 /*
 ** EPITECH PROJECT, 2025
-** my_putnbr_base.c
+** my_convertnbr_base.c
 ** File description:
 ** Convert the given number in the given base
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "write.h"
 #include "memory.h"
 #include "define.h"
 #include "error.h"
-
-static int get_size(unsigned long long nbr, int base_size)
-{
-    int size = 0;
-
-    for (; nbr >= 1; size++)
-        nbr /= base_size;
-    return size;
-}
 
 char *my_convertnbr_base(unsigned long long nbr, char const *base)
 {
@@ -31,7 +22,10 @@ char *my_convertnbr_base(unsigned long long nbr, char const *base)
     base_size = my_strlen(base);
     if (base_size < 0)
         return err_prog_n(UNDEF_ERR, "In: my_convertnbr_base 1");
-    size = get_size(nbr, base_size);
+    if (base_size == 0)
+        return err_prog_n(ARGV_ERR, "In: my_convertnbr_base");
+    for (int n = nbr; n >= 1; size++)
+        n /= base_size;
     if (my_malloc_c(&my_nbr, size + 1) == KO)
         return err_prog_n(UNDEF_ERR, "In: my_convertnbr_base 2");
     for (int i = 0; nbr >= 1; i++) {

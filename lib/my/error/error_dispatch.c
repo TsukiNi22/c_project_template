@@ -1,43 +1,43 @@
 /*
 ** EPITECH PROJECT, 2025
-** error_handling.c
+** error_dispatch.c
 ** File description:
-** Error handling
+** Printf / Dispatch error message (type)
 */
 
 #include "write.h"
 #include "error.h"
 
-static int dispatch_1(int code_error)
-{
-    if (code_error == OP_FILE_ERR)
-        return my_putstr(2, OP_FILE_MSG);
-    if (code_error == READ_FILE_ERR)
-        return my_putstr(2, READ_FILE_MSG);
-    if (code_error == FLAG_ERR)
-        return my_putstr(2, FLAG_MSG);
-    return KO;
-}
+static char const *error_message[] = {
+    "An Error have ocured in the error return.",
+    "Undefinied Error.",
+    "The given pointer is NULL.",
+    "The allocation attempt with malloc have fail.",
+    "The write function have failed.",
+    "Incorrect number of argument given to main.",
+    "Incorrect input in the given argument.",
+    "Unknow flag given for execution.",
+    "Overflow on a variable.",
+    "'Invalid Permision' or 'No Existant File'.",
+    "'Can't' or 'Fail' to read the file.",
+    "'Invalid Permision' or 'No Existant Directory.'",
+    "'Can't' or 'Fail' to read the directory."
+};
 
-int dispatch(int code_error)
+int dispatch(error_code_t code)
 {
+    int res = 0;
+
     if (!PUT_ERROR)
         return OK;
-    if (code_error == ERROR_ERR)
-        return my_putstr(2, ERROR_MSG);
-    if (code_error == UNDEF_ERR)
-        return my_putstr(2, UNDEF_MSG);
-    if (code_error == OVERFLOW)
-        return my_putstr(2, OVERFLOW_MSG);
-    if (code_error == PTR_ERR)
-        return my_putstr(2, PTR_MSG);
-    if (code_error == MALLOC_ERR)
-        return my_putstr(2, MALLOC_MSG);
-    if (code_error == WRITE_ERR)
-        return my_putstr(2, WRITE_MSG);
-    if (code_error == ARGC_ERR)
-        return my_putstr(2, ARGC_MSG);
-    if (code_error == ARGV_ERR)
-        return my_putstr(2, ARGV_MSG);
-    return dispatch_1(code_error);
+    if (code < MIN_ERROR_CODE || code > MAX_ERROR_CODE) {
+        res = my_putnbr(2, code);
+        res += my_putstr(2, ": Unknow error code\n");
+    } else {
+        res = my_putstr(2, "Error: ");
+        res += my_putstr(2, error_message[code]);
+    }
+    if (res != OK)
+        return KO;
+    return OK;
 }

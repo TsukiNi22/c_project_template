@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2025
-** my_calloc_str.c
+** my_realloc.c
 ** File description:
-** Add place at the end of the given array
+** Realloc the given ptr of a given amout
 */
 
 #include "memory.h"

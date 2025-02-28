@@ -11,7 +11,8 @@ TARGET := a.out
 TEST_TARGET := unit_tests
 BUILD_DIR := .obj
 
-W := -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow -Werror
+W := -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow
+W += -Wuninitialized -Wmaybe-uninitialized -Werror
 
 DEBUG := -g -ggdb3
 
@@ -21,15 +22,20 @@ CFLAGS := $(W)
 
 ifeq ($(d), t)
 	CFLAGS := $(DEBUG)
+else ifeq ($(d), o)
+	CFLAGS += -O1
 endif
 
 GLOBAL :=	main.c \
-		sample.c \
-		free_data.c
+			const.c \
+			sample.c \
+			free_data.c
 
 INIT :=		init/init_data.c \
-		init/init_flag.c \
-		init/init_struct_main.c
+			init/data/init_global.c \
+			init/init_flag.c\
+			init/flag/null.c \
+			init/flag/help.c
 
 FILES := $(GLOBAL) $(INIT)
 SRC := $(addprefix src/, $(FILES))
@@ -41,7 +47,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	@make -C lib/my --no-print-directory D=$(d)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -52,6 +58,7 @@ clean:
 	@rm -f tests/*.o
 	@rm -f *.gc*
 	@rm -f vgcore.*
+	@make clean -C lib/my --no-print-directory
 
 fclean: clean
 	@rm -f $(TARGET)

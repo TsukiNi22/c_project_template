@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2025
-** error_handling.c
+** error_print.c
 ** File description:
-** Error handling
+** Print the error message (information)
 */
 
 #include "write.h"
@@ -13,12 +13,12 @@ void error_error(void)
 {
     my_putstr(2, "\n");
     my_putstr(2, "---------------------ERROR---------------------");
-    my_putstr(2, ERROR_MSG);
+    my_putstr(2, "Error: An Error have ocured in the error return.");
     my_putstr(2, "---------------------ERROR---------------------");
     my_putstr(2, "\n\n");
 }
 
-void print_error(int error_number)
+void print_error(error_code_t code)
 {
     int res = 0;
 
@@ -27,7 +27,7 @@ void print_error(int error_number)
     res += my_putstr(2, "\n\n");
     res += my_putstr(2, "-------------\033[31m[ERROR]\033[0m------------");
     res += my_putstr(2, "\n");
-    res += dispatch(error_number);
+    res += dispatch(code);
     res += my_putstr(2, "\n");
     res += my_putstr(2, "--------------------------------");
     res += my_putstr(2, "\n\n");

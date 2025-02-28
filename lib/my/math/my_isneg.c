@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2025
-** my_isneg
+** my_isneg.c
 ** File description:
 ** Write P when the given parameter is greter than 0 or N in oser cases
 */
@@ -14,7 +14,7 @@ int my_isneg(int n)
 
     if (n < 0)
         c = 'N';
-    if (my_putchar(c) == KO)
+    if (my_putchar(1, c) == KO)
         return err_prog(UNDEF_ERR, "In: my_isneg", KO);
     return OK;
 }

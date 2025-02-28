@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2025
 ** my_malloc.c
 ** File description:
-** For malloc
+** For malloc function and calloc
 */
 
 #include "memory.h"

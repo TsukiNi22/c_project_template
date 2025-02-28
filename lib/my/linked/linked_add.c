@@ -5,30 +5,70 @@
 ** Add a node
 */
 
+#include "define.h"
 #include "linked.h"
 #include "error.h"
-#include "define.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
-int linked_add(linked_list_t *linked_list, void *data)
+static int add_new(linked_list_t *new)
 {
-    linked_list_t *new_linked_list = NULL;
-    int id = -1;
-
-    if (!linked_list)
-        return err_prog(PTR_ERR, "In: linked_add", KO);
-    new_linked_list = malloc(sizeof(linked_list_t));
-    if (!new_linked_list)
-        return err_prog(MALLOC_ERR, "In: linked_add", KO);
-    new_linked_list->data = data;
-    if (linked_list->id_status) {
-        for (id = linked_list->id; linked_list->next; id++)
-            linked_list = linked_list->next;
-        new_linked_list->next = NULL;
-    } else
-        new_linked_list->next = linked_list->next;
-    new_linked_list->id = id + 1;
-    new_linked_list->previous = linked_list;
-    linked_list->next = new_linked_list;
+    if (!new)
+        return err_prog(PTR_ERR, "In: add_new", KO);
+    new->acendant = malloc(sizeof(bool));
+    new->size = malloc(sizeof(int));
+    new->mid_index = malloc(sizeof(int));
+    new->head = malloc(sizeof(linked_list_t *));
+    new->mid = malloc(sizeof(linked_list_t *));
+    new->tail = malloc(sizeof(linked_list_t *));
+    if (!new->acendant || !new->size || !new->mid_index
+        || !new->head || !new->mid || !new->tail)
+        return err_prog(MALLOC_ERR, "In: add_new", KO);
+    *(new->size) = 0;
+    *(new->mid_index) = 0;
+    *(new->mid) = new;
+    *(new->tail) = new;
+    new->next = NULL;
+    new->previous = NULL;
     return OK;
+}
+
+static int add_new_alr(linked_list_t *new, linked_list_t **head)
+{
+    if (!new || !head || !(*head))
+        return err_prog(PTR_ERR, "In: add_new_alr", KO);
+    new->acendant = (*head)->acendant;
+    new->size = (*head)->size;
+    new->mid_index = (*head)->mid_index;
+    new->head = (*head)->head;
+    new->mid = (*head)->mid;
+    new->tail = (*head)->tail;
+    new->next = *head;
+    new->previous = NULL;
+    (*head)->previous = new;
+    return OK;
+}
+
+int linked_add(linked_list_t **head, void *data)
+{
+    linked_list_t *new = NULL;
+
+    if (!head)
+        return err_prog(PTR_ERR, "In: linked_add", KO);
+    new = malloc(sizeof(linked_list_t));
+    if (!new)
+        return err_prog(MALLOC_ERR, "In: linked_add", KO);
+    new->data = data;
+    if (!(*head)) {
+        if (add_new(new) == KO)
+            return err_prog(UNDEF_ERR, "In: linked_add 1", KO);
+    } else {
+        if (add_new_alr(new, head) == KO)
+            return err_prog(UNDEF_ERR, "In: linked_add 2", KO);
+    }
+    *head = new;
+    (*((*head)->size))++;
+    (*((*head)->head)) = new;
+    (*((*head)->mid_index))++;
+    return linked_upd_mid(*head);
 }

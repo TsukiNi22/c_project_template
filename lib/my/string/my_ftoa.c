@@ -5,7 +5,7 @@
 ** Return the string from a float
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "my_math.h"
 #include "write.h"
 #include "memory.h"

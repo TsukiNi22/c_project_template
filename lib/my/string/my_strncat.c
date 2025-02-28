@@ -5,7 +5,7 @@
 ** Concatenates two string
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "define.h"
 #include "error.h"
 

@@ -19,9 +19,20 @@
 
 /* linked */
 typedef struct linked_list_s {
-    bool id_status;
-    int id;
+    /* mid_localisation */
+    int *mid_index;
+    bool *acendant;
+
+    /* global_shared_information */
+    int *size;
+    struct linked_list_s **head;
+    struct linked_list_s **mid;
+    struct linked_list_s **tail;
+
+    /* data */
     void *data;
+
+    /* deplacement */
     struct linked_list_s *previous;
     struct linked_list_s *next;
 } linked_list_t;
@@ -30,12 +41,16 @@ typedef struct linked_list_s {
 /* PROTOTYPE */
 
 /* gestion */ // Error: KO
-int linked_add(linked_list_t *linked_list, void *data);
-int linked_add_id(linked_list_t **linked_list, void *data, int id);
-int linked_pop(linked_list_t *linked_list);
-int linked_pop_id(linked_list_t **linked_list, int id);
+int linked_add(linked_list_t **head, void *data);
+int linked_add_at(linked_list_t **head, void *data, int at);
+int linked_pop(int (*free_func)(void *), linked_list_t **head);
+int linked_pop_at(int (*free_func)(void *), linked_list_t **head, int at);
+int linked_pop_this(int (*free_func)(void *), linked_list_t **head,
+    linked_list_t *pop);
+int linked_upd_mid(linked_list_t *head);
+int delete_linked(int (*free_func)(void *), linked_list_t **head);
 
 /* get_info */
-void *linked_get_data(linked_list_t *linked_list, int id); // Error: NULL
+void *linked_get_data(linked_list_t *head, int at); // Error: NULL
 
 #endif /* LINKED_H */

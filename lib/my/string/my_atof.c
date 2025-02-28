@@ -6,7 +6,7 @@
 */
 
 #include "my_math.h"
-#include "string.h"
+#include "my_string.h"
 #include "error.h"
 #include <stdbool.h>
 

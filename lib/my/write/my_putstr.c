@@ -5,11 +5,11 @@
 ** Write a str
 */
 
-#include "string.h"
+#include "my_string.h"
 #include "error.h"
 #include <unistd.h>
 
-int my_putstr(int output, char const *str)
+int my_putstr(int fd, char const *str)
 {
     int len = 0;
 
@@ -18,7 +18,7 @@ int my_putstr(int output, char const *str)
     len = my_strlen(str);
     if (len < 0)
         return err_prog(UNDEF_ERR, "In: putstr", KO);
-    if (write(output, str, len) != len)
+    if (write(fd, str, len) != len)
         return err_prog(WRITE_ERR, "In: putstr", KO);
     return OK;
 }

@@ -1,23 +1,18 @@
 /*
 ** EPITECH PROJECT, 2025
-** my_put_nbr
+** my_put_nbr.c
 ** File description:
 ** Display the given number
 */
 
-#include "string.h"
 #include "write.h"
 #include "error.h"
-#include <stdlib.h>
 
-int my_putnbr(long long nb)
+int my_putnbr(int fd, long long nb)
 {
-    char *my_nb = my_itoa(nb);
-
-    if (!my_nb)
-        return err_prog(PTR_ERR, "In: putnbr", KO);
-    if (my_putstr(1, my_nb) == KO)
-        return err_prog(UNDEF_ERR, "In: putnbr", KO);
-    free(my_nb);
+    for (; nb > 0; nb /= 10) {
+        if (my_putchar(fd, (nb % 10) + 48) == KO)
+            return err_prog(UNDEF_ERR, "In: my_putnbr", KO);
+    }
     return OK;
 }

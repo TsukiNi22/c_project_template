@@ -12,8 +12,8 @@
     /* DEFINE */
 
     /* error_return_write */
-    #define PUT_ERROR 1
-    #define CUSTOM_PUT_ERROR 1
+    #define PUT_ERROR 0
+    #define CUSTOM_PUT_ERROR 0
     #define SYSTEM_PUT_ERROR 1
 
     /* error_return */
@@ -35,30 +35,8 @@
     #define EPITECH_ERR 84
 
     /* error_code */
-    #define ERROR_ERR -2
-    #define UNDEF_ERR -1
-    #define OVERFLOW 0
-    #define PTR_ERR 1
-    #define MALLOC_ERR 2
-    #define WRITE_ERR 3
-    #define ARGC_ERR 4
-    #define ARGV_ERR 5
-    #define OP_FILE_ERR 6
-    #define READ_FILE_ERR 7
-    #define FLAG_ERR 8
-
-    /* error_sentence */
-    #define ERROR_MSG "Error: An Error have ocured in the error return"
-    #define UNDEF_MSG "Error: Undefinied Error"
-    #define OVERFLOW_MSG "Error: Overflow on a variable"
-    #define PTR_MSG "Error: The given pointer is NULL"
-    #define MALLOC_MSG "Error: The allocation attempt with malloc have fail"
-    #define WRITE_MSG "Error: The write function have failed"
-    #define ARGC_MSG "Error: Incorrect number of argument given to main"
-    #define ARGV_MSG "Error: Incorrect input in the given argument"
-    #define OP_FILE_MSG "Error: 'Invalid Permision' or 'No Existant File'"
-    #define READ_FILE_MSG "Error: 'Can't' or 'Fail' to read the file"
-    #define FLAG_MSG "Error: Unknow flag given for execution"
+    #define MIN_ERROR_CODE ERROR_ERR
+    #define MAX_ERROR_CODE FLAG_ERR
 
     //----------------------------------------------------------------//
     /* MACRO */
@@ -71,45 +49,58 @@
     #define ERR_CN(msg, c) if (c) return err_custom_n(msg)
     #define ERR_CV(msg, c) if (c) return err_custom_v(msg)
     #define ERR_S(msg, c) if (c) return err_system(msg)
+    #define ERR_SN(msg, c) if (c) return err_system_n(msg)
+    #define ERR_SV(msg, c) if (c) return err_system_v(msg)
 
     //----------------------------------------------------------------//
     /* INCLUDE */
 
     /* type */
-    #include <stdbool.h>
+    #include "sample.h" // main_data_t
+    #include <stdbool.h> // boolean
+
+//----------------------------------------------------------------//
+/* TYPDEF */
+
+/* error_code */
+typedef enum error_code_e {
+    ERROR_ERR = -2,
+    UNDEF_ERR = -1,
+    PTR_ERR = 0,
+    MALLOC_ERR,
+    WRITE_ERR,
+    ARGC_ERR,
+    ARGV_ERR,
+    FLAG_ERR,
+    OVERFLOW,
+    OP_FILE_ERR,
+    READ_FILE_ERR,
+    OP_DIR_ERR,
+    READ_DIR_ERR
+} error_code_t;
+
+/*
+** For more detail in the error, look in /lib/my/error/error_dispatch.c
+*/
 
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
-/* error_handling */
-void err_prog_v(int error_number, char *error_info); // Error: None
-void *err_prog_n(int error_number, char *error_info); // Error: None
-int err_prog(int error_number, char *error_info, int to_return); // Error: None
-void err_custom_v(char *error_info); // Error: None
-void *err_custom_n(char *error_info); // Error: None
-int err_custom(char *error_info, int to_return); // Error: None
-void err_system_v(char *error_info); // Error: None
-void *err_system_n(char *error_info); // Error: None
-int err_system(char *error_info, int to_return); // Error: None
+/* error_handling */ // Error: None
+void err_prog_v(error_code_t code, char *error_info);
+void *err_prog_n(error_code_t code, char *error_info);
+int err_prog(error_code_t code, char *error_info, int to_return);
+void err_custom_v(char *error_info);
+void *err_custom_n(char *error_info);
+int err_custom(char *error_info, int to_return);
+void err_system_v(main_data_t *data, char *error_info);
+void *err_system_n(main_data_t *data, char *error_info);
+int err_system(main_data_t *data, char *error_info, int to_return);
 
 /* print_error_ouput */
 void error_error(void); // Error: None
-void print_error(int error_number); // Error: None
+void print_error(error_code_t code); // Error: None
 void print_error_info(char *error_info, bool custom); // Error: None
-int dispatch(int code_error); // Error: KO
-
-/*
-** Error -2: Can't return Error
-** Error -1: Undefinied Error
-** Error 0: Overflow
-** Error 1: The given pointer, return NULL
-** Error 2: Allocation of pointer, return NULL
-** Error 3: Write error
-** Error 4: Not enought argv
-** Error 5: Wrong input in given argument
-** Error 6: Can't open file
-** Error 7: Can't read file
-** Error 8: Flag is unknow
-*/
+int dispatch(error_code_t code); // Error: KO
 
 #endif /* ERROR_H */
