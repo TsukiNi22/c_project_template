@@ -11,6 +11,6 @@
 int my_putchar(int fd, char const c)
 {
     if (write(fd, &c, 1) != 1)
-        return err_prog(WRITE_ERR, "In: my_putchar", KO);
+        return err_prog(WRITE_ERR, KO, ERR_INFO);
     return OK;
 }

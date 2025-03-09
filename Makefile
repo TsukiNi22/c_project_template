@@ -2,7 +2,7 @@
 ## EPITECH PROJECT, 2025
 ## Makefile
 ## File description:
-## Radar makefile de la ta
+## Makefile for the compilation of the executable
 ##
 
 CC := gcc
@@ -12,7 +12,7 @@ TEST_TARGET := unit_tests
 BUILD_DIR := .obj
 
 W := -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow
-W += -Wuninitialized -Wmaybe-uninitialized -Werror
+W += -Wuninitialized -Wmaybe-uninitialized
 
 DEBUG := -g -ggdb3
 
@@ -52,6 +52,10 @@ $(TARGET): $(OBJ)
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
+
+lib:
+	@rm -f $(TARGET)
+	@make -j --no-print-directory
 
 clean:
 	@rm -rf $(BUILD_DIR)
@@ -97,4 +101,4 @@ get_unknow_files:
                 rm -f missing_files.txt; \
         fi
 
-.PHONY: all clean fclean re tests_run get_unregistered_files get_unknow_files
+.PHONY: all lib clean fclean re tests_run get_unregistered_files get_unknow_files

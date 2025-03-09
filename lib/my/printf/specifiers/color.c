@@ -16,7 +16,7 @@ int specifiers_color(printf_data_t *data)
     unsigned char b = 0;
 
     if (!data)
-        return err_prog(PTR_ERR, "In specifiers_reset", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     r = va_arg(data->ap, i_t);
     g = va_arg(data->ap, i_t);
     b = va_arg(data->ap, i_t);

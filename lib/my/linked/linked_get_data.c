@@ -12,7 +12,7 @@
 void *linked_get_data(linked_list_t *head, int at)
 {
     if (!head)
-        return err_prog_n(PTR_ERR, "In: linked_get_data");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     for (int i = 1; head->next && i < at; i++)
         head = head->next;
     return head->data;

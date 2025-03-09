@@ -7,52 +7,57 @@
 
 #include "write.h"
 #include "error.h"
+#include <unistd.h>
 #include <stdbool.h>
 
 void error_error(void)
 {
-    my_putstr(2, "\n");
-    my_putstr(2, "---------------------ERROR---------------------");
-    my_putstr(2, "Error: An Error have ocured in the error return.");
-    my_putstr(2, "---------------------ERROR---------------------");
-    my_putstr(2, "\n\n");
+    write(2, "\n", 1);
+    write(2, "---------------------ERROR---------------------\n", 48);
+    write(2, "Error: An Error have ocured in the error return.\n", 49);
+    write(2, "---------------------ERROR---------------------\n", 48);
+    write(2, "\n", 1);
 }
 
-void print_error(error_code_t code)
+void print_error_custom(char *info, err_t err)
 {
-    int res = 0;
+    int res = OK;
 
-    if (!PUT_ERROR)
-        return;
-    res += my_putstr(2, "\n\n");
-    res += my_putstr(2, "-------------\033[31m[ERROR]\033[0m------------");
-    res += my_putstr(2, "\n");
-    res += dispatch(code);
-    res += my_putstr(2, "\n");
-    res += my_putstr(2, "--------------------------------");
-    res += my_putstr(2, "\n\n");
-    if (res < 0)
-        error_error();
-}
-
-void print_error_info(char *error_info, bool custom)
-{
-    int res = 0;
-
-    if (!error_info) {
+    if (!info) {
         error_error();
         return;
     }
-    res += my_putstr(2, "\n\n");
-    if (custom)
-        res += my_putstr(2, "-------------\033[34m[INFO]\033[0m-------------");
-    else
-        res += my_putstr(2, "-------------\033[36m[INFO]\033[0m-------------");
-    res += my_putstr(2, "\n");
-    res += my_putstr(2, error_info);
-    res += my_putstr(2, "\n");
-    res += my_putstr(2, "--------------------------------");
-    res += my_putstr(2, "\n\n");
-    if (res < 0)
+    res += my_printf("%O%S\n"
+    "-------------\033[31m[ERROR]%R%S------------%R"
+    "\n"
+    "%C%s, %s, line %d: %C%s%R%S"
+    "\n"
+    "--------------------------------"
+    "\n\n%R", 2,
+    192, 192, 192,
+    err.file, err.func, err.line,
+    0, 255, 255,
+    info);
+    if (res != OK)
+        error_error();
+}
+
+void print_error_prog(error_code_t code, err_t err)
+{
+    int res = OK;
+
+    res += my_printf("%O%S\n"
+    "-------------\033[31m[ERROR]%R%S------------%R"
+    "\n"
+    "%C%s, %s, line %d: %C", 2,
+    192, 192, 192,
+    err.file, err.func, err.line,
+    0, 255, 255);
+    res += dispatch(code);
+    res += my_printf("%O%R%S"
+    "\n"
+    "--------------------------------"
+    "\n\n%R", 2);
+    if (res != OK)
         error_error();
 }

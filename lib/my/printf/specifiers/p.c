@@ -17,7 +17,7 @@
 static int set_str(printf_data_t *data, char *str, char *n, int len)
 {
     if (!data || !str || !n)
-        return err_prog(PTR_ERR, "In: set_str", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     data->c = (my_strcmp(n, "(nil)") != 0);
     if (my_get_index(data->info_flags, '-') != -1) {
         if (data->c)
@@ -44,7 +44,7 @@ int specifiers_p(printf_data_t *data)
     int len = 0;
 
     if (!data)
-        return err_prog(PTR_ERR, "In: specifiers_c", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     n = my_convertnbr_base((llu_t) va_arg(data->ap, void *),
     "0123456789abcdef");
     if (my_strcmp(n, "") == 0)
@@ -52,11 +52,11 @@ int specifiers_p(printf_data_t *data)
     len = my_strlen(n) + 2 * (my_strcmp(n, "(nil)") != 0);
     data->c = (len >= data->field);
     if (my_malloc_c(&str, data->field * !data->c + len * data->c + 2) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_c 2", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (set_str(data, str, n, len) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_c 3", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (my_putstr(data->fd, str) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_c 4", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     free(str);
     return OK;
 }

@@ -12,7 +12,7 @@ int count_occurence(char const *str, char const c)
     int count = 0;
 
     if (!str)
-        return err_prog(PTR_ERR, "In: my_count_occurence", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int i = 0; str[i]; i++) {
         if (str[i] == c)
             count++;

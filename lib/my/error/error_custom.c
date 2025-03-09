@@ -9,25 +9,31 @@
 #include "error.h"
 #include <stdbool.h>
 
-void err_custom_v(char *error_info)
+void err_custom_v(char *info, err_t err)
 {
-    if (!CUSTOM_PUT_ERROR)
+    if (!info)
+        error_error();
+    if (!CUSTOM_PUT_ERROR || !info)
         return;
-    print_error_info(error_info, true);
+    print_error_custom(info, err);
 }
 
-void *err_custom_n(char *error_info)
+void *err_custom_n(char *info, err_t err)
 {
-    if (!CUSTOM_PUT_ERROR)
+    if (!info)
+        error_error();
+    if (!CUSTOM_PUT_ERROR || !info)
         return NULL;
-    print_error_info(error_info, true);
+    print_error_custom(info, err);
     return NULL;
 }
 
-int err_custom(char *error_info, int to_return)
+int err_custom(char *info, int to_return, err_t err)
 {
-    if (!CUSTOM_PUT_ERROR)
+    if (!info)
+        error_error();
+    if (!CUSTOM_PUT_ERROR || !info)
         return to_return;
-    print_error_info(error_info, true);
+    print_error_custom(info, err);
     return to_return;
 }

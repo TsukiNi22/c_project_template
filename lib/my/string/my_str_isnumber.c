@@ -11,7 +11,7 @@
 bool my_str_isnumber(char const *str)
 {
     if (!str)
-        return err_prog(PTR_ERR, "In: my_str_isnumber", false);
+        return err_prog(PTR_ERR, false, ERR_INFO);
     for (int i = 0; str[i]; i++) {
         if (!((str[i] >= '0' && str[i] <= '9') || (str[i] == '-' && i == 0)))
             return false;

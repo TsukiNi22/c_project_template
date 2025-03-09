@@ -18,16 +18,16 @@ char *my_convertnbr_base(unsigned long long nbr, char const *base)
     int size = 0;
 
     if (!base)
-        return err_prog_n(PTR_ERR, "In: my_convertnbr_base");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     base_size = my_strlen(base);
     if (base_size < 0)
-        return err_prog_n(UNDEF_ERR, "In: my_convertnbr_base 1");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     if (base_size == 0)
-        return err_prog_n(ARGV_ERR, "In: my_convertnbr_base");
+        return err_prog_n(ARGV_ERR, ERR_INFO);
     for (int n = nbr; n >= 1; size++)
         n /= base_size;
     if (my_malloc_c(&my_nbr, size + 1) == KO)
-        return err_prog_n(UNDEF_ERR, "In: my_convertnbr_base 2");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (int i = 0; nbr >= 1; i++) {
         my_nbr[size - i - 1] = base[nbr % base_size];
         nbr /= base_size;

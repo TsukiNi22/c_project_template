@@ -20,7 +20,7 @@ static int set_str_left(printf_data_t *data, char **str, char *n, int size)
     int len = 0;
 
     if (!data || !str || !n)
-        return err_prog(PTR_ERR, "In set_str_left", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     len = my_strlen(n);
     for (int i = 0; i < data->precision - len; i++)
         my_strcat(*str, "0");
@@ -36,7 +36,7 @@ static int set_str_right(printf_data_t *data, char **str, char *n, int size)
     int len = 0;
 
     if (!data || !str || !n)
-        return err_prog(PTR_ERR, "In set_str_left", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     len = my_strlen(n);
     for (int i = 0; i < size - data->precision * (data->precision > len)
         - len * !(data->precision > len); i++)
@@ -51,13 +51,13 @@ static int set_str_right(printf_data_t *data, char **str, char *n, int size)
 static int set_str(printf_data_t *data, char **str, char *n, int size)
 {
     if (!data || !str || !n)
-        return err_prog(PTR_ERR, "In set_str", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (my_get_index(data->info_flags, '-') != -1) {
         if (set_str_left(data, str, n, size) == KO)
-            return err_prog(UNDEF_ERR, "In set_str 1", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
     } else {
         if (set_str_right(data, str, n, size) == KO)
-            return err_prog(UNDEF_ERR, "In set_str 2", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }
     return OK;
 }
@@ -68,10 +68,10 @@ static int get_str(printf_data_t *data, char **str, char *n)
     int len = 0;
 
     if (!data || !str || !n)
-        return err_prog(PTR_ERR, "In get_str", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     len = my_strlen(n);
     if (len < 0)
-        return err_prog(UNDEF_ERR, "In get_str 1", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (len >= data->field && len >= data->precision)
         size = len;
     if (data->field >= len && data->field >= data->precision)
@@ -79,16 +79,16 @@ static int get_str(printf_data_t *data, char **str, char *n)
     if (data->precision >= data->field && data->precision >= len)
         size = data->precision;
     if (my_malloc_c(str, size + 2) == KO)
-        return err_prog(UNDEF_ERR, "In get_str 2", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (set_str(data, str, n, size) == KO)
-        return err_prog(UNDEF_ERR, "In get_str 3", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     return OK;
 }
 
 static int get_nbr(printf_data_t *data, char **n, const char authorized_char[])
 {
     if (!data || !n || !authorized_char)
-        return err_prog(PTR_ERR, "In: get_nbr", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (my_strcmp(data->info_modifier, "l") == 0)
         *n = my_convertnbr_base(va_arg(data->ap, llu_t), authorized_char);
     if (my_strcmp(data->info_modifier, "ll") == 0)
@@ -96,7 +96,7 @@ static int get_nbr(printf_data_t *data, char **n, const char authorized_char[])
     else
         *n = my_convertnbr_base(va_arg(data->ap, u_t), authorized_char);
     if (!(*n))
-        return err_prog(UNDEF_ERR, "In: get_nbr", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     return OK;
 }
 
@@ -107,7 +107,7 @@ int specifiers_base(printf_data_t *data)
     int res = OK;
 
     if (!data)
-        return err_prog(PTR_ERR, "In specifiers_base", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (data->info_specifiers == 'o')
         res += get_nbr(data, &n, "01234567");
     if (data->info_specifiers == 'u')
@@ -120,6 +120,6 @@ int specifiers_base(printf_data_t *data)
         res += get_nbr(data, &n, "01");
     if (res != OK || get_str(data, &str, n) == KO
     || my_putstr(data->fd, str) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_base", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     return OK;
 }

@@ -12,7 +12,7 @@
 bool my_str_is(char const *str, char const *char_in)
 {
     if (!str || !char_in)
-        return err_prog(PTR_ERR, "In: my_str_isnum", false);
+        return err_prog(PTR_ERR, false, ERR_INFO);
     for (int i = 0; str[i]; i++) {
         if (my_get_index(char_in, str[i]) == -1)
             return false;

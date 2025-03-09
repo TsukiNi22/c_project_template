@@ -13,10 +13,10 @@
 int free_matrice(matrice_t **matrice)
 {
     if (!matrice || !(*matrice) || !(*matrice)->matrice)
-        return err_prog(PTR_ERR, "In: free_matrice 1", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int y = 0; y < (*matrice)->y; y++) {
         if (!((*matrice)->matrice[y]))
-            return err_prog(PTR_ERR, "In: free_matrice 2", KO);
+            return err_prog(PTR_ERR, KO, ERR_INFO);
         free((*matrice)->matrice[y]);
     }
     free((*matrice)->matrice);

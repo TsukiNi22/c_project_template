@@ -14,12 +14,12 @@ matrice_t *multiplie_matrice(matrice_t *matrice_a, matrice_t *matrice_b)
     matrice_t *matrice = NULL;
 
     if (!matrice_a || !matrice_b)
-        return err_prog_n(PTR_ERR, "In: multiplie_matrice");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     if (matrice_a->x != matrice_b->y)
-        return err_prog_n(ARGV_ERR, "In: multiplie_matrice");
+        return err_prog_n(ARGV_ERR, ERR_INFO);
     matrice = init_matrice(matrice_b->x, matrice_a->y);
     if (!matrice)
-        return err_prog_n(UNDEF_ERR, "In: multiplie_matrice");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (int i = 0; i < matrice->x * matrice->y; i++) {
         for (int j = 0; j < matrice_a->x; j++) {
             matrice->matrice[i / matrice->x][i % matrice->x] +=

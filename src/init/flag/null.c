@@ -12,6 +12,6 @@
 int flag_null(main_data_t *data, UNUSED int const argc, char const *argv[])
 {
     if (!data || !argv)
-        return err_prog(PTR_ERR, "In: flag_null", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     return OK;
 }

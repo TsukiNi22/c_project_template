@@ -16,12 +16,12 @@ static int print_linked(linked_list_t *temp)
     int res = OK;
 
     if (!temp)
-        return err_prog(PTR_ERR, "In: print_linked", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     data = (hash_linked_data_t *)temp->data;
     res += my_printf("> %d - \"%s\" - \"%s\"\n",
     data->index, data->key, data->value);
     if (res < 0)
-            return err_prog(UNDEF_ERR, "In: print_linked", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
     return OK;
 }
 
@@ -30,13 +30,13 @@ int ht_dump(hashtable_t *ht)
     int res = OK;
 
     if (!ht)
-        return err_prog(PTR_ERR, "In: ht_dump", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int i = 0; i < ht->len; i++) {
         res += my_printf("[%d]:\n", i);
         for (linked_list_t *tmp = ht->linked[i]; tmp; tmp = tmp->next)
             res += print_linked(tmp);
         if (res < 0)
-            return err_prog(UNDEF_ERR, "In: ht_dump", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }
     return OK;
 }

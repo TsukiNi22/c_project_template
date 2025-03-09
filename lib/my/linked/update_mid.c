@@ -12,7 +12,7 @@
 int linked_upd_mid(linked_list_t *head)
 {
     if (!head)
-        return err_prog(PTR_ERR, "In: linked_upd_mid", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (!(*head->mid) || *(head->size) <= 1 || *(head->size) % 2 != 1)
         return OK;
     if ((*(head->size) + 1) / 2 == *(head->mid_index))

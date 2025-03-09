@@ -13,10 +13,10 @@
 int my_show_word_array(char **array)
 {
     if (!array)
-        return err_prog(PTR_ERR, "In: show_word_array", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int i = 0; array[i]; i++) {
         if (my_printf("array[%d]=\"%s\"\n", i, array[i]) == KO)
-            return err_prog(WRITE_ERR, "In: show_word_array", KO);
+            return err_prog(WRITE_ERR, KO, ERR_INFO);
     }
     return OK;
 }

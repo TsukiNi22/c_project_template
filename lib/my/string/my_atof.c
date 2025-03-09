@@ -18,7 +18,7 @@ static long double my_atof_basic(const char *str)
     bool diff = false;
 
     if (!str)
-        return err_prog(PTR_ERR, "In: my_atof > my_atof_basic", 0.0);
+        return err_prog(PTR_ERR, 0, ERR_INFO);
     if (!str[0])
         return OK;
     size = my_strlen(str) - 1;
@@ -47,7 +47,7 @@ static int my_atof_second(const char *str, long double *my_float)
 
     if (!str || !my_float || !first_array || !second_array
         || size < 0 || cut_place == KO || second_size < 0)
-        return err_prog(UNDEF_ERR, "In: my_atof > my_atof_second", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (first_int < 0)
         *my_float = first_int + second_int * mult * -1;
     else
@@ -60,6 +60,6 @@ long double my_atof(const char *str)
     long double my_float = 0.0;
 
     if (!str || my_atof_second(str, &my_float) == KO)
-        return err_prog(PTR_ERR, "In: my_atof", 0.0);
+        return err_prog(PTR_ERR, 0, ERR_INFO);
     return my_float;
 }

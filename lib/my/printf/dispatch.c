@@ -39,7 +39,7 @@ static int (*const functions[])(printf_data_t *) = {
 static int get_field_precision(printf_data_t *data)
 {
     if (!data)
-        return err_prog(PTR_ERR, "In: get_field_precision", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     data->field = 0;
     data->precision = 0;
     if (data->info_field[0] == '*')
@@ -56,12 +56,13 @@ static int get_field_precision(printf_data_t *data)
 int specifiers_dispatch(printf_data_t *data)
 {
     if (!data)
-        return err_prog(PTR_ERR, "In: dispatch", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (get_field_precision(data) == KO)
-        return err_prog(UNDEF_ERR, "In: dispatch", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     for (int i = 0; data->specifiers[i] && functions[i]; i++) {
         if (data->info_specifiers == data->specifiers[i][0])
             return functions[i](data);
     }
-    return err_custom("Can't dispatch the specifiers to it's function", KO);
+    return err_custom("Can't dispatch the specifiers to it's function",
+        KO, ERR_INFO);
 }

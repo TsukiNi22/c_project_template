@@ -12,6 +12,6 @@
 int init_global(main_data_t *data)
 {
     if (!data)
-        return err_prog(PTR_ERR, "In: init_global", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     return OK;
 }

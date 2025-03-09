@@ -12,7 +12,7 @@ static int set_sorted_array(int *already_sorted, int *changed,
     int *save_i, int smallest)
 {
     if (!already_sorted || !changed || !save_i)
-        return err_prog(PTR_ERR, "In: set_sorted_array", 0);
+        return err_prog(PTR_ERR, 0, ERR_INFO);
     if (*changed != 1)
         already_sorted[*changed * -1] = 1;
     else
@@ -28,7 +28,7 @@ static int get_smallest(int *array, int size, int *already_sorted)
     int save_i = 0;
 
     if (!already_sorted)
-        return err_prog(PTR_ERR, "In: get_smallest", 0);
+        return err_prog(PTR_ERR, 0, ERR_INFO);
     for (int i = 0; i < size; i++) {
         if (first && already_sorted[i] == 0) {
             smallest = array[i];
@@ -50,9 +50,9 @@ int my_sort_int_array(int *array, int size)
     int already_sorted[size];
 
     if (!array)
-        return err_prog(PTR_ERR, "In: my_sort_int_array", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (size < 0)
-        return err_prog(ARGV_ERR, "In: my_sort_int_array", KO);
+        return err_prog(ARGV_ERR, KO, ERR_INFO);
     for (int i = 0; i < size; i++)
         already_sorted[i] = 0;
     for (int i = 0; i < size; i++)

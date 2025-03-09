@@ -18,10 +18,10 @@ long long my_atoi(const char *str)
     bool negatif = false;
 
     if (!str)
-        return err_prog(PTR_ERR, "In: my_atoi", 0);
+        return err_prog(PTR_ERR, 0, ERR_INFO);
     array_size = my_strlen(str);
     if (array_size < 0)
-        return err_prog(UNDEF_ERR, "In: my_atoi", 0);
+        return err_prog(UNDEF_ERR, 0, ERR_INFO);
     negatif = (str[0] == '-');
     for (int i = negatif; str[i]; i++) {
         mult = my_pow(10, array_size - 1 - (i - negatif) - negatif);
@@ -30,6 +30,6 @@ long long my_atoi(const char *str)
     if (negatif)
         my_int *= -1;
     if (((!negatif && my_int < 0) || (negatif && my_int >= 0)) && my_int != 0)
-        return err_prog(OVERFLOW, "In: my_atoi", 0);
+        return err_prog(OVERFLOW, 0, ERR_INFO);
     return my_int;
 }

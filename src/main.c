@@ -16,9 +16,9 @@ int main(int const argc, char const *argv[])
     int res = 0;
 
     if (!argv)
-        return err_prog(PTR_ERR, "In: main", EPITECH_ERR);
-    data->help = false;
-    data->err_sys = false;
+        return err_prog(PTR_ERR, EPITECH_ERR, ERR_INFO);
+    data.help = false;
+    data.err_sys = false;
     res = sample(argc, argv, &data);
     if (res == KO || res == FATAL_ERR) {
         if (res != FATAL_ERR)

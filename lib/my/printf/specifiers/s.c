@@ -19,7 +19,7 @@ static int set_str(printf_data_t *data, char *str, char *s, int len)
     int size = 0;
 
     if (!data || !str || !s)
-        return err_prog(PTR_ERR, "In: set_str", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (my_strcmp(data->info_precision, "") == 0)
         size = len;
     else
@@ -42,10 +42,10 @@ static int get_str(printf_data_t *data, char **str, char *s)
     int len = 0;
 
     if (!data || !str || !s)
-        return err_prog(PTR_ERR, "In get_str", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     len = my_strlen(s);
     if (len < 0)
-        return err_prog(UNDEF_ERR, "In get_str 1", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (len >= data->field && len >= data->precision)
         size = len;
     if (data->field >= len && data->field >= data->precision)
@@ -53,9 +53,9 @@ static int get_str(printf_data_t *data, char **str, char *s)
     if (data->precision >= data->field && data->precision >= len)
         size = data->precision;
     if (my_malloc_c(str, size + 2) == KO)
-        return err_prog(UNDEF_ERR, "In get_str 2", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (set_str(data, *str, s, len) == KO)
-        return err_prog(UNDEF_ERR, "In: get_str 3", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     return OK;
 }
 
@@ -65,7 +65,7 @@ int specifiers_s(printf_data_t *data)
     char *s = NULL;
 
     if (!data)
-        return err_prog(PTR_ERR, "In: specifiers_c", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     s = va_arg(data->ap, void *);
     data->c = true;
     if (!s) {
@@ -73,9 +73,9 @@ int specifiers_s(printf_data_t *data)
         data->c = false;
     }
     if (get_str(data, &str, s) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_c 1", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (my_putstr(data->fd, str) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_c 3", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     free(str);
     return OK;
 }

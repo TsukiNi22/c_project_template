@@ -16,10 +16,10 @@ matrice_t *reduce_matrice(matrice_t *matrice, int y_remove, int x_remove)
     int x_b = 0;
 
     if (!matrice)
-        return err_prog_n(PTR_ERR, "In: reduce_matrice");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     matrice_reduce = init_matrice(matrice->x - 1, matrice->y - 1);
     if (!matrice_reduce)
-        return err_prog_n(UNDEF_ERR, "In: reduce_matrice");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (int i = 0; i < matrice->y * matrice->x; i++) {
         if (i / matrice->x != y_remove && i % matrice->x != x_remove) {
             matrice_reduce->matrice[y_b][x_b] =

@@ -16,11 +16,11 @@ static int get_size(int argc, char **argv)
     int res = 0;
 
     if (!argv)
-        return err_prog(PTR_ERR, "In: my_concat_params", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int i = 0; i < argc; i++) {
         res = my_strlen(argv[i]);
         if (res < 0)
-            return err_prog(UNDEF_ERR, "In: my_concat_params > get_size", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
         size += res;
     }
     return size;
@@ -32,15 +32,15 @@ char *concat_params(int argc, char **argv)
     char *str = NULL;
 
     if (!argv)
-        return err_prog_n(PTR_ERR, "In: my_concat_params");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     total_str_size = get_size(argc, argv);
     if (total_str_size < 0)
-        return err_prog_n(ARGV_ERR, "In: my_concat_params");
+        return err_prog_n(ARGV_ERR, ERR_INFO);
     if (my_malloc_c(&str, total_str_size + argc) == KO)
-        return err_prog_n(UNDEF_ERR, "In: my_concat_params");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (int i = 0; i < argc; i++) {
         if (!my_strcat(str, argv[i]))
-            return err_prog_n(UNDEF_ERR, "In: concat_params 2");
+            return err_prog_n(UNDEF_ERR, ERR_INFO);
     }
     return str;
 }

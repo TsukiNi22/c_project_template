@@ -14,12 +14,12 @@ int my_putnbr_base(int fd, unsigned long long nbr, char const *base)
     int base_size = 0;
 
     if (!base)
-        return err_prog(PTR_ERR, "In: my_putnbr_base", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     base_size = my_strlen(base);
     if (base_size < 0)
-        return err_prog(UNDEF_ERR, "In: my_putnbr_base", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (base_size == 0)
-        return err_prog(ARGV_ERR, "In: my_putnbr_base", KO);
+        return err_prog(ARGV_ERR, KO, ERR_INFO);
     for (int i = 0; nbr >= 1; i++) {
         my_putchar(fd, base[nbr % base_size]);
         nbr /= base_size;

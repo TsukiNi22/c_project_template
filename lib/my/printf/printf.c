@@ -16,13 +16,13 @@
 static int set_data(printf_data_t *data, char const *str)
 {
     if (!data || !str)
-        return err_prog(PTR_ERR, "In: set_data", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     data->i = 0;
     data->str = (char *) str;
     data->modifier = my_str_to_str_array(MODIFIER, ":", false);
     data->specifiers = my_str_to_str_array(SPECIFIERS, ":", false);
     if (!data->modifier || !data->specifiers)
-        return err_prog(UNDEF_ERR, "In: set_data", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     data->fd = 1;
     data->info = NULL;
     data->info_flags = NULL;
@@ -36,7 +36,7 @@ static int set_data(printf_data_t *data, char const *str)
 static int free_printf_data(printf_data_t *data)
 {
     if (!data)
-        return err_prog(PTR_ERR, "In: free_printf_data", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (data->modifier) {
         for (int i = 0; data->modifier[i]; i++)
             free(data->modifier[i]);
@@ -53,14 +53,14 @@ static int free_printf_data(printf_data_t *data)
 static int print(printf_data_t *data)
 {
     if (!data)
-        return err_prog(PTR_ERR, "In: print", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (data->invalid_star && data->str[data->i] == '*') {
         if (my_putnbr(data->fd, va_arg(data->ap, int)) == KO)
-            return err_prog(UNDEF_ERR, "In: printf 1", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
         data->invalid_star = false;
     } else {
         if (my_putchar(data->fd, data->str[data->i]) == KO)
-            return err_prog(UNDEF_ERR, "In: printf 2", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }
     return OK;
 }
@@ -72,18 +72,18 @@ int my_printf(char const *str, ...)
     int res = OK;
 
     if (!str)
-        return err_prog(PTR_ERR, "In: my_printf", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (set_data(&data, str) == KO)
-        return err_prog(UNDEF_ERR, "In: my_printf 1", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     va_start(data.ap, str);
     for (data.i = 0; str[data.i]; data.i++) {
         identifier_b = false;
         if (str[data.i] == IDENTIFIER)
             res = identifier(&data, &identifier_b);
         if (res == KO)
-            return err_prog(UNDEF_ERR, "In: my_printf 2", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
         if (!identifier_b && print(&data) == KO)
-            return err_prog(UNDEF_ERR, "In: my_printf 3", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }
     va_end(data.ap);
     return free_printf_data(&data);

@@ -11,6 +11,6 @@
 int specifiers_null(printf_data_t *data)
 {
     if (!data)
-        return err_prog(PTR_ERR, "In specifiers_null", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     return OK;
 }

@@ -9,28 +9,25 @@
 #include "error.h"
 #include <stdbool.h>
 
-void err_prog_v(error_code_t code, char *error_info)
+void err_prog_v(error_code_t code, err_t err)
 {
     if (!PUT_ERROR)
         return;
-    print_error_info(error_info, false);
-    print_error(code);
+    print_error_prog(code, err);
 }
 
-void *err_prog_n(error_code_t code, char *error_info)
+void *err_prog_n(error_code_t code, err_t err)
 {
     if (!PUT_ERROR)
         return NULL;
-    print_error_info(error_info, false);
-    print_error(code);
+    print_error_prog(code, err);
     return NULL;
 }
 
-int err_prog(error_code_t code, char *error_info, int to_return)
+int err_prog(error_code_t code, int to_return, err_t err)
 {
     if (!PUT_ERROR)
         return to_return;
-    print_error_info(error_info, false);
-    print_error(code);
+    print_error_prog(code, err);
     return to_return;
 }

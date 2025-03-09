@@ -13,7 +13,7 @@ char *my_strncpy(char *dest, char const *src, int n)
     int i = 0;
 
     if (!dest || !src)
-        return err_prog_n(PTR_ERR, "In: my_strncpy");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     for (; i < n && src[i]; i++)
         dest[i] = src[i];
     dest[i] = '\0';

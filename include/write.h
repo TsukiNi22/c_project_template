@@ -18,6 +18,7 @@
     #include "linked.h" // linked_list_t
     #include "hashtable.h" // hashtable_t
     #include "matrice.h" // matrice_t
+    #include "array.h" // array_t
 
     //----------------------------------------------------------------//
     /* DEFINE */
@@ -77,5 +78,6 @@ int display_matrice(matrice_t *matrice); // Error: KO
 int display_linked(int (*display_data)(void *data),
     linked_list_t *head); // Error: KO
 int ht_dump(hashtable_t *ht); // Error: KO
+int array_dump(array_t *array, int (*display_ptr)(void *)); // Error: KO
 
 #endif /* WRITE_H */

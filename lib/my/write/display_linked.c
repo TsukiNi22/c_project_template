@@ -15,7 +15,7 @@ int display_linked(int (*display_data)(void *data), linked_list_t *head)
     int res = OK;
 
     if (!display_data || !head)
-        return err_prog(PTR_ERR, "In: display_linked", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     res += my_printf("\nHead: |%p|\nMid: |%p|\nTail: |%p|\n",
     *(head->head), *(head->mid), *(head->tail));
     res += my_printf("Mid Index: |%d|\nAcendant: |%B|\n",
@@ -23,7 +23,7 @@ int display_linked(int (*display_data)(void *data), linked_list_t *head)
     res += my_printf("Size: |%d|\n//---------------------//\n", *(head->size));
     for (int i = 0; head; i++) {
         if (res != OK)
-            return err_prog(UNDEF_ERR, "In: display_linked 3", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
         res += my_printf("Ptr: |%p|\n", head);
         res += my_printf("I: |%.*d|\n", (int) my_log(*(head->size), 10), i);
         res += my_printf("Data:\n-------------------------\n");

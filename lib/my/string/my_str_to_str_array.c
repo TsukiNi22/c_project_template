@@ -19,15 +19,15 @@ static char *my_strdup_local(char const *base_str, char const *identifier,
     char *str = NULL;
 
     if (!base_str || !identifier)
-        return err_prog_n(PTR_ERR, "In: my_strdup");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     size -= (!base_str[i + 1] && my_strfind(identifier, base_str[i]) != -1);
     i -= (i > 0);
     for (; i > 0 && my_strfind(identifier, base_str[i]) == -1; i--);
     src = &((char *)base_str)[i + (my_strfind(identifier, base_str[i]) >= 0)];
     if (my_malloc_c(&str, size + 1) == KO)
-        return err_prog_n(UNDEF_ERR, "In: my_strdup 1");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     if (!my_strncpy(str, src, size))
-        return err_prog_n(UNDEF_ERR, "In: my_strdup 2");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     return str;
 }
 
@@ -39,11 +39,11 @@ static int alloc_array(char const *str, char const *identifier,
     bool last = true;
 
     if (!str || !identifier)
-        return err_prog(PTR_ERR, "In: my_str_to_str_array > get_size", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int i = 0; str[i]; i++) {
         res = my_strfind(identifier, str[i]);
         if (res == -2)
-            return err_prog(UNDEF_ERR, "In: str_to_str_array > gt_size 1", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
         if (res >= 0 && !last)
             count++;
         last = (res >= 0);
@@ -51,7 +51,7 @@ static int alloc_array(char const *str, char const *identifier,
     count += (res == -1);
     *str_array = malloc(sizeof(char *) * (count + 1));
     if (!(*str_array))
-        return err_prog(MALLOC_ERR, "In: str_to_str_array > get_size 2", KO);
+        return err_prog(MALLOC_ERR, KO, ERR_INFO);
     (*str_array)[count] = NULL;
     return OK;
 }
@@ -63,7 +63,7 @@ char **my_str_to_str_array(char const *str, char const *identifier, bool take)
     int index = 0;
 
     if (!str || !identifier || alloc_array(str, identifier, &str_array) == KO)
-        return err_prog_n(PTR_ERR, "In: my_str_to_str_array");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     for (int i = 0; str[i]; i++) {
         count += (my_strfind(identifier, str[i - 1]) == -1);
         if ((!str[i + 1] && my_strfind(identifier, str[i]) == -1)
@@ -75,7 +75,7 @@ char **my_str_to_str_array(char const *str, char const *identifier, bool take)
             index++;
         }
         if (index > 0 && !str_array[index - 1])
-            return err_prog_n(UNDEF_ERR, "In: str_to_str_array");
+            return err_prog_n(UNDEF_ERR, ERR_INFO);
     }
     return str_array;
 }

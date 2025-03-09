@@ -14,7 +14,7 @@ bool my_str_isalpha(char const *str)
     bool c2 = false;
 
     if (!str)
-        return err_prog(PTR_ERR, "In: my_str_isalpha", false);
+        return err_prog(PTR_ERR, false, ERR_INFO);
     for (int i = 0; str[i]; i++) {
         c1 = (str[i] >= 'A' && str[i] <= 'Z');
         c2 = (str[i] >= 'a' && str[i] <= 'z');

@@ -16,12 +16,12 @@ hashtable_t *new_hashtable(int (*hash_function)(char *, int), int len)
     hashtable_t *ht = NULL;
 
     if (!hash_function)
-        return err_prog_n(PTR_ERR, "In: new_hashtable");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     if (len < 1)
-        return err_prog_n(ARGV_ERR, "In: new_hashtable");
+        return err_prog_n(ARGV_ERR, ERR_INFO);
     ht = malloc(sizeof(hashtable_t));
     if (!ht)
-        return err_prog_n(MALLOC_ERR, "In: new_hashtable 1");
+        return err_prog_n(MALLOC_ERR, ERR_INFO);
     ht->keys_nbr = 0;
     ht->len = len;
     ht->hash = hash_function;
@@ -29,6 +29,6 @@ hashtable_t *new_hashtable(int (*hash_function)(char *, int), int len)
     for (int i = 0; i < len; i++)
         ht->linked[i] = NULL;
     if (!ht->linked)
-        return err_prog_n(MALLOC_ERR, "In: new_hashtable 2");
+        return err_prog_n(MALLOC_ERR, ERR_INFO);
     return ht;
 }

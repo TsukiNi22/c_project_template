@@ -16,7 +16,7 @@ static int set_value(hash_linked_data_t *data, char *key, char *value,
     int index)
 {
     if (!data || !key || !value)
-        return err_prog(PTR_ERR, "In: set_value", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     data->index = index;
     data->key = key;
     data->value = value;
@@ -26,7 +26,7 @@ static int set_value(hash_linked_data_t *data, char *key, char *value,
 int new_value(linked_list_t *linked, char *value)
 {
     if (!linked || !value)
-        return err_prog(PTR_ERR, "In: new_value", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     free(((hash_linked_data_t *) linked->data)->value);
     ((hash_linked_data_t *) linked->data)->value = value;
     return OK;
@@ -39,7 +39,7 @@ int ht_insert(hashtable_t *ht, char *key, char *value)
     int index = 0;
 
     if (!ht || !key || !value)
-        return err_prog(PTR_ERR, "In: ht_insert", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     index = ht->hash(key, ht->len);
     for (linked = ht->linked[index % ht->len]; linked
     && (((hash_linked_data_t *) linked->data)->index != index
@@ -50,8 +50,8 @@ int ht_insert(hashtable_t *ht, char *key, char *value)
     ht->keys_nbr++;
     data = malloc(sizeof(hash_linked_data_t));
     if (set_value(data, key, value, index) == KO)
-        return err_prog(UNDEF_ERR, "In: ht_insert 1", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (linked_add(&(ht->linked[index % ht->len]), data) == KO)
-        return err_prog(UNDEF_ERR, "In: ht_insert 2", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     return OK;
 }

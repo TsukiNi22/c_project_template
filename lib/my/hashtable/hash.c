@@ -20,10 +20,10 @@ static int get_nbr_from_str(char *key, int const r)
     int n = 0;
 
     if (!key)
-        return err_prog(PTR_ERR, "In: get_nbr_from_str", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     len = my_strlen(key);
     if (len < 0)
-        return err_prog(UNDEF_ERR, "In: get_nbr_from_str", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     count = my_log(len << (r - len * 8), 1.000000000001);
     while (count > 256)
         count /= 1.460354;
@@ -41,9 +41,9 @@ int hash(char *key, int len)
     int r = (sizeof(int) - sizeof(char)) * 8;
 
     if (!key)
-        return err_prog(PTR_ERR, "In: hash", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (len < 1)
-        return err_prog(ARGV_ERR, "In: hash", KO);
+        return err_prog(ARGV_ERR, KO, ERR_INFO);
     hashed_key = get_nbr_from_str(key, r);
     ABS(hashed_key);
     hashed_key >>= (int) (r * ((float) hashed_key / (float) INT_MAX));

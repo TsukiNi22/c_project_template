@@ -11,7 +11,7 @@
 char *my_strupcase(char *str)
 {
     if (!str)
-        return err_prog_n(PTR_ERR, "In: my_strupcase");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     for (int i = 0; str[i]; i++) {
         if (str[i] <= 'z' && str[i] >= 'a')
             str[i] = (char) ((int) str[i] - 32);

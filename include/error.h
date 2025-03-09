@@ -9,11 +9,20 @@
     #define ERROR_H
 
     //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* type */
+    #include <stdbool.h> // boolean
+
+    //----------------------------------------------------------------//
     /* DEFINE */
 
+    /* error_info */
+    #define ERR_INFO ((err_t){__FILE__, __func__, __LINE__})
+
     /* error_return_write */
-    #define PUT_ERROR 0
-    #define CUSTOM_PUT_ERROR 0
+    #define PUT_ERROR 1
+    #define CUSTOM_PUT_ERROR 1
     #define SYSTEM_PUT_ERROR 1
 
     /* error_return */
@@ -36,28 +45,7 @@
 
     /* error_code */
     #define MIN_ERROR_CODE ERROR_ERR
-    #define MAX_ERROR_CODE FLAG_ERR
-
-    //----------------------------------------------------------------//
-    /* MACRO */
-
-    /* err_macro */
-    #define ERR_D(er, msg, ret, c) if (c) return err_prog(er, msg, ret)
-    #define ERR_DN(err, msg, c) if (c) return err_prog_n(err, msg)
-    #define ERR_DV(err, msg, c) if (c) return err_prog_v(err, msg)
-    #define ERR_C(msg, ret, c) if (c) return err_custom(msg, ret)
-    #define ERR_CN(msg, c) if (c) return err_custom_n(msg)
-    #define ERR_CV(msg, c) if (c) return err_custom_v(msg)
-    #define ERR_S(msg, c) if (c) return err_system(msg)
-    #define ERR_SN(msg, c) if (c) return err_system_n(msg)
-    #define ERR_SV(msg, c) if (c) return err_system_v(msg)
-
-    //----------------------------------------------------------------//
-    /* INCLUDE */
-
-    /* type */
-    #include "sample.h" // main_data_t
-    #include <stdbool.h> // boolean
+    #define MAX_ERROR_CODE READ_DIR_ERR
 
 //----------------------------------------------------------------//
 /* TYPDEF */
@@ -84,23 +72,32 @@ typedef enum error_code_e {
 */
 
 //----------------------------------------------------------------//
+/* TYPEDEF */
+
+typedef struct err_s {
+    char const *file;
+    char const *func;
+    int const line;
+} err_t;
+
+//----------------------------------------------------------------//
 /* PROTOTYPE */
 
 /* error_handling */ // Error: None
-void err_prog_v(error_code_t code, char *error_info);
-void *err_prog_n(error_code_t code, char *error_info);
-int err_prog(error_code_t code, char *error_info, int to_return);
-void err_custom_v(char *error_info);
-void *err_custom_n(char *error_info);
-int err_custom(char *error_info, int to_return);
-void err_system_v(main_data_t *data, char *error_info);
-void *err_system_n(main_data_t *data, char *error_info);
-int err_system(main_data_t *data, char *error_info, int to_return);
+void err_prog_v(error_code_t code, err_t err);
+void *err_prog_n(error_code_t code, err_t err);
+int err_prog(error_code_t code, int to_return, err_t err);
+void err_custom_v(char *info, err_t err);
+void *err_custom_n(char *info, err_t err);
+int err_custom(char *info, int to_return, err_t err);
+void err_system_v(void *data, char const *info, char const *err);
+void *err_system_n(void *data, char const *info, char const *err);
+int err_system(void *data, int to_return, char const *info, char const *err);
 
 /* print_error_ouput */
 void error_error(void); // Error: None
-void print_error(error_code_t code); // Error: None
-void print_error_info(char *error_info, bool custom); // Error: None
 int dispatch(error_code_t code); // Error: KO
+void print_error_custom(char *info, err_t err); // Error: None
+void print_error_prog(error_code_t code, err_t err); // Error: None
 
 #endif /* ERROR_H */

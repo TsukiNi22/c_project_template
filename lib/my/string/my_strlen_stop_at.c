@@ -12,7 +12,7 @@ int my_strlen_stop_at(char const *str, char c)
     int len = 0;
 
     if (!str)
-        return err_prog(PTR_ERR, "In: my_strlen_stop_at", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (; str[len] && str[len] != c; len++);
     return len;
 }

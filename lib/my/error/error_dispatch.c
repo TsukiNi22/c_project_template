@@ -5,6 +5,7 @@
 ** Printf / Dispatch error message (type)
 */
 
+#include "define.h"
 #include "write.h"
 #include "error.h"
 
@@ -21,22 +22,18 @@ static char const *error_message[] = {
     "'Invalid Permision' or 'No Existant File'.",
     "'Can't' or 'Fail' to read the file.",
     "'Invalid Permision' or 'No Existant Directory.'",
-    "'Can't' or 'Fail' to read the directory."
+    "'Can't' or 'Fail' to read the directory.",
+    NULL
 };
 
 int dispatch(error_code_t code)
 {
-    int res = 0;
+    int res = OK;
 
-    if (!PUT_ERROR)
-        return OK;
-    if (code < MIN_ERROR_CODE || code > MAX_ERROR_CODE) {
-        res = my_putnbr(2, code);
-        res += my_putstr(2, ": Unknow error code\n");
-    } else {
-        res = my_putstr(2, "Error: ");
-        res += my_putstr(2, error_message[code]);
-    }
+    if (code < MIN_ERROR_CODE || code > MAX_ERROR_CODE)
+        res += my_printf("%O%d, Unknow error code.", 2, code);
+    else
+        res += my_putstr(2, error_message[code + MIN_ERROR_CODE * -1]);
     if (res != OK)
         return KO;
     return OK;

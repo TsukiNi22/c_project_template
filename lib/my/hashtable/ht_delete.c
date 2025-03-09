@@ -18,17 +18,17 @@ int ht_delete(hashtable_t *ht, char *key)
     int index = 0;
 
     if (!ht || !key)
-        return err_prog(PTR_ERR, "In: ht_delete", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     index = ht->hash(key, ht->len);
     linked = ht->linked[index % ht->len];
     for (; linked && (((hash_linked_data_t *) linked->data)->index != index
     || my_strcmp(((hash_linked_data_t *) linked->data)->key, key) != 0);
     linked = linked->next);
     if (!linked)
-        return err_custom("There is no data for this key", KO);
+        return err_custom("There is no data for this key", KO, ERR_INFO);
     ht->keys_nbr--;
     if (linked_pop_this(&free_hash_data, &(ht->linked[index % ht->len]),
         linked) == KO)
-        return err_custom("There is no data for this key", KO);
+        return err_custom("There is no data for this key", KO, ERR_INFO);
     return OK;
 }

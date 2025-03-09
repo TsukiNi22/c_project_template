@@ -14,7 +14,7 @@ int delete_linked(int (*free_func)(void *), linked_list_t **head)
     linked_list_t *tmp = NULL;
 
     if (!free_func || !head)
-        return err_prog(PTR_ERR, "In: delete_linked", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (*head) {
         free((*head)->acendant);
         free((*head)->size);
@@ -26,7 +26,7 @@ int delete_linked(int (*free_func)(void *), linked_list_t **head)
     while (*head) {
         tmp = (*head)->next;
         if (free_func((*head)->data) == KO)
-            return err_prog(UNDEF_ERR, "In: delete_linked", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
         free(*head);
         *head = tmp;
     }

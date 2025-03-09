@@ -19,15 +19,15 @@ matrice_t *str_to_square_matrice(char const *str)
     int x = 0;
 
     if (!str)
-        return err_prog_n(PTR_ERR, "In: str_to_matrice");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     len = my_strlen(str);
     if (len < 0)
-        return err_prog_n(UNDEF_ERR, "In: str_to_matrice 1");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     sqrt = (int) my_sqrt((float) len);
     x = (int) sqrt + ((int) (sqrt * sqrt) != len);
     new = init_matrice(x, x);
     if (!new)
-        return err_prog_n(UNDEF_ERR, "In: str_to_matrice 2");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (int i = 0; i < x * x; i++)
         new->matrice[i / x][i % x] = (float) str[i * (i < len)] * (i < len);
     return new;
@@ -40,15 +40,15 @@ matrice_t *str_to_n_matrice(char const *str, int n)
     int i = 0;
 
     if (!str)
-        return err_prog_n(PTR_ERR, "In: str_to_matrice");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     if (n < 1)
-        return err_prog_n(ARGV_ERR, "In: str_to_matrice");
+        return err_prog_n(ARGV_ERR, ERR_INFO);
     len = my_strlen(str);
     if (len < 0)
-        return err_prog_n(UNDEF_ERR, "In: str_to_matrice 1");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     matrice = init_matrice(n, len / n + ((float) len / (float) n > len / n));
     if (!matrice)
-        return err_prog_n(UNDEF_ERR, "In: str_to_matrice 2");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (i = 0; i < len; i++)
         matrice->matrice[i / n][i % n] = (float) str[i];
     for (; i < matrice->x * matrice->y; i++)

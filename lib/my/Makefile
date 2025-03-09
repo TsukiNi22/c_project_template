@@ -2,7 +2,7 @@
 ## EPITECH PROJECT, 2025
 ## Makefile
 ## File description:
-## Makefile de la TA
+## Makefile for the compilation of the lib
 ##
 
 CC := gcc
@@ -11,7 +11,7 @@ TARGET := libmy.a
 BUILD_DIR := .obj
 
 W := -W -Wall -Wextra -Wpedantic -Wunused-parameter -Wshadow
-W += -Wuninitialized -Wmaybe-uninitialized -Werror
+W += -Wuninitialized -Wmaybe-uninitialized
 
 DEBUG := -g -ggdb3
 
@@ -67,6 +67,7 @@ WRITE := 	write/my_putnbr_base.c \
 			write/display_matrice.c \
 			write/display_linked.c \
 			write/ht_dump.c \
+			write/array_dump.c \
 			write/edit_ouput.c
 
 STRING := 	string/my_strcat.c \
@@ -134,6 +135,11 @@ PRINTF :=	printf/printf.c \
 			printf/specifiers/s.c \
 			printf/specifiers/p.c
 
+ARRAY := 	array/new_array.c \
+			array/add_array.c \
+			array/pop_array.c \
+			array/delete_array.c
+
 FILE := 	file/get_file.c
 
 ERROR :=	error/error_dispatch.c \
@@ -143,7 +149,7 @@ ERROR :=	error/error_dispatch.c \
 			error/error_system.c
 
 SRC := $(MATH) $(MATRICE) $(MEMORY) $(WRITE) $(STRING) $(LINKED)
-SRC += $(HASH) $(PRINTF) $(FILE) $(ERROR)
+SRC += $(HASH) $(PRINTF) $(ARRAY) $(FILE) $(ERROR)
 OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
 
 all: $(TARGET)

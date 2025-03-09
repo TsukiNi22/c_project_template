@@ -12,6 +12,6 @@
 int free_data(main_data_t *data)
 {
     if (!data)
-        return err_prog(PTR_ERR, "In: free_data", EPITECH_ERR);
+        return err_prog(PTR_ERR, EPITECH_ERR, ERR_INFO);
     return OK;
 }

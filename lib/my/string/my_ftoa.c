@@ -18,7 +18,7 @@ static int len_local(char *str)
     int len = 0;
 
     if (!str)
-        return err_prog(PTR_ERR, "In: my_ftoa > len_local", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (; str[len] != '\0'; len++);
     free(str);
     return len;
@@ -30,10 +30,10 @@ static char *my_strcat_local(char *dest, char *src)
     int i = 0;
 
     if (!dest || !src)
-        return err_prog_n(PTR_ERR, "In: my_ftoa > my_strcat_local");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     len = my_strlen(dest);
     if (len < 0)
-        return err_prog_n(UNDEF_ERR, "In: my_ftoa > my_strcat_local");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (; src[i]; i++)
         dest[len + i] = src[i];
     dest[len + i] = '\0';
@@ -48,7 +48,7 @@ static int get_d_integer(long double nbr, long double *nbr_already,
     int signe = 0;
 
     if (!nbr_already || !depth || !str)
-        return err_prog(PTR_ERR, "In: >d_integer", false);
+        return err_prog(PTR_ERR, false, ERR_INFO);
     nbr -= *nbr_already;
     signe = (nbr < 0);
     nbr *= 1 - 2 * (signe == 1 && *depth != 0);
@@ -57,9 +57,9 @@ static int get_d_integer(long double nbr, long double *nbr_already,
     cast = (long long) nbr;
     if (my_realloc_c(str, len_local(my_itoa(cast)),
         my_strlen(*str)) == KO)
-        return err_prog(UNDEF_ERR, "In: my_ftoa > get_d_integer 1", false);
+        return err_prog(UNDEF_ERR, false, ERR_INFO);
     if (!(*str))
-        return err_prog(UNDEF_ERR, "In: my_ftoa > get_d_integer 2", false);
+        return err_prog(UNDEF_ERR, false, ERR_INFO);
     my_strcat_local(*str, my_itoa(cast));
     *nbr_already += cast * (1 - 2 * (signe == 1));
     (*depth)++;
@@ -74,7 +74,7 @@ static int get_d_decimal(long double nbr, long double *nbr_already,
     int signe = (nbr < 0);
 
     if (!nbr_already || !depth || !str)
-        return err_prog(PTR_ERR, "In: >d_decimal", false);
+        return err_prog(PTR_ERR, false, ERR_INFO);
     nbr = (nbr - *nbr_already * (1 - 2 * signe)) * (1 - 2 * signe);
     if ((long long) (nbr * my_pow(10, my_log(LLONG_MAX, 10) - 1)) == 0)
         return true;
@@ -83,7 +83,7 @@ static int get_d_decimal(long double nbr, long double *nbr_already,
     ll_cast = (long long) nbr;
     d_cast = (long double) ll_cast;
     if (my_realloc_c(str, len_local(my_itoa(ll_cast)), my_strlen(*str)) == KO)
-        return err_prog(UNDEF_ERR, "In: my_ftoa > get_d_decimal 1", false);
+        return err_prog(UNDEF_ERR, false, ERR_INFO);
     my_strcat_local(*str, my_itoa(ll_cast));
     for (; d_cast > 1; d_cast /= 10);
     *nbr_already += d_cast * (1 - 2 * (signe == 1));
@@ -94,7 +94,7 @@ static int get_d_decimal(long double nbr, long double *nbr_already,
 static char *clear_char(char *str)
 {
     if (!str)
-        return err_prog_n(PTR_ERR, "In: my_ftoa > clear_char");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     for (int i = 0; str[i]; i++) {
         if ((str[i] < '0' || str[i] > '9') && str[i] != '-' && str[i] != '.')
             str[i] = '0';
@@ -107,10 +107,10 @@ static int set_dot(char *str)
     int len = 0;
 
     if (!str)
-        return err_prog(PTR_ERR, "In: my_ftoa > set_dot", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     len = my_strlen(str);
     if (len < 0)
-        return err_prog(UNDEF_ERR, "In: my_ftoa > set_dot", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     str[len] = '.';
     str[len + 1] = '\0';
     return OK;
@@ -124,7 +124,7 @@ char *my_ftoa(long double nbr)
     int size = 0;
 
     if (!str || my_calloc_c(&str, 1) == KO)
-        return err_prog_n(UNDEF_ERR, "In: my_ftoa 1");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     while (get_d_integer(nbr, &nbr_already, &depth, &str) == 0);
     set_dot(str);
     if (depth < 3) {
@@ -133,7 +133,7 @@ char *my_ftoa(long double nbr)
     if (depth >= 3) {
         size = my_strlen(str);
         if (my_realloc_c(&str, 6, size) == KO)
-            return err_prog_n(UNDEF_ERR, "In: ftoa 2");
+            return err_prog_n(UNDEF_ERR, ERR_INFO);
         for (int i = 0; i < 6; i++)
             str[size + i] = '0';
     }

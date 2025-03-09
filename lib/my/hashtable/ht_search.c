@@ -16,13 +16,13 @@ char *ht_search(hashtable_t *ht, char *key)
     int index = 0;
 
     if (!ht || !key)
-        return err_prog_n(PTR_ERR, "In: ht_delete");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     index = ht->hash(key, ht->len);
     linked = ht->linked[index % ht->len];
     for (; linked && (((hash_linked_data_t *) linked->data)->index != index
     || my_strcmp(((hash_linked_data_t *) linked->data)->key, key) != 0);
     linked = linked->next);
     if (!linked)
-        return err_custom_n("There is no data for this key");
+        return err_custom_n("There is no data for this key", ERR_INFO);
     return ((hash_linked_data_t *) linked->data)->value;
 }

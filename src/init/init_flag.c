@@ -15,7 +15,7 @@ static int full_flag(main_data_t *data,
     int const argc, char const *argv[], int const i)
 {
     if (!data || !argv)
-        return err_prog(PTR_ERR, "In: full_flag", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int j = 0; full_flags[j]; j++) {
         if (my_strcmp(argv[i], full_flags[j]) == 0)
             return flag_functions[j](data, argc - i, &(argv[i]));
@@ -28,7 +28,7 @@ static int full_flag(main_data_t *data,
 static int is_flag_char(char const c, int *index)
 {
     if (!index)
-        return err_prog(PTR_ERR, "In: is_flag_char", false);
+        return err_prog(PTR_ERR, false, ERR_INFO);
     for (int i = 0; flags[i]; i++) {
         if (c == flags[i]) {
             *index = i;
@@ -44,7 +44,7 @@ static int flag(main_data_t *data,
     int index = 0;
 
     if (!data || !argv)
-        return err_prog(PTR_ERR, "In: flag", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int j = 1; argv[i][j]; j++) {
         if (!is_flag_char(argv[i][j], &index)) {
             data->err_sys = true;
@@ -58,7 +58,7 @@ static int flag(main_data_t *data,
             return KO;
         }
         if (flag_functions[index](data, argc - i, &(argv[i])) == KO)
-            return err_prog(UNDEF_ERR, "In: flag", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }
     return OK;
 }
@@ -66,7 +66,7 @@ static int flag(main_data_t *data,
 int init_flag(main_data_t *data, int const argc, char const *argv[])
 {
     if (!data || !argv)
-        return err_prog(PTR_ERR, "In: init_flag", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int i = 0; i < argc; i++) {
         if ((argv[i][0] == '-' && argv[i][1] == flags[0] && !argv[i][2])
             || my_strcmp(argv[i], full_flags[0]) == 0) {
@@ -79,10 +79,10 @@ int init_flag(main_data_t *data, int const argc, char const *argv[])
             continue;
         if (argv[i][1] == '-' && argv[i][2]
             && full_flag(data, argc, argv, i) == KO)
-            return err_prog(UNDEF_ERR, "In: init_flag 2", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
         if (argv[i][1] != '-' && argv[i][1]
             && flag(data, argc, argv, i) == KO)
-            return err_prog(UNDEF_ERR, "In: init_flag 3", KO);
+            return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }
     return OK;
 }

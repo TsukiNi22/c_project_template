@@ -16,14 +16,14 @@ matrice_t *cofacteur_matrice(matrice_t *matrice)
     float det = 0.0;
 
     if (!matrice)
-        return err_prog_n(PTR_ERR, "In: cofacteur_matrice");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     if (matrice->x != matrice->y)
-        return err_prog_n(ARGV_ERR, "In: cofacteur_matrice");
+        return err_prog_n(ARGV_ERR, ERR_INFO);
     matrice_cofacteur = init_matrice(matrice->x, matrice->x);
     for (int i = 0; i < matrice->x * matrice->y; i++) {
         matrice_re = reduce_matrice(matrice, i / matrice->x, i % matrice->x);
         if (!matrice_re)
-            return err_prog_n(UNDEF_ERR, "In: cofacteur_matrice 1");
+            return err_prog_n(UNDEF_ERR, ERR_INFO);
         det = determinant_matrice(matrice_re);
         matrice_cofacteur->matrice[i / matrice->x][i % matrice->x] =
         (1 - 2 * ((i / matrice->x + i % matrice->x) % 2 != 0)) * det;

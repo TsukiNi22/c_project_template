@@ -14,10 +14,10 @@ matrice_t *transpose_matrice(matrice_t *matrice)
     matrice_t *transposed_matrice = NULL;
 
     if (!matrice)
-        return err_prog_n(PTR_ERR, "In: multiplie_matrice");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     transposed_matrice = init_matrice(matrice->y, matrice->x);
     if (!matrice)
-        return err_prog_n(UNDEF_ERR, "In: multiplie_matrice");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (int i = 0; i < matrice->y; i++) {
         for (int j = 0; j < matrice->x; j++) {
             transposed_matrice->matrice[j][i] =

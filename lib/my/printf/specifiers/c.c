@@ -16,7 +16,7 @@
 static int set_str(printf_data_t *data, char *str, char *c)
 {
     if (!data || !str || !c)
-        return err_prog(PTR_ERR, "In: set_str", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     if (my_get_index(data->info_flags, '-') != -1) {
         my_strcat(str, c);
         for (int i = 0; i < data->field - 1; i++)
@@ -35,14 +35,14 @@ int specifiers_c(printf_data_t *data)
     char c[2] = {'\0'};
 
     if (!data)
-        return err_prog(PTR_ERR, "In: specifiers_c", KO);
+        return err_prog(PTR_ERR, KO, ERR_INFO);
     c[0] = va_arg(data->ap, i_t);
     if (my_malloc_c(&str, data->field + 2) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_c 1", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (set_str(data, str, c) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_c 2", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     if (my_putstr(data->fd, str) == KO)
-        return err_prog(UNDEF_ERR, "In: specifiers_c 3", KO);
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
     free(str);
     return OK;
 }

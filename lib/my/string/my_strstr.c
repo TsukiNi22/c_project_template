@@ -16,10 +16,10 @@ char *my_strstr(char *str, char const *to_find)
     int i = 0;
 
     if (!str || !to_find)
-        return err_prog_n(PTR_ERR, "In: my_strstr");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     len = my_strlen(to_find);
     if (len < 0)
-        return err_prog_n(UNDEF_ERR, "In: my_strstr");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (; size < len && str[i]; i++) {
         if (str[i] == to_find[size])
             size++;

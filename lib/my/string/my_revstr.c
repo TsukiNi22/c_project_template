@@ -18,12 +18,12 @@ char *my_revstr(char *str)
     int len = 0;
 
     if (!str)
-        return err_prog_n(PTR_ERR, "In: my_revstr");
+        return err_prog_n(PTR_ERR, ERR_INFO);
     len = my_strlen(str);
     if (len < 0)
-        return err_prog_n(UNDEF_ERR, "In: my_revstr 1");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     if (my_malloc_c(&evil_str, len) == KO)
-        return err_prog_n(UNDEF_ERR, "In: my_revstr 2");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     for (int i = 0; str[i]; i++)
         evil_str[len - (i + 1)] = str[i];
     for (int i = 0; str[i]; i++)

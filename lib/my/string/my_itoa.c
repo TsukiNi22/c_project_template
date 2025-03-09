@@ -23,7 +23,7 @@ static char *get_str_from_nbr(long long n, int negatif)
         size++;
     size += (size == 0);
     if (my_malloc_c(&str, size + negatif + 2) == KO)
-        return err_prog_n(UNDEF_ERR, "In: my_itoa > get_str_from_nbr");
+        return err_prog_n(UNDEF_ERR, ERR_INFO);
     str[0] = '-' * negatif;
     for (int nb = 0; diviseur > 0; diviseur /= 10) {
         nb = (n / diviseur) - nbis;

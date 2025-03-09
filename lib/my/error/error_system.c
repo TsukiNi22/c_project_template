@@ -5,45 +5,61 @@
 ** Error print for system version
 */
 
+#include "define.h"
 #include "sample.h"
 #include "write.h"
-#include "define.h"
 #include "error.h"
+#include <stdbool.h>
 
-void err_system_v(main_data_t *data, char *error_info)
+void err_system_v(void *data, char const *info, char const *err)
 {
+    int res = OK;
+
     if (data)
-        data->err_sys = true;
+        ((main_data_t *) data)->err_sys = true;
     if (!SYSTEM_PUT_ERROR)
         return;
-    if (my_putstr(2, error_info) == KO)
-        error_error();
-    if (my_putstr(2, "\n") == KO)
+    res += my_printf("%O%C%s: %C%s.\n", 2,
+    192, 192, 192,
+    info,
+    0, 255, 255,
+    err);
+    if (res != OK)
         error_error();
 }
 
-void *err_system_n(main_data_t *data, char *error_info)
+void *err_system_n(void *data, char const *info, char const *err)
 {
+    int res = OK;
+
     if (data)
-        data->err_sys = true;
+        ((main_data_t *) data)->err_sys = true;
     if (!SYSTEM_PUT_ERROR)
         return NULL;
-    if (my_putstr(2, error_info) == KO)
-        error_error();
-    if (my_putstr(2, "\n") == KO)
+    res += my_printf("%O%C%s: %C%s.\n", 2,
+    192, 192, 192,
+    info,
+    0, 255, 255,
+    err);
+    if (res != OK)
         error_error();
     return NULL;
 }
 
-int err_system(main_data_t *data, char *error_info, int to_return)
+int err_system(void *data, int to_return, char const *info, char const *err)
 {
+    int res = OK;
+
     if (data)
-        data->err_sys = true;
+        ((main_data_t *) data)->err_sys = true;
     if (!SYSTEM_PUT_ERROR)
         return to_return;
-    if (my_putstr(2, error_info) == KO)
-        error_error();
-    if (my_putstr(2, "\n") == KO)
+    res += my_printf("%O%C%s: %C%s.\n", 2,
+    192, 192, 192,
+    info,
+    0, 255, 255,
+    err);
+    if (res != OK)
         error_error();
     return to_return;
 }
