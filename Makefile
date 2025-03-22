@@ -17,7 +17,7 @@ W += -Wuninitialized -Wmaybe-uninitialized
 DEBUG := -g -ggdb3
 
 CPPFLAGS := -I ./include/
-LDFLAGS := -L ./lib/ -lmy
+LDFLAGS := -L ./lib/ -lmy -lm
 CFLAGS := $(W)
 
 ifeq ($(d), t)
@@ -101,4 +101,5 @@ get_unknow_files:
                 rm -f missing_files.txt; \
         fi
 
-.PHONY: all lib clean fclean re tests_run get_unregistered_files get_unknow_files
+.PHONY: all lib clean fclean re tests_run \
+	get_unregistered_files get_unknow_files

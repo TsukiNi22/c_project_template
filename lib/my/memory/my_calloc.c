@@ -8,6 +8,17 @@
 #include "error.h"
 #include <stdbool.h>
 
+int my_calloc(void **ptr, int type_size, int size)
+{
+    if (!ptr || !(*ptr))
+        return err_prog(PTR_ERR, KO, ERR_INFO);
+    if (type_size <= 0 || size < 0)
+        return err_prog(ARGV_ERR, KO, ERR_INFO);
+    for (int i = 0; i < size * type_size; i++)
+        ((unsigned char *) (*ptr))[i] = 0;
+    return OK;
+}
+
 int my_calloc_b(bool **ptr, int size)
 {
     if (!ptr || !(*ptr))

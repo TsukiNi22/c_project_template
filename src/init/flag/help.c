@@ -9,5 +9,5 @@
 
 int flag_help(void)
 {
-    return my_printf("There is nothing to help here.\n");
+    return my_putstr(STDOUT, "There is nothing to help here.\n");
 }

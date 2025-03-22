@@ -5,7 +5,7 @@
 ** Create a new hashtable
 */
 
-#include "linked.h"
+#include "array.h"
 #include "define.h"
 #include "hashtable.h"
 #include "error.h"
@@ -25,10 +25,10 @@ hashtable_t *new_hashtable(int (*hash_function)(char *, int), int len)
     ht->keys_nbr = 0;
     ht->len = len;
     ht->hash = hash_function;
-    ht->linked = malloc(sizeof(linked_list_t *) * len);
-    for (int i = 0; i < len; i++)
-        ht->linked[i] = NULL;
-    if (!ht->linked)
+    ht->arrays = malloc(sizeof(array_t *) * len);
+    if (!ht->arrays)
         return err_prog_n(MALLOC_ERR, ERR_INFO);
+    for (int i = 0; i < len; i++)
+        ht->arrays[i] = new_array();
     return ht;
 }

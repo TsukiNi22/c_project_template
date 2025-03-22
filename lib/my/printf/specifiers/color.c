@@ -20,5 +20,5 @@ int specifiers_color(printf_data_t *data)
     r = va_arg(data->ap, i_t);
     g = va_arg(data->ap, i_t);
     b = va_arg(data->ap, i_t);
-    return set_color_rgb(data->fd, r, g, b);
+    return color_rgb(data->fd, r, g, b);
 }

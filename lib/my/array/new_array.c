@@ -18,8 +18,8 @@ array_t *new_array(void)
     if (!array)
         return err_prog_n(MALLOC_ERR, ERR_INFO);
     array->len = 0;
-    array->size = DEFAULT_SIZE;
-    array->data = malloc(sizeof(void *) * DEFAULT_SIZE);
+    array->size = DEFAULT_ARRAY_SIZE;
+    array->data = malloc(sizeof(void *) * DEFAULT_ARRAY_SIZE);
     if (!array->data)
         return err_prog_n(MALLOC_ERR, ERR_INFO);
     return array;

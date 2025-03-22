@@ -10,6 +10,20 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+int my_malloc(void **ptr, int type_size, int size)
+{
+    if (!ptr)
+        return err_prog(PTR_ERR, KO, ERR_INFO);
+    if (type_size < 1 || size < 1)
+        return err_prog(ARGV_ERR, KO, ERR_INFO);
+    (*ptr) = malloc(type_size * size);
+    if (!(*ptr))
+        return err_prog(MALLOC_ERR, KO, ERR_INFO);
+    if (my_calloc(ptr, type_size, size) == ERROR)
+        return err_prog(UNDEF_ERR, KO, ERR_INFO);
+    return OK;
+}
+
 int my_malloc_b(bool **ptr, int size)
 {
     if (!ptr)

@@ -19,11 +19,11 @@ static int set_data(printf_data_t *data, char const *str)
         return err_prog(PTR_ERR, KO, ERR_INFO);
     data->i = 0;
     data->str = (char *) str;
-    data->modifier = my_str_to_str_array(MODIFIER, ":", false);
-    data->specifiers = my_str_to_str_array(SPECIFIERS, ":", false);
+    data->modifier = str_to_str_array(MODIFIER, ":", false);
+    data->specifiers = str_to_str_array(SPECIFIERS, ":", false);
     if (!data->modifier || !data->specifiers)
         return err_prog(UNDEF_ERR, KO, ERR_INFO);
-    data->fd = 1;
+    data->fd = DEFAULT_OUPUT;
     data->info = NULL;
     data->info_flags = NULL;
     data->info_field = NULL;

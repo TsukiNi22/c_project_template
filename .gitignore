@@ -6,7 +6,7 @@
 \#*#
 *~
 .obj
-.file_function
+.info
 vgcore.*
 main_test*.c
 test_sample.c

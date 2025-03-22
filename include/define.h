@@ -9,7 +9,18 @@
     #define DEFINE_H
 
     //----------------------------------------------------------------//
+    /* INCLUDE */
+
+    /* define */
+    #include <unistd.h> // STDERR_FILENO, STDOUT_FILENO, STDIN_FILENO
+
+    //----------------------------------------------------------------//
     /* DEFINE */
+
+    /* ouput */
+    #define STDERR STDERR_FILENO
+    #define STDOUT STDOUT_FILENO
+    #define STDIN STDIN_FILENO
 
     /* global */
     #define NULL ((void *)0)

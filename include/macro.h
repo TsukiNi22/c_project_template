@@ -23,8 +23,11 @@
     /* math */
     #define ABS(x) x = ((x) * (1 - 2 * (x < 0 || x == -0)))
 
+    /* string */
+    #define GET_BOOL_STR(c) ((c) ? "true" : "false")
+
     /* binary */
-    #define LEFT_BITS_ROTATE(n, r, s) n = (n << r) | (n >> (s - r))
-    #define RIGHT_BITS_ROTATE(n, r, s) n = (n >> r) | (n << (s - r))
+    #define LEFT_BITS_ROTATE(n, r, s) (n << r) | (n >> (s - r))
+    #define RIGHT_BITS_ROTATE(n, r, s) (n >> r) | (n << (s - r))
 
 #endif /* MACRO_H */

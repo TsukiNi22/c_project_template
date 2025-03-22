@@ -16,6 +16,7 @@ W += -Wuninitialized -Wmaybe-uninitialized
 DEBUG := -g -ggdb3
 
 CPPFLAGS := -I ../../include/
+LDFLAGS := -lm
 CFLAGS := $(W)
 
 ifeq ($(d), t)
@@ -24,83 +25,109 @@ else ifeq ($(d), o)
 	CFLAGS += -O1
 endif
 
-MATH := 	math/my_degree_rad.c \
-			math/my_gamma.c \
-			math/my_log.c \
-			math/my_pow.c \
-       		math/my_rad_degree.c \
-			math/my_sqrt.c \
-			math/my_binomial.c \
-       		math/my_factorial.c \
-			math/my_sin.c \
-			math/my_tan.c \
-			math/my_cos.c \
-       		math/my_isneg.c \
-			math/my_find_prime_sup.c \
-			math/my_convertnbr_base.c \
-       		math/my_is_prime.c \
-			math/my_sort_int_array.c \
-			math/my_get_rand.c
-
-MATRICE :=	matrice/init_matrice.c \
-			matrice/transpose_matrice.c \
-			matrice/multiplie_matrice.c \
-			matrice/str_to_matrice.c \
-			matrice/free_matrice.c \
-			matrice/reduce_matrice.c \
-			matrice/determinant_matrice.c \
-			matrice/inverse_matrice.c \
-			matrice/cofacteur_matrice.c
-
 MEMORY :=	memory/my_calloc.c \
 			memory/my_realloc.c \
 			memory/my_malloc.c \
 			memory/my_swap.c \
          	memory/my_strdup.c \
+         	memory/my_strndup.c \
 			memory/my_memeset.c
 
-WRITE := 	write/my_putnbr_base.c \
-			write/my_putchar.c \
-			write/my_show_word_array.c \
-        	write/my_putnbr.c \
-			write/my_putstr.c \
-			write/display_matrice.c \
-			write/display_linked.c \
-			write/ht_dump.c \
-			write/array_dump.c \
-			write/edit_ouput.c
+MATH := 	math/find_prime_sup.c \
+			math/is_prime.c \
+			math/trigo/my_cos.c \
+			math/trigo/my_sin.c \
+			math/trigo/my_tan.c \
+			math/trigo/rad_degree.c \
+			math/trigo/degree_rad.c \
+			math/function/my_exp.c \
+			math/function/my_ln.c \
+			math/function/my_log.c \
+			math/function/my_round.c \
+			math/operator/my_binomial.c \
+			math/operator/my_gamma.c \
+			math/operator/my_factorial.c \
+			math/operator/my_pow.c \
+			math/operator/my_sqrt.c \
 
-STRING := 	string/my_strcat.c \
-			string/my_strcmp.c \
-			string/my_strcpy.c \
-			string/my_strlen_stop_at.c \
-       		string/my_strlowcase.c \
-			string/my_strncat.c \
-			string/my_strncmp.c \
-			string/my_strncpy.c \
-       		string/my_cut_str.c \
-			string/my_strlen.c \
-			string/my_strstr.c \
-			string/my_str_isalpha.c \
-			string/my_str_islower.c \
-       		string/my_str_isnum.c \
-       		string/my_str_isnumber.c \
-			string/my_str_isprintable.c \
-			string/my_str_isupper.c \
-       		string/my_strupcase.c \
-			string/my_atof.c \
-			string/my_atoi.c \
-			string/my_concat_params.c \
-       		string/my_itoa.c \
-			string/my_strcapitalize.c \
-			string/my_ftoa.c \
-			string/my_revstr.c \
-			string/my_strfind.c \
-			string/my_stris.c \
-       		string/my_count_occurence.c \
-			string/get_fullpath.c \
-			string/my_str_to_str_array.c \
-			string/my_get_index.c
+STRING := 	string/cmp/my_strncmp.c \
+			string/cmp/my_strcmp.c \
+			string/cmp/my_str_isalpha.c \
+			string/cmp/my_str_islower.c \
+			string/cmp/my_str_isnumber.c \
+			string/cmp/my_str_isnum.c \
+			string/cmp/my_str_isprintable.c \
+			string/cmp/my_str_isupper.c \
+			string/cmp/my_str_is.c \
+			string/edit/my_strcat.c \
+			string/edit/my_strcpy.c \
+			string/edit/my_strncat.c \
+			string/edit/my_strncpy.c \
+			string/edit/my_revstr.c \
+			string/edit/my_strcapitalize.c \
+			string/edit/my_strlowcase.c \
+			string/edit/my_strupcase.c \
+			string/retrive/count_occurence.c \
+			string/retrive/my_get_index.c \
+			string/retrive/my_strlen.c \
+			string/retrive/my_strlen_stop_at.c \
+			string/retrive/my_strstr.c \
+			string/retrive/my_strfind.c \
+			string/transformation/convertnbr_base.c \
+			string/transformation/concat_params.c \
+			string/transformation/get_fullpath.c \
+			string/transformation/str_to_str_array.c \
+			string/transformation/my_itoa.c \
+			string/transformation/my_ftoa.c \
+			string/transformation/my_atoi.c \
+			string/transformation/my_atof.c \
+			string/transformation/cut_str.c
+
+WRITE := 	write/my_putchar.c \
+			write/my_putstr.c \
+        	write/my_putnbr.c \
+			write/my_putnbr_base.c \
+			write/dump/array_dump.c \
+			write/dump/ht_dump.c \
+			write/dump/str_array_dump.c \
+			write/dump/linked_dump.c \
+			write/edit_ouput/color/back_color.c \
+			write/edit_ouput/color/back_color_rgb.c \
+			write/edit_ouput/color/color_rgb.c \
+			write/edit_ouput/color/color.c \
+			write/edit_ouput/style/italic.c \
+			write/edit_ouput/style/reversed.c \
+			write/edit_ouput/style/strong.c \
+			write/edit_ouput/style/underlined.c \
+			write/edit_ouput/style/flashing_slow.c \
+			write/edit_ouput/style/flashing_fast.c \
+			write/edit_ouput/style/hide.c \
+			write/edit_ouput/style/bar.c \
+			write/edit_ouput/style/dark.c \
+			write/edit_ouput/reset.c \
+			write/edit_ouput/cursor/up.c \
+			write/edit_ouput/cursor/down.c \
+			write/edit_ouput/cursor/left.c \
+			write/edit_ouput/cursor/right.c \
+			write/edit_ouput/cursor/next_line.c \
+			write/edit_ouput/cursor/previous_line.c \
+			write/edit_ouput/cursor/column.c \
+			write/edit_ouput/cursor/co.c \
+			write/edit_ouput/cursor/save.c \
+			write/edit_ouput/cursor/load.c \
+			write/edit_ouput/cursor/hide.c \
+			write/edit_ouput/cursor/show.c \
+			write/edit_ouput/erase/line.c \
+			write/edit_ouput/erase/line_end.c \
+			write/edit_ouput/erase/line_start.c \
+			write/edit_ouput/erase/screen_end.c \
+			write/edit_ouput/erase/screen_start.c \
+			write/edit_ouput/erase/screen.c \
+
+ARRAY := 	array/new_array.c \
+			array/add_array.c \
+			array/pop_array.c \
+			array/delete_array.c
 
 LINKED := 	linked/linked_add.c \
 			linked/linked_add_at.c \
@@ -135,11 +162,6 @@ PRINTF :=	printf/printf.c \
 			printf/specifiers/s.c \
 			printf/specifiers/p.c
 
-ARRAY := 	array/new_array.c \
-			array/add_array.c \
-			array/pop_array.c \
-			array/delete_array.c
-
 FILE := 	file/get_file.c
 
 ERROR :=	error/error_dispatch.c \
@@ -148,8 +170,9 @@ ERROR :=	error/error_dispatch.c \
 			error/error_custom.c \
 			error/error_system.c
 
-SRC := $(MATH) $(MATRICE) $(MEMORY) $(WRITE) $(STRING) $(LINKED)
-SRC += $(HASH) $(PRINTF) $(ARRAY) $(FILE) $(ERROR)
+SRC := $(MEMORY) $(MATH) $(STRING) $(WRITE)
+SRC += $(ARRAY) $(LINKED) $(HASH) $(PRINTF) $(FILE)
+SRC += $(ERROR)
 OBJ := $(SRC:%.c=$(BUILD_DIR)/%.o)
 
 all: $(TARGET)
@@ -160,7 +183,7 @@ $(TARGET): $(OBJ)
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $^
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $^
 
 clean:
 	@rm -rf $(BUILD_DIR)

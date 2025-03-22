@@ -5,8 +5,9 @@
 ** Init the flag option
 */
 
-#include "write.h"
+#include "memory.h"
 #include "my_string.h"
+#include "write.h"
 #include "sample.h"
 #include "error.h"
 #include <stdbool.h>
@@ -20,9 +21,7 @@ static int full_flag(main_data_t *data,
         if (my_strcmp(argv[i], full_flags[j]) == 0)
             return flag_functions[j](data, argc - i, &(argv[i]));
     }
-    data->err_sys = true;
-    my_printf("%Obinary: Unrecognized option \'%s\'.\n", 2, argv[i]);
-    return KO;
+    return err_system(data, KO, argv[i], "Unrecognized option");
 }
 
 static int is_flag_char(char const c, int *index)
@@ -46,17 +45,12 @@ static int flag(main_data_t *data,
     if (!data || !argv)
         return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int j = 1; argv[i][j]; j++) {
-        if (!is_flag_char(argv[i][j], &index)) {
-            data->err_sys = true;
-            my_printf("%Obinary: Invalid option \'%c\'.\n", 2, argv[i][j]);
-            return KO;
-        }
-        if (flags_argc[index] != 0 && (j > 1 || argv[i][j + 1])) {
-            data->err_sys = true;
-            my_printf("%Obinary: \'%c\' can't be combined with other.\n",
-            2, argv[i][j]);
-            return KO;
-        }
+        if (!is_flag_char(argv[i][j], &index))
+            return err_system(data, KO,
+            my_strndup(&argv[i][j], 1), "Invalid option");
+        if (flags_argc[index] != 0 && (j > 1 || argv[i][j + 1]))
+            return err_system(data, KO,
+            my_strndup(&argv[i][j], 1), "Can't be combined with other");
         if (flag_functions[index](data, argc - i, &(argv[i])) == KO)
             return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }

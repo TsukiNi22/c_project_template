@@ -13,5 +13,5 @@ int specifiers_strong(printf_data_t *data)
 {
     if (!data)
         return err_prog(PTR_ERR, KO, ERR_INFO);
-    return set_strong(data->fd);
+    return strong(data->fd);
 }

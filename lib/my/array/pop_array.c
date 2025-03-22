@@ -19,5 +19,5 @@ int pop_array(array_t *array, int (*free_ptr)(void *), unsigned int index)
     for (unsigned int i = index; i + 1 < array->len; i++)
         array->data[i] = array->data[i + 1];
     array->len--;
-    return KO;
+    return OK;
 }

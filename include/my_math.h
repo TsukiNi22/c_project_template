@@ -14,31 +14,31 @@
     /* math */
     #define PI 3.14159265358979323846
     #define EULER 2.7182818284590452354
+    #define LN_2 0.6931471805599453094
     #define H_ZERO (my_pow(10, -7))
-    #define ACCURATE 1000
+    #define ACCURACY 1000
 
 //----------------------------------------------------------------//
 /* PROTOTYPE */
 
 /* math_gestion */
-int my_sort_int_array(int *tab, int size); // Error: KO
-int my_find_prime_sup(int nb); // Error: None
-char *my_convertnbr_base(unsigned long long nbr, char const *base); // NULL
+int find_prime_sup(int nb); // Error: None
 
 /* math_comparaison */
-int my_isneg(int nb); // Error: KO
-int my_is_prime(int nb); // Error: KO
+int is_prime(int nb); // Error: KO
 
 /* math_operator */
-float my_sqrt(float x); // Error: no
-long double my_pow(double n, double power); // Error: None
+long double my_pow(double x, double pow); // Error: None
+float my_sqrt(float x); // Error: None
 double my_gamma(float x); // Error: 0
 double my_factorial(int x); // Error: KO
 int my_binomial(float n, float k); // Error: -1
 
 /* math_function */
+float my_round(float x, int precision); // Error: None
 long double my_log(double base, double x); // Error: inf (div by 0)
-float get_rand(float min, float max); // Error: None
+long double my_exp(double pow); // Error: None
+long double my_ln(double x); // Error: None
 
 /* math_trigonometrie */
 float my_sin(float x); // Error: KO

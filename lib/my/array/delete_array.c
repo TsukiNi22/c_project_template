@@ -18,6 +18,7 @@ int delete_array(array_t **array, int (*free_ptr)(void *))
         if (free_ptr((*array)->data[i]) == KO)
             return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }
+    free((*array)->data);
     free(*array);
     *array = NULL;
     return OK;

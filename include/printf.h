@@ -11,12 +11,16 @@
     //----------------------------------------------------------------//
     /* INCLUDE */
 
-    /* global */
+    /* type */
+    #include "define.h" // STDIN
     #include <stdbool.h> // boolean
     #include <stdarg.h> // va_list
 
     //----------------------------------------------------------------//
     /* DEFINE */
+
+    /* default */
+    #define DEFAULT_OUPUT STDIN
 
     /* flag */
     #define IDENTIFIER '%'

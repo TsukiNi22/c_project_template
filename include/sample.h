@@ -19,7 +19,10 @@
 
 /* data */
 typedef struct main_data_s {
-    /* error */
+    /* global_info */
+    char const *exe_name;
+
+    /* ouput */
     bool help;
     bool err_sys;
 } main_data_t;

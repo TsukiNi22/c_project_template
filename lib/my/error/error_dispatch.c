@@ -30,10 +30,12 @@ int dispatch(error_code_t code)
 {
     int res = OK;
 
-    if (code < MIN_ERROR_CODE || code > MAX_ERROR_CODE)
-        res += my_printf("%O%d, Unknow error code.", 2, code);
-    else
-        res += my_putstr(2, error_message[code + MIN_ERROR_CODE * -1]);
+    if (code < MIN_ERROR_CODE || code > MAX_ERROR_CODE) {
+        res += my_putnbr(STDERR, code);
+        res += my_putstr(STDERR, ", Unknow error code.");
+    } else
+        res += my_putstr(STDERR,
+        error_message[code + MIN_ERROR_CODE * -1]);
     if (res != OK)
         return KO;
     return OK;

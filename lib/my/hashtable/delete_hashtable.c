@@ -6,11 +6,12 @@
 */
 
 #include "define.h"
+#include "array.h"
 #include "hashtable.h"
 #include "error.h"
 #include <stdlib.h>
 
-int free_hash_data(void *data)
+int free_hash_data_str(void *data)
 {
     hash_linked_data_t *tmp = NULL;
 
@@ -35,16 +36,14 @@ int free_hash_keys(char **keys)
     return OK;
 }
 
-int delete_hashtable(hashtable_t *ht)
+int delete_hashtable(hashtable_t *ht, int (*free_hash_data)(void *))
 {
-    if (!ht)
+    if (!ht || !free_hash_data)
         return err_prog(PTR_ERR, KO, ERR_INFO);
     for (int i = 0; i < ht->len; i++) {
-        if (ht->linked[i]
-            && delete_linked(&free_hash_data, &(ht->linked[i])) == KO)
+        if (delete_array(&ht->arrays[i], free_hash_data) == KO)
             return err_prog(UNDEF_ERR, KO, ERR_INFO);
     }
-    free(ht->linked);
     free(ht);
     return OK;
 }

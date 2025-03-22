@@ -5,8 +5,9 @@
 ** Retrevie the list of the keys
 */
 
-#include "memory.h"
 #include "define.h"
+#include "memory.h"
+#include "array.h"
 #include "hashtable.h"
 #include "error.h"
 #include <stdlib.h>
@@ -36,8 +37,8 @@ char **ht_keys(hashtable_t *ht)
         return err_prog_n(MALLOC_ERR, ERR_INFO);
     keys[ht->keys_nbr] = NULL;
     for (int i = 0; i < ht->len; i++) {
-        for (linked_list_t *tmp = ht->linked[i]; tmp; tmp = tmp->next) {
-            key = ((hash_linked_data_t *) tmp->data)->key;
+        for (unsigned int j = 0; j < ht->arrays[i]->len; j++) {
+            key = ((hash_linked_data_t *) ht->arrays[i]->data[j])->key;
             res += add_key(keys, key, &index);
         }
         if (res != OK)

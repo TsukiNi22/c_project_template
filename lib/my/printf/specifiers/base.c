@@ -90,11 +90,11 @@ static int get_nbr(printf_data_t *data, char **n, const char authorized_char[])
     if (!data || !n || !authorized_char)
         return err_prog(PTR_ERR, KO, ERR_INFO);
     if (my_strcmp(data->info_modifier, "l") == 0)
-        *n = my_convertnbr_base(va_arg(data->ap, llu_t), authorized_char);
+        *n = convertnbr_base(va_arg(data->ap, llu_t), authorized_char);
     if (my_strcmp(data->info_modifier, "ll") == 0)
-        *n = my_convertnbr_base(va_arg(data->ap, lu_t), authorized_char);
+        *n = convertnbr_base(va_arg(data->ap, lu_t), authorized_char);
     else
-        *n = my_convertnbr_base(va_arg(data->ap, u_t), authorized_char);
+        *n = convertnbr_base(va_arg(data->ap, u_t), authorized_char);
     if (!(*n))
         return err_prog(UNDEF_ERR, KO, ERR_INFO);
     return OK;
@@ -109,11 +109,11 @@ int specifiers_base(printf_data_t *data)
     if (!data)
         return err_prog(PTR_ERR, KO, ERR_INFO);
     if (data->info_specifiers == 'o')
-        res += get_nbr(data, &n, "01234567");
+        res += get_nbr(data, &n, BASE_OCT);
     if (data->info_specifiers == 'u')
-        res += get_nbr(data, &n, "0123456789");
+        res += get_nbr(data, &n, BASE_DEC);
     if (data->info_specifiers == 'x')
-        res += get_nbr(data, &n, "0123456789abcdef");
+        res += get_nbr(data, &n, BASE_HEX);
     if (data->info_specifiers == 'X')
         res += get_nbr(data, &n, "0123456789ABCDEF");
     if (data->info_specifiers == 'b')

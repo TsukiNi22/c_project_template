@@ -45,8 +45,7 @@ int specifiers_p(printf_data_t *data)
 
     if (!data)
         return err_prog(PTR_ERR, KO, ERR_INFO);
-    n = my_convertnbr_base((llu_t) va_arg(data->ap, void *),
-    "0123456789abcdef");
+    n = convertnbr_base((llu_t) va_arg(data->ap, void *), BASE_HEX);
     if (my_strcmp(n, "") == 0)
         n = "(nil)";
     len = my_strlen(n) + 2 * (my_strcmp(n, "(nil)") != 0);

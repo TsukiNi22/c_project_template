@@ -12,7 +12,7 @@
     /* DEFINE */
 
     /* default_param */
-    #define DEFAULT_SIZE 1
+    #define DEFAULT_ARRAY_SIZE 1
 
 //----------------------------------------------------------------//
 /* TYPEDEF */
