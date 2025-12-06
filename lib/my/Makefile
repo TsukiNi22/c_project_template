@@ -48,7 +48,7 @@ MATH := 	math/find_prime_sup.c \
 			math/operator/my_gamma.c \
 			math/operator/my_factorial.c \
 			math/operator/my_pow.c \
-			math/operator/my_sqrt.c \
+			math/operator/my_sqrt.c
 
 STRING := 	string/cmp/my_strncmp.c \
 			string/cmp/my_strcmp.c \
@@ -122,7 +122,7 @@ WRITE := 	write/my_putchar.c \
 			write/edit_ouput/erase/line_start.c \
 			write/edit_ouput/erase/screen_end.c \
 			write/edit_ouput/erase/screen_start.c \
-			write/edit_ouput/erase/screen.c \
+			write/edit_ouput/erase/screen.c
 
 ARRAY := 	array/new_array.c \
 			array/add_array.c \
